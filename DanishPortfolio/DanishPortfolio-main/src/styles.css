@@ -1,0 +1,3208 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-neon-red: var(--neon-red);
+  --color-neon-blue: var(--neon-blue);
+  --color-neon-cyan: var(--neon-cyan);
+  --color-deep: var(--deep);
+  /* Tech-forward font stack
+     Orbitron: large headings / hero titles
+     Goldman: nav, buttons, labels, cards
+     Zen Dots: logo marks, numbers, special futuristic accents
+     Inter: readable body copy */
+  --font-display: "Orbitron", ui-sans-serif, system-ui, sans-serif;
+  --font-tech: "Goldman", ui-sans-serif, system-ui, sans-serif;
+  --font-logo: "Zen Dots", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+:root {
+  --radius: 0.875rem;
+  /* Deep, layered base — not flat black */
+  --deep: oklch(0.13 0.04 270);
+  --background: oklch(0.14 0.045 270);
+  --foreground: oklch(0.98 0.005 240);
+  --card: oklch(0.18 0.05 270 / 0.6);
+  --card-foreground: oklch(0.98 0.005 240);
+  --popover: oklch(0.16 0.05 270);
+  --popover-foreground: oklch(0.98 0.005 240);
+
+  /* Danish Nadar brand palette — accessible red/blue on dark surfaces
+     Deep Signal Red: #c81e46 (primary warm accent, deeper and less abrasive)
+     Signal Blue: #3b82f6 (primary cool accent)
+     Hologram Cyan: #22d3ee (small highlights only)
+     Deep Ink: #070b1a / #0b1024 (background surfaces) */
+  --primary: #3b82f6;
+  --primary-foreground: #060914;
+
+  /* Secondary = Aurora Red, softer and easier to read than the previous harsh red */
+  --secondary: #c81e46;
+  --secondary-foreground: #060914;
+
+  --muted: oklch(0.22 0.04 270);
+  --muted-foreground: oklch(0.72 0.03 250);
+  --accent: oklch(0.78 0.18 215);
+  --accent-foreground: oklch(0.1 0.02 270);
+  --destructive: #d6284f;
+  --destructive-foreground: #060914;
+  --border: color-mix(in oklab, #3b82f6 22%, transparent);
+  --input: #111a33;
+  --ring: #5aa2ff;
+
+  --neon-red: #c81e46;
+  --neon-blue: #3b82f6;
+  --neon-cyan: #22d3ee;
+  --brand-red-deep: #8f1234;
+  --brand-blue-deep: #1d4ed8;
+
+  --gradient-hero: radial-gradient(ellipse at 20% 10%, color-mix(in oklab, #3b82f6 45%, transparent), transparent 60%),
+                   radial-gradient(ellipse at 82% 26%, color-mix(in oklab, #c81e46 38%, transparent), transparent 58%),
+                   linear-gradient(180deg, #0b1024, #070b1a);
+  --gradient-rb: linear-gradient(135deg, #c81e46 0%, #7c3aed 44%, #3b82f6 100%);
+  --gradient-card: linear-gradient(160deg, color-mix(in oklab, #172554 90%, transparent), color-mix(in oklab, #120718 80%, transparent));
+  --shadow-glow-blue: 0 0 60px -10px color-mix(in oklab, #3b82f6 55%, transparent);
+  --shadow-glow-red: 0 0 60px -12px color-mix(in oklab, #c81e46 50%, transparent);
+  --shadow-elevated: 0 30px 80px -30px oklch(0.05 0.04 270 / 0.8);
+}
+
+.dark { /* already dark by default */ }
+
+@layer base {
+  * { border-color: var(--color-border); }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--gradient-hero);
+    background-attachment: fixed;
+    color: var(--color-foreground);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.035em; }
+  h1 { line-height: 0.98; }
+  button, nav a { font-family: var(--font-tech); letter-spacing: 0.01em; }
+  ::selection { background: var(--neon-blue); color: oklch(0.1 0.02 270); }
+}
+
+@layer utilities {
+
+  .font-tech { font-family: var(--font-tech); }
+  .font-logo { font-family: var(--font-logo); letter-spacing: 0.015em; }
+  .font-display { font-family: var(--font-display); }
+  .tech-label {
+    font-family: var(--font-tech);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .zen-accent {
+    font-family: var(--font-logo);
+    letter-spacing: 0.04em;
+  }
+  .orbitron-heading {
+    font-family: var(--font-display);
+    letter-spacing: -0.035em;
+  }
+
+  .text-gradient-rb {
+    background: var(--gradient-rb);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .bg-gradient-rb { background: var(--gradient-rb); color: white; }
+  .glass {
+    background: var(--gradient-card);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid oklch(0.7 0.18 245 / 0.15);
+  }
+  .glow-blue { box-shadow: var(--shadow-glow-blue); }
+  .glow-red { box-shadow: var(--shadow-glow-red); }
+  .ring-orb {
+    position: relative;
+  }
+  .ring-orb::before {
+    content: ""; position: absolute; inset: -2px; border-radius: inherit;
+    background: conic-gradient(from 0deg, var(--neon-red), var(--neon-blue), var(--neon-cyan), var(--neon-red));
+    z-index: -1; filter: blur(8px); opacity: 0.7;
+    animation: spin 8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+  .float { animation: float 5s ease-in-out infinite; }
+
+  .grid-bg {
+    background-image:
+      linear-gradient(oklch(0.7 0.24 250 / 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, oklch(0.7 0.24 250 / 0.06) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+  }
+
+
+  @keyframes riseFade {
+    0% { opacity: 0; transform: translateY(18px) scale(0.985); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @keyframes softPulse {
+    0%, 100% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--neon-blue) 0%, transparent); }
+    50% { box-shadow: 0 0 42px -22px color-mix(in oklab, var(--neon-blue) 70%, transparent); }
+  }
+  @keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  .animate-rise { animation: riseFade 0.7s ease both; }
+  .hover-lift { transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease, background 220ms ease; }
+  .hover-lift:hover { transform: translateY(-4px); }
+  .premium-border { position: relative; overflow: hidden; }
+  .premium-border::after {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; pointer-events: none;
+    background: linear-gradient(135deg, color-mix(in oklab, var(--neon-blue) 70%, transparent), color-mix(in oklab, var(--neon-red) 58%, transparent), transparent 68%);
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); mask-composite: exclude;
+    opacity: 0.75;
+  }
+  .animated-gradient-surface {
+    background-size: 180% 180%;
+    animation: gradientShift 12s ease infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+}
+
+@layer components {
+  .brand-button {
+    min-height: 3.1rem;
+    padding: 0.9rem 1.35rem;
+    border-radius: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+  .brand-button-lg {
+    min-height: 3.45rem;
+    padding: 1rem 1.65rem;
+    border-radius: 1rem;
+    font-weight: 800;
+  }
+  .case-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    border-radius: 999px;
+    padding: 0.6rem 1.1rem;
+    font-family: var(--font-tech);
+    font-size: 0.875rem;
+    line-height: 1;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    box-shadow: 0 4px 18px rgba(96,165,250,0.18);
+  }
+  .readable-panel {
+    font-family: var(--font-body);
+    line-height: 1.78;
+    font-size: clamp(1rem, 0.96rem + 0.2vw, 1.12rem);
+  }
+}
+
+/* Premium continuous motion layer — polished ambient AI/robotics energy */
+@layer utilities {
+  .motion-page {
+    position: relative;
+  }
+
+  .neural-grid {
+    background-image:
+      linear-gradient(115deg, rgba(59, 130, 246, 0.09) 0 1px, transparent 1px 120px),
+      linear-gradient(25deg, rgba(34, 211, 238, 0.06) 0 1px, transparent 1px 140px),
+      radial-gradient(circle at 20% 30%, rgba(34, 211, 238, 0.12), transparent 24%),
+      radial-gradient(circle at 80% 22%, rgba(146, 18, 51, 0.13), transparent 26%);
+    background-size: 240px 240px, 260px 260px, 100% 100%, 100% 100%;
+    animation: neuralDrift 28s linear infinite;
+    mask-image: radial-gradient(ellipse at center, black 35%, transparent 88%);
+  }
+
+  .scanline-overlay {
+    background: repeating-linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.035) 0,
+      rgba(255, 255, 255, 0.035) 1px,
+      transparent 1px,
+      transparent 7px
+    );
+    animation: scanlineTravel 11s linear infinite;
+    mix-blend-mode: screen;
+  }
+
+  .data-beam {
+    display: none;
+  }
+  .data-beam-one { top: 18%; animation-delay: 0s; }
+  .data-beam-two { top: 64%; animation-delay: 5.8s; }
+
+  .glass {
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 20px 70px -50px rgba(34, 211, 238, 0.35);
+    animation: glassBreathe 10s ease-in-out infinite;
+  }
+  .glass::before {
+    content: "";
+    position: absolute;
+    inset: -40% -70%;
+    background: linear-gradient(110deg, transparent 35%, rgba(255,255,255,0.055), transparent 65%);
+    transform: translateX(-40%);
+    animation: panelSweep 9s ease-in-out infinite;
+    pointer-events: none;
+  }
+  .glass > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .premium-border::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    background: conic-gradient(from 0deg, rgba(34,211,238,0.0), rgba(59,130,246,0.35), rgba(146,18,51,0.45), rgba(34,211,238,0.25), rgba(34,211,238,0.0));
+    opacity: 0.45;
+    filter: blur(18px);
+    animation: borderOrbit 14s linear infinite;
+    pointer-events: none;
+  }
+
+  .ambient-card {
+    animation: cardFloat 8s ease-in-out infinite;
+  }
+  .ambient-card:nth-child(2n) { animation-delay: -2.5s; }
+  .ambient-card:nth-child(3n) { animation-delay: -4.5s; }
+
+  .living-chip {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .living-chip::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+    transform: translateX(-120%);
+    animation: chipSweep 6.5s ease-in-out infinite;
+    z-index: -1;
+  }
+
+  .resume-timeline-rail {
+    position: relative;
+  }
+  .resume-timeline-rail::before {
+    content: "";
+    position: absolute;
+    left: 27px;
+    top: 1rem;
+    bottom: 1rem;
+    width: 2px;
+    background: linear-gradient(180deg, rgba(59,130,246,0.15), rgba(34,211,238,0.75), rgba(146,18,51,0.55), rgba(59,130,246,0.15));
+    box-shadow: 0 0 28px rgba(34,211,238,0.35);
+  }
+  .resume-timeline-rail::after {
+    content: "";
+    position: absolute;
+    left: 23px;
+    top: 0;
+    width: 10px;
+    height: 80px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, transparent, rgba(34,211,238,0.9), transparent);
+    filter: blur(2px);
+    animation: railPulse 8s ease-in-out infinite;
+  }
+
+  .animated-title-glow {
+    text-shadow: 0 0 34px rgba(59,130,246,0.25), 0 0 46px rgba(146,18,51,0.16);
+    animation: titleGlow 6s ease-in-out infinite;
+  }
+
+  .stack-constellation-card {
+    animation: constellationPulse 9s ease-in-out infinite;
+  }
+  .stack-constellation-card:nth-child(2n) { animation-delay: -3s; }
+  .stack-constellation-card:nth-child(3n) { animation-delay: -5s; }
+
+  .ai-engine-button {
+    animation: aiEnginePulse 3.8s ease-in-out infinite;
+  }
+}
+
+@keyframes neuralDrift {
+  0% { background-position: 0 0, 0 0, center, center; }
+  100% { background-position: 240px 120px, -260px 130px, center, center; }
+}
+@keyframes scanlineTravel {
+  0% { transform: translateY(-16px); }
+  100% { transform: translateY(16px); }
+}
+@keyframes beamTravel {
+  0% { transform: translateX(0) rotate(-14deg); opacity: 0; }
+  12% { opacity: 0.6; }
+  70% { opacity: 0.45; }
+  100% { transform: translateX(170vw) rotate(-14deg); opacity: 0; }
+}
+@keyframes glassBreathe {
+  0%, 100% { border-color: color-mix(in oklab, var(--neon-blue) 16%, transparent); }
+  50% { border-color: color-mix(in oklab, var(--neon-cyan) 34%, transparent); }
+}
+@keyframes panelSweep {
+  0%, 35% { transform: translateX(-55%) rotate(3deg); opacity: 0; }
+  48% { opacity: 1; }
+  65%, 100% { transform: translateX(55%) rotate(3deg); opacity: 0; }
+}
+@keyframes borderOrbit {
+  to { transform: rotate(360deg); }
+}
+@keyframes cardFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+@keyframes chipSweep {
+  0%, 46% { transform: translateX(-130%); }
+  62%, 100% { transform: translateX(130%); }
+}
+@keyframes railPulse {
+  0% { transform: translateY(0); opacity: 0; }
+  12% { opacity: 1; }
+  50% { opacity: 0.9; }
+  100% { transform: translateY(72vh); opacity: 0; }
+}
+@keyframes titleGlow {
+  0%, 100% { filter: saturate(1); }
+  50% { filter: saturate(1.22); }
+}
+@keyframes constellationPulse {
+  0%, 100% { box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 0 40px -32px rgba(59,130,246,0.55); }
+  50% { box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 0 54px -26px rgba(34,211,238,0.62); }
+}
+@keyframes aiEnginePulse {
+  0%, 100% { filter: drop-shadow(0 0 10px rgba(59,130,246,0.35)); }
+  50% { filter: drop-shadow(0 0 22px rgba(34,211,238,0.75)); }
+}
+
+/* AnimatedBackground — pure CSS replacements for the former Framer Motion orbs/particles/nodes.
+   CSS @keyframes respond to animation-play-state:paused; Framer Motion does not. */
+@keyframes bgOrbDriftA {
+  0%   { transform: translate(0px, 0px) scale(1); }
+  33%  { transform: translate(90px, 45px) scale(1.1); }
+  66%  { transform: translate(20px, 80px) scale(0.96); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
+@keyframes bgOrbDriftB {
+  0%   { transform: translate(0px, 0px) scale(1); }
+  33%  { transform: translate(-80px, -35px) scale(1.16); }
+  66%  { transform: translate(-30px, 40px) scale(1.02); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
+@keyframes bgOrbPulse {
+  0%, 100% { transform: scale(1);    opacity: 0.55; }
+  50%       { transform: scale(1.18); opacity: 0.9; }
+}
+@keyframes bgParticleFloatL {
+  0%, 100% { transform: translate(0, 0);       opacity: 0.15; }
+  50%      { transform: translate(-18px, -28px); opacity: 0.75; }
+}
+@keyframes bgParticleFloatR {
+  0%, 100% { transform: translate(0, 0);      opacity: 0.15; }
+  50%      { transform: translate(18px, -28px); opacity: 0.75; }
+}
+@keyframes bgNodePulse {
+  0%, 100% { transform: scale(1);   opacity: 0.25; }
+  50%      { transform: scale(1.8); opacity: 0.8; }
+}
+
+@layer utilities {
+  .bg-orb {
+    position: absolute;
+    border-radius: 9999px;
+  }
+  .bg-orb-a {
+    background: radial-gradient(circle, rgba(59,130,246,0.38), transparent 68%);
+    animation: bgOrbDriftA 24s ease-in-out infinite;
+  }
+  .bg-orb-b {
+    background: radial-gradient(circle, rgba(145,18,52,0.38), transparent 70%);
+    animation: bgOrbDriftB 28s ease-in-out infinite;
+  }
+  .bg-orb-c {
+    background: radial-gradient(circle, rgba(34,211,238,0.22), transparent 68%);
+    opacity: 0.55;
+    animation: bgOrbPulse 16s ease-in-out infinite;
+  }
+  .bg-particle {
+    background: rgba(103, 232, 249, 0.7);
+    box-shadow: 0 0 18px rgba(34,211,238,0.65);
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    /* animation-duration and animation-delay come from inline styles */
+  }
+  .bg-particle-l { animation-name: bgParticleFloatL; }
+  .bg-particle-r { animation-name: bgParticleFloatR; }
+  .bg-node {
+    height: 0.5rem;
+    width: 0.5rem;
+    border-radius: 9999px;
+    border: 1px solid rgba(147, 197, 253, 0.6);
+    background: rgba(96, 165, 250, 0.25);
+    box-shadow: 0 0 24px rgba(59,130,246,0.75);
+    animation: bgNodePulse 5.5s ease-in-out infinite;
+    /* animation-delay from inline style */
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .neural-grid,
+  .scanline-overlay,
+  .data-beam,
+  .glass,
+  .glass::before,
+  .premium-border::before,
+  .ambient-card,
+  .living-chip::after,
+  .resume-timeline-rail::after,
+  .animated-title-glow,
+  .stack-constellation-card,
+  .ai-engine-button {
+    animation: none !important;
+  }
+}
+
+/* Stack map refresh: wider context map + functional jump navigation */
+@layer utilities {
+  .stack-map-hero {
+    position: relative;
+    isolation: isolate;
+  }
+  .stack-map-hero::before {
+    content: "";
+    position: absolute;
+    inset: -30% -10% auto -10%;
+    height: 80%;
+    background:
+      radial-gradient(circle at 25% 35%, color-mix(in oklab, var(--neon-blue) 35%, transparent), transparent 34%),
+      radial-gradient(circle at 72% 20%, color-mix(in oklab, var(--neon-red) 30%, transparent), transparent 36%);
+    filter: blur(36px);
+    opacity: 0.72;
+    z-index: -1;
+    animation: stackHeroDrift 18s ease-in-out infinite alternate;
+  }
+  .stack-jump-panel {
+    box-shadow: 0 24px 90px -50px color-mix(in oklab, var(--neon-blue) 75%, transparent);
+  }
+  .stack-section {
+    position: relative;
+    overflow: hidden;
+  }
+  .stack-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(90deg, transparent, color-mix(in oklab, var(--neon-blue) 10%, transparent), transparent),
+      radial-gradient(circle at 12% 20%, color-mix(in oklab, var(--neon-cyan) 9%, transparent), transparent 24%),
+      radial-gradient(circle at 88% 8%, color-mix(in oklab, var(--neon-red) 8%, transparent), transparent 22%);
+    opacity: 0.8;
+  }
+  .skill-context-card {
+    position: relative;
+    min-height: 28rem;
+  }
+  .skill-context-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(120deg, transparent 0 28%, rgba(255,255,255,0.08) 42%, transparent 56% 100%);
+    transform: translateX(-120%);
+    animation: contextSweep 9s ease-in-out infinite;
+    pointer-events: none;
+  }
+  .stack-summary-card {
+    animation: cardBreath 7s ease-in-out infinite;
+  }
+  @keyframes stackHeroDrift {
+    0% { transform: translate3d(-2%, 0, 0) scale(1); }
+    100% { transform: translate3d(2%, 4%, 0) scale(1.06); }
+  }
+  @keyframes contextSweep {
+    0%, 35% { transform: translateX(-120%); opacity: 0; }
+    45% { opacity: 0.9; }
+    60%, 100% { transform: translateX(120%); opacity: 0; }
+  }
+}
+
+/* DN logo response engine */
+@layer utilities {
+  .dn-ai-orb {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 5.75rem;
+    height: 5.75rem;
+    border-radius: 999px;
+    filter: drop-shadow(0 0 28px color-mix(in oklab, var(--neon-blue) 42%, transparent));
+  }
+  .dn-ai-orb-core {
+    position: relative;
+    z-index: 3;
+    width: 4.25rem;
+    height: 4.25rem;
+    border-radius: 1.25rem;
+    overflow: hidden;
+    background: radial-gradient(circle at 35% 25%, rgba(255,255,255,0.2), rgba(6,9,20,0.86) 58%);
+    border: 1px solid color-mix(in oklab, var(--neon-cyan) 45%, transparent);
+    box-shadow:
+      inset 0 0 24px rgba(255,255,255,0.06),
+      0 0 34px -8px color-mix(in oklab, var(--neon-blue) 72%, transparent);
+  }
+  .dn-ai-orb-ring {
+    position: absolute;
+    border-radius: 999px;
+    border: 1px solid color-mix(in oklab, var(--neon-blue) 55%, transparent);
+    inset: 0.35rem;
+    animation: spin 8s linear infinite;
+  }
+  .dn-ai-orb-ring-a {
+    border-top-color: var(--neon-cyan);
+    border-right-color: var(--neon-red);
+  }
+  .dn-ai-orb-ring-b {
+    inset: 0.05rem;
+    transform: rotate(38deg);
+    border-left-color: var(--neon-red);
+    border-bottom-color: var(--neon-cyan);
+    opacity: 0.65;
+    animation-duration: 13s;
+    animation-direction: reverse;
+  }
+  .dn-ai-orb-speaking .dn-ai-orb-core {
+    animation: aiTalkPulse 700ms ease-in-out infinite alternate;
+  }
+  .dn-ai-orb-speaking .dn-ai-orb-ring {
+    animation-duration: 3.2s;
+  }
+  @keyframes aiTalkPulse {
+    from { transform: scale(0.98); box-shadow: 0 0 26px -8px color-mix(in oklab, var(--neon-blue) 65%, transparent); }
+    to { transform: scale(1.05); box-shadow: 0 0 48px -10px color-mix(in oklab, var(--neon-red) 68%, transparent); }
+  }
+}
+
+
+/* Stack map navigation + response engine fixes */
+@layer utilities {
+  .stack-horizontal-nav {
+    box-shadow: 0 22px 80px -52px color-mix(in oklab, var(--neon-cyan) 75%, transparent);
+    backdrop-filter: blur(22px);
+  }
+
+  .dn-response-trigger {
+    position: fixed;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    z-index: 80;
+    display: grid;
+    height: 4.85rem;
+    width: 4.85rem;
+    place-items: center;
+    overflow: visible;
+    border-radius: 999px;
+    border: 1px solid color-mix(in oklab, var(--neon-cyan) 42%, transparent);
+    background: radial-gradient(circle at 35% 25%, rgba(255,255,255,0.14), transparent 28%), linear-gradient(135deg, rgba(8,13,34,0.92), rgba(17,22,53,0.88));
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.03) inset, 0 18px 48px -18px rgba(6,182,212,0.75), 0 0 36px -12px color-mix(in oklab, var(--neon-blue) 70%, transparent);
+    animation: aiEnginePulse 3.8s ease-in-out infinite;
+  }
+
+  .dn-response-trigger .dn-ai-orb { width: 4.35rem; height: 4.35rem; }
+  .dn-response-trigger .dn-ai-orb-core { width: 3.05rem; height: 3.05rem; border-radius: 1rem; }
+  .dn-response-trigger .dn-ai-orb-ring { inset: 0.25rem; }
+  .dn-response-trigger .dn-ai-orb-ring-b { inset: 0.02rem; }
+
+  .dn-response-panel {
+    position: fixed;
+    right: 1rem;
+    left: auto;
+    bottom: 6.65rem;
+    z-index: 79;
+    width: min(24rem, calc(100vw - 2rem));
+    max-height: min(72vh, 34rem);
+  }
+
+  .dn-response-messages { height: min(17rem, 34vh); }
+
+  @media (min-width: 640px) {
+    .dn-response-trigger { right: 1.5rem; bottom: 1.5rem; height: 5rem; width: 5rem; }
+    .dn-response-panel { right: 1.5rem; bottom: 7rem; width: 24rem; }
+  }
+
+  @media (max-width: 640px) {
+    .dn-response-trigger { right: 0.9rem; bottom: 0.9rem; height: 4.25rem; width: 4.25rem; }
+    .dn-response-trigger .dn-ai-orb { width: 3.85rem; height: 3.85rem; }
+    .dn-response-trigger .dn-ai-orb-core { width: 2.7rem; height: 2.7rem; }
+    .dn-response-panel { right: 0.75rem; bottom: 5.75rem; width: calc(100vw - 1.5rem); }
+  }
+}
+
+/* Refined stack map and resume navigation */
+@layer utilities {
+  .stack-map-page {
+    overflow-x: hidden;
+  }
+
+  .stack-map-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .stack-chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+  }
+
+  @media (max-width: 768px) {
+    .stack-chip-row {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      padding-bottom: 0.25rem;
+      scrollbar-width: thin;
+    }
+  }
+
+  .stack-jump-chip {
+    flex-shrink: 0;
+    border-radius: 999px;
+    border: 1px solid color-mix(in oklab, var(--border) 85%, transparent);
+    background: color-mix(in oklab, var(--muted) 22%, transparent);
+    padding: 0.65rem 1rem;
+    font-family: var(--font-tech);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: color-mix(in oklab, var(--muted-foreground) 92%, white 8%);
+    transition: border-color 180ms ease, color 180ms ease, background 180ms ease, transform 180ms ease;
+  }
+
+  .stack-jump-chip:hover {
+    transform: translateY(-1px);
+  }
+
+  .stack-jump-chip-primary:hover {
+    border-color: color-mix(in oklab, var(--neon-blue) 75%, transparent);
+    background: color-mix(in oklab, var(--neon-blue) 13%, transparent);
+    color: var(--accent);
+  }
+
+  .stack-jump-chip-skill {
+    border-color: color-mix(in oklab, var(--neon-cyan) 25%, transparent);
+    background: color-mix(in oklab, var(--neon-cyan) 8%, transparent);
+    color: color-mix(in oklab, var(--neon-cyan) 72%, white 20%);
+  }
+
+  .stack-jump-chip-skill:hover {
+    border-color: color-mix(in oklab, var(--neon-cyan) 72%, transparent);
+    background: color-mix(in oklab, var(--neon-cyan) 15%, transparent);
+    color: var(--neon-cyan);
+  }
+
+  .stack-back-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: max-content;
+    border-radius: 999px;
+    border: 1px solid color-mix(in oklab, var(--border) 80%, transparent);
+    padding: 0.55rem 1rem;
+    font-family: var(--font-tech);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
+    transition: all 180ms ease;
+  }
+
+  .stack-back-button:hover {
+    border-color: color-mix(in oklab, var(--accent) 68%, transparent);
+    color: var(--accent);
+    background: color-mix(in oklab, var(--accent) 10%, transparent);
+  }
+
+  .stack-skill-grid {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  @media (min-width: 1024px) {
+    .stack-skill-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1536px) {
+    .stack-skill-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .skill-context-card {
+    min-height: 0 !important;
+    scroll-margin-top: 9rem;
+  }
+
+  .stack-context-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    border-radius: 0.95rem;
+    border: 1px solid color-mix(in oklab, var(--border) 82%, transparent);
+    background: color-mix(in oklab, var(--background) 48%, transparent);
+    padding: 0.82rem 0.95rem;
+    font-size: 0.88rem;
+    line-height: 1.35;
+    color: color-mix(in oklab, var(--foreground) 90%, var(--accent) 10%);
+    transition: border-color 180ms ease, background 180ms ease, color 180ms ease, transform 180ms ease;
+  }
+
+  .stack-context-link:hover {
+    transform: translateX(2px);
+    border-color: color-mix(in oklab, var(--accent) 62%, transparent);
+    background: color-mix(in oklab, var(--accent) 9%, transparent);
+    color: var(--accent);
+  }
+
+  .resume-jump-nav {
+    position: relative;
+    z-index: 5;
+  }
+
+  .resume-page section[id] {
+    scroll-margin-top: 9rem;
+  }
+
+  .dn-response-trigger .dn-ai-orb-core {
+    width: 3.45rem !important;
+    height: 3.45rem !important;
+  }
+
+  .dn-response-trigger .dn-ai-orb {
+    width: 4.65rem !important;
+    height: 4.65rem !important;
+  }
+
+  @media (min-width: 640px) {
+    .dn-response-trigger {
+      height: 5.3rem !important;
+      width: 5.3rem !important;
+    }
+    .dn-response-trigger .dn-ai-orb {
+      width: 4.8rem !important;
+      height: 4.8rem !important;
+    }
+    .dn-response-trigger .dn-ai-orb-core {
+      width: 3.6rem !important;
+      height: 3.6rem !important;
+    }
+  }
+}
+
+
+/* Final spacing/stack map/resume polish */
+@layer utilities {
+  .stack-horizontal-nav {
+    position: relative;
+    z-index: 2;
+    margin-bottom: 3.25rem;
+    isolation: isolate;
+  }
+  .stack-map-content {
+    margin-top: 3.25rem !important;
+  }
+  .stack-summary-card,
+  .skill-context-card,
+  .stack-section {
+    position: relative;
+    z-index: 1;
+  }
+  .stack-section {
+    margin-top: 0.75rem;
+  }
+  .stack-skill-grid {
+    gap: 1.85rem !important;
+  }
+  @media (min-width: 1280px) {
+    .skill-context-card {
+      padding: 1.85rem !important;
+    }
+  }
+  .resume-positioning-card {
+    position: relative;
+    overflow: hidden;
+  }
+  .resume-positioning-card::before {
+    content: "";
+    position: absolute;
+    inset: -40% -10% auto -10%;
+    height: 70%;
+    background: radial-gradient(circle, color-mix(in oklab, var(--neon-blue) 18%, transparent), transparent 58%);
+    pointer-events: none;
+  }
+  .dn-response-logo-img {
+    transform: scale(1.28);
+    filter: drop-shadow(0 0 14px color-mix(in oklab, var(--neon-blue) 75%, transparent));
+  }
+  .dn-response-trigger .dn-ai-orb-core {
+    overflow: visible !important;
+    background: radial-gradient(circle at 45% 40%, rgba(255,255,255,0.08), rgba(9,14,35,0.92) 64%) !important;
+  }
+  @media (min-width: 640px) {
+    .dn-response-trigger {
+      height: 5.6rem !important;
+      width: 5.6rem !important;
+    }
+    .dn-response-trigger .dn-ai-orb {
+      width: 5.05rem !important;
+      height: 5.05rem !important;
+    }
+    .dn-response-trigger .dn-ai-orb-core {
+      width: 4rem !important;
+      height: 4rem !important;
+    }
+  }
+}
+
+
+/* 2026-05 polish: global top button, stack map clarity, card spacing */
+@layer utilities {
+  .global-back-to-top {
+    position: fixed;
+    right: 1.25rem;
+    bottom: 10.75rem;
+    z-index: 79;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    border-radius: 999px;
+    border: 1px solid color-mix(in oklab, var(--neon-cyan) 55%, transparent);
+    background: color-mix(in oklab, var(--background) 82%, transparent);
+    color: var(--neon-cyan);
+    padding: 0.7rem 1rem;
+    font-family: var(--font-tech);
+    font-size: 0.74rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    box-shadow: 0 0 28px -12px color-mix(in oklab, var(--neon-cyan) 85%, transparent);
+    backdrop-filter: blur(18px);
+    transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+  }
+  .global-back-to-top:hover { transform: translateY(-2px); background: color-mix(in oklab, var(--neon-cyan) 12%, var(--background)); }
+  @media (max-width: 640px) { .global-back-to-top { right: 0.9rem; bottom: 9.6rem; padding: 0.65rem 0.75rem; } .global-back-to-top span { display: none; } }
+
+  .stack-horizontal-nav {
+    margin-bottom: 4.75rem !important;
+    padding-block: 1.5rem !important;
+  }
+  .stack-map-content {
+    margin-top: 4.75rem !important;
+  }
+  .stack-chip-row:first-of-type {
+    padding: 0.55rem;
+    border-radius: 1.25rem;
+    background: color-mix(in oklab, var(--background) 28%, transparent);
+    border: 1px solid color-mix(in oklab, var(--border) 78%, transparent);
+  }
+  .stack-jump-chip-primary {
+    border-color: color-mix(in oklab, var(--neon-blue) 42%, var(--border));
+    background: linear-gradient(135deg, color-mix(in oklab, var(--neon-blue) 14%, transparent), color-mix(in oklab, var(--neon-red) 8%, transparent));
+    color: color-mix(in oklab, var(--foreground) 86%, var(--accent));
+    font-weight: 700;
+  }
+  .stack-summary-card { min-height: 11.25rem; }
+  .stack-summary-card .font-logo { line-height: 1; }
+  .stack-section { margin-top: 2.5rem !important; }
+  .skill-context-card { min-height: 25rem !important; }
+  .nav-link { font-size: 0.95rem !important; }
+  .project-card-grid, .post-card-grid { gap: 2.25rem !important; }
+}
+
+
+@layer components {
+  .stack-horizontal-nav {
+    background:
+      linear-gradient(135deg, color-mix(in oklab, var(--background) 82%, black 18%), color-mix(in oklab, var(--muted) 35%, transparent)),
+      radial-gradient(circle at 12% 20%, color-mix(in oklab, var(--neon-blue) 20%, transparent), transparent 38%),
+      radial-gradient(circle at 88% 15%, color-mix(in oklab, var(--neon-red) 13%, transparent), transparent 35%) !important;
+  }
+
+  .stack-chip-row:first-of-type {
+    gap: 0.85rem !important;
+    padding: 0.85rem !important;
+    background: linear-gradient(135deg, rgba(6, 10, 24, 0.82), rgba(21, 26, 48, 0.72)) !important;
+    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--border) 75%, transparent), 0 18px 45px -35px var(--neon-blue);
+  }
+
+  .stack-jump-chip-primary {
+    border-radius: 1rem !important;
+    padding: 0.9rem 1.1rem !important;
+    background:
+      linear-gradient(135deg, color-mix(in oklab, var(--background) 70%, black), color-mix(in oklab, var(--muted) 28%, transparent)),
+      linear-gradient(135deg, color-mix(in oklab, var(--neon-blue) 18%, transparent), color-mix(in oklab, var(--neon-red) 12%, transparent)) !important;
+    border-color: color-mix(in oklab, var(--neon-blue) 45%, var(--border)) !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 14px 34px -28px color-mix(in oklab, var(--neon-cyan) 80%, transparent);
+    color: color-mix(in oklab, var(--foreground) 92%, var(--accent) 8%) !important;
+  }
+
+  .stack-jump-chip-primary:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in oklab, var(--accent) 75%, transparent) !important;
+    box-shadow: 0 18px 45px -28px color-mix(in oklab, var(--accent) 90%, transparent);
+  }
+
+  .stack-section {
+    background:
+      linear-gradient(135deg, rgba(6, 10, 24, 0.78), rgba(16, 21, 40, 0.66)),
+      radial-gradient(circle at 0% 0%, color-mix(in oklab, var(--neon-blue) 12%, transparent), transparent 35%) !important;
+  }
+}
+
+/* 2026-05-27 readability + relationship-ranking polish */
+@layer base {
+  html { font-size: 16.5px; }
+}
+
+@layer utilities {
+  main .text-sm { font-size: 0.96rem; line-height: 1.72; }
+  main .text-xs { font-size: 0.82rem; line-height: 1.55; }
+  .readable-page p { font-size: 1.04rem; line-height: 1.82; }
+
+  .project-small-card-upgrade,
+  .home-context-card {
+    min-height: 10.75rem;
+    padding: 1.45rem;
+  }
+
+  .about-scroll-card {
+    position: relative;
+    overflow: hidden;
+  }
+  .about-scroll-card::after {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+    height: 5rem;
+    background: linear-gradient(to bottom, transparent, color-mix(in oklab, var(--background) 88%, transparent));
+    border-radius: 0 0 1.5rem 1.5rem;
+  }
+  .about-sub-scroller {
+    max-height: 32rem;
+    overflow-y: auto;
+    scroll-snap-type: y proximity;
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in oklab, var(--accent) 65%, transparent) transparent;
+  }
+  .about-sub-scroller::-webkit-scrollbar { width: 0.55rem; }
+  .about-sub-scroller::-webkit-scrollbar-thumb {
+    background: linear-gradient(var(--neon-cyan), var(--neon-red));
+    border-radius: 99px;
+  }
+
+  /* Journey dropdown scrollbar */
+  .journey-dropdown-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(34, 211, 238, 0.55) transparent;
+  }
+  .journey-dropdown-scroll::-webkit-scrollbar { width: 4px; }
+  .journey-dropdown-scroll::-webkit-scrollbar-track { background: transparent; }
+  .journey-dropdown-scroll::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, #22d3ee, #a78bfa, #fbbf24);
+    border-radius: 99px;
+  }
+  .about-scroll-item,
+  .about-timeline-item {
+    scroll-snap-align: start;
+    border: 1px solid color-mix(in oklab, var(--neon-blue) 22%, transparent);
+    background: linear-gradient(145deg, color-mix(in oklab, #172554 35%, transparent), color-mix(in oklab, #120718 32%, transparent));
+    border-radius: 1.35rem;
+    padding: 1.25rem 1.35rem;
+    margin-bottom: 1rem;
+    box-shadow: inset 0 1px 0 color-mix(in oklab, white 8%, transparent), 0 20px 60px -45px color-mix(in oklab, var(--neon-blue) 80%, transparent);
+    animation: contextPulse 9s ease-in-out infinite;
+  }
+  .about-timeline-item {
+    position: relative;
+    padding-left: 2rem;
+  }
+  .about-timeline-item::before {
+    content: "";
+    position: absolute;
+    left: 0.8rem;
+    top: 1.45rem;
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 999px;
+    background: var(--gradient-rb);
+    box-shadow: 0 0 24px color-mix(in oklab, var(--neon-cyan) 80%, transparent);
+  }
+
+  .related-content-card {
+    min-height: 18rem;
+  }
+}
+
+/* 2026-05-27 DN Response Engine crash fix: no layout animation, fixed paint area */
+@layer utilities {
+  .dn-response-trigger {
+    contain: layout paint style;
+    transform: translateZ(0);
+    will-change: transform;
+  }
+
+  .dn-response-trigger:hover {
+    transform: translate3d(0, -2px, 0) scale(1.025);
+  }
+
+  .dn-response-hover-label {
+    right: 5.8rem;
+    top: 0.35rem;
+  }
+
+  .dn-response-panel {
+    contain: layout paint style;
+    transform: translateZ(0);
+  }
+
+  .dn-response-panel-open {
+    animation: dnPanelIn 180ms ease-out both;
+  }
+
+  @keyframes dnPanelIn {
+    from { opacity: 0; transform: translate3d(0, 14px, 0) scale(0.98); }
+    to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+  }
+
+  @media (max-width: 640px) {
+    .dn-response-hover-label { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dn-response-panel-open { animation: none !important; }
+    .dn-response-trigger:hover { transform: none !important; }
+  }
+}
+
+/* DN panel stability: avoid expensive backdrop-filter repaint loops on Linux/Chromium */
+@layer utilities {
+  .dn-response-panel.glass,
+  .dn-response-panel .glass {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .dn-response-panel {
+    background:
+      linear-gradient(135deg, rgba(9, 14, 35, 0.98), rgba(18, 20, 48, 0.96)),
+      radial-gradient(circle at 12% 10%, color-mix(in oklab, var(--neon-blue) 16%, transparent), transparent 32%),
+      radial-gradient(circle at 92% 0%, color-mix(in oklab, var(--neon-red) 12%, transparent), transparent 30%) !important;
+  }
+
+  .dn-response-panel [class*="glass"] {
+    background: rgba(12, 18, 42, 0.9) !important;
+  }
+}
+
+/* 2026-05-27 DN Response Engine hard stability patch
+   The engine uses an uncontrolled textarea and pauses ambient page animations while open/focused.
+   This prevents Chrome/Vercel builds from locking the main thread when the input receives focus. */
+@layer utilities {
+  .dn-response-panel {
+    isolation: isolate;
+    contain: layout paint style;
+    background: linear-gradient(135deg, rgba(7, 11, 26, 0.99), rgba(15, 18, 44, 0.985)) !important;
+    border: 1px solid color-mix(in oklab, var(--neon-blue) 30%, transparent);
+    box-shadow: 0 28px 90px -38px rgba(0, 0, 0, 0.85), 0 0 45px -24px color-mix(in oklab, var(--neon-cyan) 65%, transparent);
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  .dn-response-header,
+  .dn-response-footer {
+    background: rgba(8, 12, 31, 0.96) !important;
+  }
+
+  .dn-screen-avatar {
+    position: fixed;
+    z-index: 120;
+    aspect-ratio: 0.72;
+    pointer-events: none;
+    background: transparent !important;
+    opacity: 1;
+    filter: drop-shadow(0 22px 42px rgba(0, 0, 0, 0.58)) drop-shadow(0 0 24px rgba(34, 211, 238, 0.18));
+    animation: dnAvatarFloat 4.8s ease-in-out infinite;
+    transform-origin: 50% 85%;
+    transition: right 220ms ease, bottom 220ms ease, width 220ms ease, opacity 220ms ease, filter 220ms ease;
+  }
+
+  .dn-screen-avatar-open {
+    right: calc(min(24rem, calc(100vw - 2rem)) + 2.75rem);
+    bottom: 6.9rem;
+    width: clamp(12rem, 17vw, 16rem);
+  }
+
+  .dn-screen-avatar-closed {
+    right: 6.3rem;
+    bottom: 1.6rem;
+    width: clamp(8rem, 11vw, 10rem);
+    opacity: 0.92;
+  }
+
+  .dn-screen-avatar-shadow {
+    position: absolute;
+    left: 16%;
+    right: 16%;
+    bottom: -0.2rem;
+    height: 1.2rem;
+    border-radius: 999px;
+    background: radial-gradient(ellipse, rgba(34, 211, 238, 0.28), transparent 66%);
+    filter: blur(8px);
+    opacity: 0.72;
+    animation: dnAvatarShadow 4.8s ease-in-out infinite;
+  }
+
+  .dn-screen-avatar-media {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 51% 22%;
+    background: transparent !important;
+    border: 0;
+    border-radius: 1.35rem;
+    transform: translateZ(0);
+  }
+
+  .dn-screen-avatar-face-rig {
+    position: absolute;
+    left: 50.8%;
+    top: 34.7%;
+    width: 13.5%;
+    height: 4.2%;
+    transform: translateX(-50%) rotate(1deg);
+    pointer-events: none;
+    opacity: 0;
+  }
+
+  .dn-screen-avatar-speaking .dn-screen-avatar-face-rig {
+    opacity: 0.96;
+  }
+
+  .dn-screen-avatar-mouth {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    display: block;
+    transform: translate(-50%, -50%);
+    border-radius: 999px;
+    background: rgba(20, 9, 13, 0.72);
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.16), 0 0 4px rgba(0, 0, 0, 0.34);
+  }
+
+  .dn-screen-avatar-mouth-a {
+    width: 100%;
+    height: 42%;
+    animation: dnMouthTalkA 180ms ease-in-out infinite;
+  }
+
+  .dn-screen-avatar-mouth-b {
+    width: 72%;
+    height: 20%;
+    background: rgba(245, 224, 224, 0.42);
+    opacity: 0.36;
+    animation: dnMouthTalkB 240ms ease-in-out infinite;
+  }
+
+  .dn-screen-avatar::after {
+    content: "";
+    position: absolute;
+    inset: 9% 11% 8%;
+    border-radius: 48% 48% 42% 42%;
+    border: 1px solid color-mix(in oklab, var(--neon-cyan) 40%, transparent);
+    box-shadow: 0 0 42px -22px color-mix(in oklab, var(--neon-blue) 80%, transparent);
+    opacity: 0.72;
+    pointer-events: none;
+    mask-image: linear-gradient(#000, transparent 92%);
+    -webkit-mask-image: linear-gradient(#000, transparent 92%);
+  }
+
+  .dn-screen-avatar-speaking {
+    animation: dnAvatarTalk 720ms ease-in-out infinite;
+  }
+
+  .dn-screen-avatar-speaking::after {
+    border-color: color-mix(in oklab, var(--neon-red) 48%, var(--neon-blue));
+    box-shadow: 0 0 48px -20px color-mix(in oklab, var(--neon-red) 72%, transparent);
+    opacity: 0.75;
+  }
+
+  @keyframes dnAvatarFloat {
+    0%, 100% { transform: translate3d(0, 0, 0) rotate(-0.4deg); }
+    50% { transform: translate3d(0, -0.85rem, 0) rotate(0.45deg); }
+  }
+
+  @keyframes dnAvatarTalk {
+    0%, 100% { transform: translate3d(0, -0.18rem, 0) scale(1); }
+    50% { transform: translate3d(0, -0.75rem, 0) scale(1.018); }
+  }
+
+  @keyframes dnMouthTalkA {
+    0%, 100% { height: 18%; width: 78%; border-radius: 999px; }
+    35% { height: 82%; width: 92%; border-radius: 55% 55% 48% 48%; }
+    65% { height: 48%; width: 110%; border-radius: 999px; }
+  }
+
+  @keyframes dnMouthTalkB {
+    0%, 100% { transform: translate(-50%, -48%) scaleX(0.6); opacity: 0.2; }
+    50% { transform: translate(-50%, -20%) scaleX(0.92); opacity: 0.5; }
+  }
+
+  @keyframes dnAvatarShadow {
+    0%, 100% { transform: scaleX(0.94); opacity: 0.58; }
+    50% { transform: scaleX(1.08); opacity: 0.34; }
+  }
+
+  .dn-live-avatar {
+    position: relative;
+    height: 3.25rem;
+    width: 3.25rem;
+    flex: 0 0 3.25rem;
+    overflow: hidden;
+    border-radius: 0.85rem;
+    background: rgba(7, 11, 26, 0.95);
+    border: 1px solid color-mix(in oklab, var(--neon-blue) 42%, transparent);
+    box-shadow: 0 0 24px -14px color-mix(in oklab, var(--neon-cyan) 72%, transparent);
+  }
+
+  .dn-live-avatar img,
+  .dn-live-avatar video {
+    background: transparent !important;
+  }
+
+  .dn-live-avatar::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  }
+
+  .dn-live-avatar[data-status="preview"] {
+    border-color: color-mix(in oklab, var(--neon-cyan) 50%, transparent);
+  }
+
+  .dn-live-avatar[data-status="rendered"],
+  .dn-live-avatar-speaking {
+    border-color: color-mix(in oklab, var(--neon-red) 50%, var(--neon-blue));
+  }
+
+  @media (max-width: 980px) {
+    .dn-screen-avatar-open {
+      right: 1.1rem;
+      bottom: min(31rem, 59vh);
+      z-index: 120;
+      width: min(9.5rem, 34vw);
+    }
+
+    .dn-screen-avatar-closed {
+      right: 5.4rem;
+      bottom: 1rem;
+      width: min(7.8rem, 28vw);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .dn-screen-avatar-open {
+      right: 0.85rem;
+      bottom: min(29rem, 58vh);
+      width: min(7.25rem, 30vw);
+    }
+
+    .dn-screen-avatar-closed {
+      right: 4.9rem;
+      bottom: 0.75rem;
+      width: min(6.5rem, 25vw);
+    }
+  }
+
+  .dn-response-bubble,
+  .dn-response-bubble-avatar,
+  .dn-response-bubble-user {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    white-space: pre-line;
+  }
+
+  .dn-response-bubble-avatar {
+    background: rgba(17, 24, 52, 0.94);
+    border: 1px solid color-mix(in oklab, var(--border) 55%, transparent);
+  }
+
+  .dn-response-bubble-user {
+    background: var(--gradient-rb);
+    color: white;
+  }
+
+  .dn-response-input {
+    min-height: 3.25rem;
+    max-height: 6rem;
+    line-height: 1.45;
+    color: var(--foreground);
+    background: rgba(9, 14, 35, 0.96) !important;
+    border: 1px solid color-mix(in oklab, var(--neon-blue) 35%, transparent);
+    box-shadow: none !important;
+    transform: translateZ(0);
+    will-change: auto;
+  }
+
+  .dn-response-input:focus {
+    border-color: color-mix(in oklab, var(--neon-cyan) 70%, transparent);
+    box-shadow: 0 0 0 2px color-mix(in oklab, var(--neon-cyan) 24%, transparent) !important;
+  }
+
+  .dn-response-send {
+    background: var(--gradient-rb);
+    color: white;
+    transform: translateZ(0);
+  }
+
+  html.dn-engine-open,
+  body.dn-engine-open {
+    scroll-behavior: auto !important;
+  }
+
+  /* ── Targeted CSS animation pause (dn-engine-open only).
+     dn-input-active has been removed entirely — it was being toggled on textarea focus
+     via a DOM classList mutation, which triggered style recalculation across the page
+     and was the direct cause of the Chrome freeze on clicking the typing bar.
+     dn-engine-open is set once when the panel opens and cleared when it closes.
+     AnimatedBackground uses pure CSS @keyframes so animation-play-state works. ── */
+  html.dn-engine-open .neural-grid,
+  html.dn-engine-open .scanline-overlay,
+  html.dn-engine-open .data-beam,
+  html.dn-engine-open .bg-orb,
+  html.dn-engine-open .bg-particle,
+  html.dn-engine-open .bg-particle-l,
+  html.dn-engine-open .bg-particle-r,
+  html.dn-engine-open .bg-node,
+  html.dn-engine-open .ring-orb::before,
+  html.dn-engine-open .ambient-card,
+  html.dn-engine-open .living-chip::after,
+  html.dn-engine-open .premium-border::before,
+  html.dn-engine-open .glass,
+  html.dn-engine-open .glass::before,
+  html.dn-engine-open .stack-map-hero::before,
+  html.dn-engine-open .skill-context-card::before,
+  html.dn-engine-open .stack-summary-card,
+  html.dn-engine-open .animated-title-glow,
+  html.dn-engine-open .stack-constellation-card,
+  html.dn-engine-open .resume-timeline-rail::after,
+  html.dn-engine-open .ai-engine-button,
+  html.dn-engine-open .dn-ai-orb-ring,
+  html.dn-engine-open .dn-ai-orb-core,
+  html.dn-engine-open .dn-response-trigger {
+    animation: none !important;
+    transition-duration: 0ms !important;
+    filter: none !important;
+  }
+
+  /* ── Hide expensive pseudo-element sweeps ── */
+  html.dn-engine-open .glass::before,
+  html.dn-engine-open .premium-border::before,
+  html.dn-engine-open .skill-context-card::before {
+    display: none !important;
+  }
+
+  /* ── The DN panel itself must have no running animations ── */
+  html.dn-engine-open .dn-response-panel,
+  html.dn-engine-open .dn-response-panel * {
+    animation: none !important;
+  }
+
+  @media (max-width: 640px) {
+    .dn-response-panel {
+      max-height: min(72vh, 34rem);
+    }
+  }
+}
+
+/* 2026-05-29 embedded text-entry stability rebuild
+   The visible typing UI now lives inside lightweight sandboxed iframes.
+   Keystrokes stay outside the React render tree; React only receives the final submitted text. */
+@layer utilities {
+  .stable-search-shell,
+  .stable-search-shell *,
+  .dn-embedded-input-shell,
+  .embedded-contact-iframe {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    filter: none !important;
+  }
+
+  .embedded-input-shell,
+  .dn-embedded-input-shell {
+    contain: layout paint style;
+    transform: translateZ(0);
+    will-change: auto;
+  }
+
+  .stable-search-iframe,
+  .dn-embedded-input-iframe,
+  .embedded-contact-iframe {
+    display: block;
+    width: 100%;
+    border: 0;
+    background: transparent;
+    color-scheme: dark;
+  }
+
+  .stable-search-iframe {
+    min-height: 58px;
+  }
+
+  .dn-embedded-input-iframe {
+    height: 82px;
+  }
+
+  .embedded-contact-iframe {
+    min-height: 315px;
+  }
+
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  .posts-page a,
+  .posts-page button,
+  .stack-map-page a,
+  .stack-map-page button,
+  .post-card-link,
+  .post-card-link * {
+    cursor: pointer;
+  }
+
+  @media (max-width: 520px) {
+    .stable-search-iframe {
+      min-height: 108px;
+    }
+
+    .embedded-contact-iframe {
+      min-height: 395px;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .dn-embedded-input-iframe {
+      height: 120px;
+    }
+  }
+}
+
+/* 2026-05-29 visual polish: subtle AI-engineering motion without distracting the reader */
+@keyframes routeEnterSignal {
+  0% { opacity: 0; transform: translate3d(-4%, -1%, 0) scale(0.99); }
+  28% { opacity: 0.14; }
+  100% { opacity: 0; transform: translate3d(4%, 1%, 0) scale(1.005); }
+}
+
+@keyframes ambientBrandDrift {
+  0%, 100% { transform: translate3d(0, 0, 0); opacity: 0.55; }
+  50% { transform: translate3d(1.5%, -1%, 0); opacity: 0.72; }
+}
+
+@layer utilities {
+  .motion-page::before {
+    content: "";
+    position: fixed;
+    inset: 4rem 0 auto 0;
+    height: 28vh;
+    pointer-events: none;
+    background: radial-gradient(ellipse at 50% 50%, color-mix(in oklab, var(--neon-cyan) 3%, transparent), transparent 62%);
+    filter: blur(44px);
+    opacity: 0;
+    animation: routeEnterSignal 800ms ease-out both;
+    z-index: -1;
+  }
+
+  .neural-grid,
+  .scanline-overlay,
+  .bg-orb,
+  .data-beam {
+    will-change: transform, opacity;
+  }
+
+  .grid-bg {
+    animation: ambientBrandDrift 24s ease-in-out infinite;
+  }
+}
+
+/* 2026-05-29 Science Gothic title + semantic brand motion polish
+   Science Gothic is used only for portfolio artifact titles so the site keeps body text readable.
+   The background now means something specific: neural reasoning, path planning, sensor fusion,
+   and data moving between AI software and physical robotics systems. */
+@layer utilities {
+  .portfolio-title-font {
+    font-family: "Science Gothic", var(--font-display), ui-sans-serif, system-ui, sans-serif;
+    letter-spacing: -0.018em;
+    font-feature-settings: "kern" 1;
+    font-variation-settings: "wght" 760, "wdth" 112;
+  }
+
+  .post-title-font,
+  .project-title-font {
+    text-wrap: balance;
+  }
+
+  .post-card-link:hover .portfolio-title-font,
+  .projects-page a:hover .project-title-font,
+  .related-content-card a:hover .portfolio-title-font {
+    text-shadow: 0 0 20px color-mix(in oklab, var(--neon-cyan) 40%, transparent), 0 0 34px color-mix(in oklab, var(--neon-blue) 24%, transparent);
+  }
+
+  .pointer-glow {
+    --pointer-x: 50vw;
+    --pointer-y: 50vh;
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 180ms ease;
+    background: radial-gradient(
+      8rem circle at var(--pointer-x) var(--pointer-y),
+      color-mix(in oklab, var(--neon-cyan) 16%, transparent),
+      color-mix(in oklab, var(--neon-blue) 8%, transparent) 32%,
+      transparent 68%
+    );
+    mix-blend-mode: screen;
+  }
+
+  .pointer-glow-active { opacity: 1; }
+
+  a:hover,
+  button:hover,
+  [role="button"]:hover,
+  .post-card-link:hover,
+  .project-card-grid a:hover,
+  .stack-context-link:hover,
+  .stack-jump-chip:hover {
+    cursor: pointer;
+    filter: drop-shadow(0 0 10px color-mix(in oklab, var(--neon-cyan) 18%, transparent));
+  }
+
+  .autonomy-lanes {
+    background:
+      linear-gradient(116deg, transparent 0 47%, color-mix(in oklab, var(--neon-cyan) 7%, transparent) 47.35% 47.7%, transparent 48.15% 100%),
+      linear-gradient(64deg, transparent 0 50.8%, color-mix(in oklab, var(--neon-blue) 5%, transparent) 51.05% 51.35%, transparent 51.75% 100%),
+      repeating-linear-gradient(116deg, transparent 0 5.3rem, color-mix(in oklab, var(--neon-cyan) 4%, transparent) 5.3rem 5.8rem, transparent 5.8rem 10.4rem);
+    background-size: 100% 100%, 100% 100%, 28rem 28rem;
+    transform-origin: center;
+    mask-image: radial-gradient(ellipse at center, black 20%, transparent 78%);
+    animation: autonomyLaneDrift 34s ease-in-out infinite;
+  }
+
+  .sensor-fusion-radar {
+    background:
+      radial-gradient(circle at 18% 74%, transparent 0 5.5rem, color-mix(in oklab, var(--neon-cyan) 10%, transparent) 5.55rem 5.65rem, transparent 5.7rem 11rem, color-mix(in oklab, var(--neon-blue) 7%, transparent) 11.05rem 11.16rem, transparent 11.2rem),
+      radial-gradient(circle at 82% 24%, transparent 0 4.8rem, color-mix(in oklab, var(--neon-red) 9%, transparent) 4.85rem 4.95rem, transparent 5rem 9.8rem, color-mix(in oklab, var(--neon-cyan) 7%, transparent) 9.85rem 9.95rem, transparent 10rem);
+    animation: sensorFusionPulse 18s ease-in-out infinite;
+  }
+
+  @keyframes autonomyLaneDrift {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.18; }
+    50% { transform: translate3d(0.8%, -0.45%, 0) scale(1.01); opacity: 0.28; }
+  }
+
+  @keyframes sensorFusionPulse {
+    0%, 100% { opacity: 0.28; transform: scale(1); }
+    50% { opacity: 0.58; transform: scale(1.025); }
+  }
+
+  @media (prefers-reduced-motion: reduce), (pointer: coarse) {
+    .pointer-glow { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .autonomy-lanes,
+    .sensor-fusion-radar { animation: none !important; }
+  }
+}
+
+@layer utilities {
+  html.dn-engine-open .autonomy-lanes,
+  html.dn-engine-open .sensor-fusion-radar,
+  html.dn-engine-open .pointer-glow {
+    animation: none !important;
+    display: none !important;
+  }
+}
+
+/* Stack Map skill images: real assets above each stack item card */
+.stack-card-image-wrap {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 1.25rem;
+  border: 1px solid color-mix(in oklab, var(--accent) 35%, transparent);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.14), rgba(200, 30, 70, 0.10));
+  box-shadow: 0 18px 55px -34px color-mix(in oklab, var(--accent) 75%, transparent);
+}
+.stack-card-image-wrap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(5, 8, 20, 0.36), rgba(5, 8, 20, 0.02) 55%);
+}
+.stack-card-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transition: transform 280ms ease, filter 280ms ease;
+}
+.skill-context-card:hover .stack-card-image {
+  transform: scale(1.035);
+  filter: brightness(1.07) saturate(1.08);
+}
+
+/* Purposeful background labels: the motion represents Danish's AI/autonomy workflow, not random decoration. */
+@layer utilities {
+  .bg-system-flow {
+    position: absolute;
+    max-width: min(42rem, 80vw);
+    border: 1px solid color-mix(in oklab, var(--neon-cyan) 28%, transparent);
+    background: linear-gradient(90deg, rgba(7, 16, 38, 0.02), rgba(34, 211, 238, 0.06), rgba(200, 30, 70, 0.045), rgba(7, 16, 38, 0.02));
+    border-radius: 999px;
+    padding: 0.45rem 1rem;
+    color: color-mix(in oklab, var(--foreground) 58%, var(--neon-cyan) 42%);
+    font-family: var(--font-tech);
+    font-size: clamp(0.58rem, 0.5rem + 0.28vw, 0.82rem);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 0.26;
+    filter: drop-shadow(0 0 18px rgba(34, 211, 238, 0.2));
+    animation: systemFlowPulse 12s ease-in-out infinite;
+  }
+  .bg-system-flow-top { left: 7vw; top: 17vh; }
+  .bg-system-flow-bottom { right: 6vw; bottom: 11vh; animation-delay: -5s; }
+  @keyframes systemFlowPulse {
+    0%, 100% { transform: translateY(0); opacity: 0.18; }
+    50% { transform: translateY(-8px); opacity: 0.34; }
+  }
+  @media (max-width: 768px) { .bg-system-flow { display: none; } }
+  @media (prefers-reduced-motion: reduce) { .bg-system-flow { animation: none !important; } }
+}
+
+
+/* Mission background vehicle: use a cleaner Cadillac Lyriq outline inspired by the EcoCAR mark.
+   The goal is to feel unmistakably automotive and polished rather than abstract. */
+@layer utilities {
+  .holographic-lyriq {
+    position: absolute;
+    left: 50%;
+    top: 57%;
+    width: min(82rem, 88vw);
+    height: min(28rem, 30vw);
+    transform: translate(-50%, -50%);
+    opacity: 0.26;
+    filter: drop-shadow(0 0 18px rgba(255,255,255,0.12)) drop-shadow(0 0 48px rgba(59, 130, 246, 0.16));
+    animation: lyriqCruise 18s ease-in-out infinite;
+    mix-blend-mode: screen;
+  }
+
+  .lyriq-car {
+    position: absolute;
+    inset: 0;
+    animation: lyriqBodyMotion 6s ease-in-out infinite;
+  }
+
+  .lyriq-outline-img {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 100%;
+    height: auto;
+    transform: translate(-50%, -50%);
+    object-fit: contain;
+    opacity: 0.98;
+    filter: drop-shadow(0 0 8px rgba(255,255,255,0.12)) drop-shadow(0 0 18px rgba(96, 165, 250, 0.16));
+    animation: lyriqGlowPulse 5.2s ease-in-out infinite;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+
+
+  .lyriq-wheel-overlay {
+    position: absolute;
+    border-radius: 999px;
+    border: 4px solid rgba(255, 255, 255, 0.94);
+    box-shadow:
+      0 0 0 1px rgba(96, 165, 250, 0.18),
+      0 0 12px rgba(255, 255, 255, 0.08),
+      0 0 22px rgba(96, 165, 250, 0.18);
+    transform: translate(-50%, -50%);
+    animation: lyriqWheelRoll 4.5s linear infinite;
+    opacity: 0.95;
+    overflow: hidden;
+  }
+
+  .lyriq-wheel-overlay::before {
+    content: "";
+    position: absolute;
+    inset: 17%;
+    border-radius: 999px;
+    border: 2px solid rgba(255, 255, 255, 0.54);
+    opacity: 0.78;
+  }
+
+  .lyriq-wheel-overlay::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 999px;
+    background: repeating-conic-gradient(
+      from 0deg,
+      rgba(255, 255, 255, 0.82) 0deg 3deg,
+      rgba(255, 255, 255, 0.04) 3deg 14deg
+    );
+    mask: radial-gradient(circle at center, transparent 0 83%, #000 85.5% 100%);
+    -webkit-mask: radial-gradient(circle at center, transparent 0 83%, #000 85.5% 100%);
+    pointer-events: none;
+  }
+
+  .lyriq-wheel-overlay-front {
+    left: 16.68%;
+    top: 69.1%;
+    width: 15.7%;
+    aspect-ratio: 1 / 1;
+  }
+
+  .lyriq-wheel-overlay-rear {
+    left: 81.93%;
+    top: 69.5%;
+    width: 14.1%;
+    aspect-ratio: 1 / 1;
+  }
+
+  .lyriq-wheel-overlay-spokes {
+    position: absolute;
+    inset: 12%;
+    border-radius: 999px;
+    background:
+      repeating-conic-gradient(
+        from 0deg,
+        rgba(255, 255, 255, 0.88) 0deg 3deg,
+        rgba(255, 255, 255, 0.12) 3deg 42deg,
+        rgba(255, 255, 255, 0.74) 42deg 45deg
+      );
+    mask: radial-gradient(circle at center, transparent 0 20%, #000 21% 68%, transparent 69% 100%);
+    -webkit-mask: radial-gradient(circle at center, transparent 0 20%, #000 21% 68%, transparent 69% 100%);
+    filter: drop-shadow(0 0 3px rgba(96, 165, 250, 0.22));
+  }
+
+  .lyriq-wheel-overlay-spokes::before,
+  .lyriq-wheel-overlay-spokes::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.92), transparent);
+    transform-origin: center;
+    margin-left: -1px;
+    margin-top: -50%;
+  }
+
+  .lyriq-wheel-overlay-spokes::after {
+    transform: rotate(90deg);
+  }
+
+  .lyriq-wheel-overlay-hub {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 20%;
+    height: 20%;
+    transform: translate(-50%, -50%);
+    border-radius: 999px;
+    background: radial-gradient(circle at 38% 38%, rgba(255,255,255,0.95), rgba(96,165,250,0.7) 52%, rgba(37,99,235,0.4) 100%);
+    box-shadow: 0 0 10px rgba(96,165,250,0.35);
+  }
+
+  .lyriq-underglow {
+    position: absolute;
+    left: 50%;
+    bottom: 4%;
+    width: 58%;
+    height: 10%;
+    transform: translateX(-50%);
+    border-radius: 999px;
+    background: radial-gradient(circle at center, rgba(96, 165, 250, 0.26), rgba(96, 165, 250, 0.07) 45%, transparent 72%);
+    filter: blur(18px);
+    animation: lyriqUnderGlow 4.5s ease-in-out infinite;
+  }
+
+  .lyriq-airflow {
+    position: absolute;
+    left: 2%;
+    height: 2px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, transparent, rgba(116, 240, 255, 0.3), rgba(255,255,255,0.18), transparent);
+    box-shadow: 0 0 12px rgba(96, 165, 250, 0.2);
+    opacity: 0.36;
+    animation: lyriqAirflow 2.8s ease-in-out infinite;
+  }
+
+  .lyriq-airflow-a { top: 40%; width: 38%; animation-delay: -0.6s; }
+  .lyriq-airflow-b { top: 53%; width: 46%; left: 5%; animation-delay: -2.1s; opacity: 0.24; }
+  .lyriq-airflow-c { top: 75%; width: 34%; left: 13%; animation-delay: -3.4s; opacity: 0.2; }
+
+  .lyriq-sensor-halo {
+    position: absolute;
+    border-radius: 999px;
+    border: 1px solid rgba(116, 240, 255, 0.2);
+    box-shadow: 0 0 28px rgba(96, 165, 250, 0.12), inset 0 0 18px rgba(116, 240, 255, 0.06);
+    opacity: 0;
+    animation: lyriqSensorHalo 5.8s ease-in-out infinite;
+  }
+
+  .lyriq-sensor-halo-front {
+    right: -2%;
+    top: 40%;
+    width: 17%;
+    aspect-ratio: 1 / 1;
+  }
+
+  .lyriq-sensor-halo-rear {
+    left: 9%;
+    top: 55%;
+    width: 14%;
+    aspect-ratio: 1 / 1;
+    animation-delay: -2.4s;
+  }
+
+  .lyriq-road-layer {
+    position: absolute;
+    inset: 0;
+    opacity: 0.42;
+  }
+
+  .lyriq-road {
+    position: absolute;
+    left: 8%;
+    right: 8%;
+    height: 1px;
+    border-top: 1.5px dashed rgba(148, 163, 184, 0.16);
+    animation: lyriqRoadFlow 3.6s linear infinite;
+  }
+
+  .lyriq-road-a { bottom: 12%; }
+  .lyriq-road-b { bottom: 6%; animation-delay: -3.5s; opacity: 0.58; }
+
+  @keyframes lyriqCruise {
+    0% { transform: translate(-50%, -50%) translate3d(-4.2%, 0, 0) scale(0.995); opacity: 0.18; }
+    12% { opacity: 0.25; }
+    50% { transform: translate(-50%, -50%) translate3d(4.2%, -0.28%, 0) scale(1.012); opacity: 0.30; }
+    88% { opacity: 0.25; }
+    100% { transform: translate(-50%, -50%) translate3d(-4.2%, 0, 0) scale(0.995); opacity: 0.18; }
+  }
+  @keyframes lyriqBodyMotion {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-2px); }
+  }
+  @keyframes lyriqGlowPulse {
+    0%, 100% { opacity: 0.92; }
+    50% { opacity: 1; }
+  }
+  @keyframes lyriqUnderGlow {
+    0%, 100% { opacity: 0.4; transform: translateX(-50%) scaleX(0.96); }
+    50% { opacity: 0.8; transform: translateX(-50%) scaleX(1.03); }
+  }
+  @keyframes lyriqAirflow {
+    0%, 100% { transform: translateX(3%); opacity: 0.10; }
+    50% { transform: translateX(-6%); opacity: 0.38; }
+  }
+  @keyframes lyriqSensorHalo {
+    0%, 100% { transform: scale(0.82); opacity: 0; }
+    35% { opacity: 0.28; }
+    65% { transform: scale(1.15); opacity: 0.08; }
+  }
+  @keyframes lyriqRoadFlow {
+    from { transform: translateX(0); border-top-color: rgba(148, 163, 184, 0.10); }
+    50% { border-top-color: rgba(96, 165, 250, 0.16); }
+    to { transform: translateX(-7%); border-top-color: rgba(148, 163, 184, 0.10); }
+  }
+
+  @keyframes lyriqWheelRoll {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to   { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+
+  html.dn-engine-open .holographic-lyriq, html.dn-engine-open .holographic-lyriq * { animation: none !important; }
+  @media (max-width: 768px) {
+    .holographic-lyriq { width: 140vw; height: 42vw; opacity: 0.13; top: 62%; }
+    .lyriq-underglow { width: 66%; }
+    .lyriq-wheel-overlay-front { width: 16.3%; }
+    .lyriq-wheel-overlay-rear { width: 14.7%; }
+  }
+  @media (prefers-reduced-motion: reduce) { .holographic-lyriq, .holographic-lyriq * { animation: none !important; } }
+}
+
+/* Stack Map skill images: real assets above each stack item card */
+.stack-card-image-wrap {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 1.25rem;
+  border: 1px solid color-mix(in oklab, var(--accent) 35%, transparent);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.14), rgba(200, 30, 70, 0.10));
+  box-shadow: 0 18px 55px -34px color-mix(in oklab, var(--accent) 75%, transparent);
+}
+.stack-card-image-wrap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(5, 8, 20, 0.36), rgba(5, 8, 20, 0.02) 55%);
+}
+.stack-card-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transition: transform 280ms ease, filter 280ms ease;
+}
+.skill-context-card:hover .stack-card-image {
+  transform: scale(1.035);
+  filter: brightness(1.07) saturate(1.08);
+}
+
+/* Purposeful background labels: the motion represents Danish's AI/autonomy workflow, not random decoration. */
+@layer utilities {
+  .bg-system-flow {
+    position: absolute;
+    max-width: min(42rem, 80vw);
+    border: 1px solid color-mix(in oklab, var(--neon-cyan) 28%, transparent);
+    background: linear-gradient(90deg, rgba(7, 16, 38, 0.02), rgba(34, 211, 238, 0.06), rgba(200, 30, 70, 0.045), rgba(7, 16, 38, 0.02));
+    border-radius: 999px;
+    padding: 0.45rem 1rem;
+    color: color-mix(in oklab, var(--foreground) 58%, var(--neon-cyan) 42%);
+    font-family: var(--font-tech);
+    font-size: clamp(0.58rem, 0.5rem + 0.28vw, 0.82rem);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 0.26;
+    filter: drop-shadow(0 0 18px rgba(34, 211, 238, 0.2));
+    animation: systemFlowPulse 12s ease-in-out infinite;
+  }
+  .bg-system-flow-top { left: 7vw; top: 17vh; }
+  .bg-system-flow-bottom { right: 6vw; bottom: 11vh; animation-delay: -5s; }
+  @keyframes systemFlowPulse {
+    0%, 100% { transform: translateY(0); opacity: 0.18; }
+    50% { transform: translateY(-8px); opacity: 0.34; }
+  }
+  @media (max-width: 768px) { .bg-system-flow { display: none; } }
+  @media (prefers-reduced-motion: reduce) { .bg-system-flow { animation: none !important; } }
+}
+
+/* Homepage story overhaul: a scrollable autonomy narrative rather than simple cards. */
+@layer utilities {
+  .motion-page {
+    position: relative;
+  }
+
+  .motion-page::before {
+    content: "";
+    position: fixed;
+    inset: 4.25rem 0 auto 0;
+    height: 0.22rem;
+    z-index: 45;
+    pointer-events: none;
+    background: linear-gradient(90deg, transparent, color-mix(in oklab, var(--neon-cyan) 50%, transparent), color-mix(in oklab, var(--neon-red) 42%, transparent), transparent);
+    transform-origin: left;
+    animation: pageIgnition 720ms ease-out both;
+    box-shadow: 0 0 26px color-mix(in oklab, var(--neon-cyan) 26%, transparent);
+  }
+
+  .motion-page::after {
+    content: "";
+    position: fixed;
+    left: 50%;
+    top: 4.3rem;
+    width: min(34rem, 76vw);
+    height: 1px;
+    z-index: 45;
+    pointer-events: none;
+    transform: translateX(-50%);
+    background: repeating-linear-gradient(90deg, transparent 0 1.2rem, color-mix(in oklab, var(--neon-cyan) 28%, transparent) 1.2rem 1.35rem, transparent 1.35rem 2.7rem);
+    animation: routeDash 1.1s linear both;
+    opacity: 0.7;
+  }
+
+  @keyframes pageIgnition {
+    0% { transform: scaleX(0); opacity: 0; }
+    45% { opacity: 1; }
+    100% { transform: scaleX(1); opacity: 0; }
+  }
+
+  @keyframes routeDash {
+    0% { clip-path: inset(0 100% 0 0); opacity: 0; }
+    30% { opacity: 0.72; }
+    100% { clip-path: inset(0 0 0 0); opacity: 0; }
+  }
+
+  .home-story-page {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .home-road-scan {
+    opacity: 0.35;
+    mask-image: linear-gradient(90deg, transparent, black 20% 80%, transparent);
+    background:
+      radial-gradient(ellipse at 50% 100%, color-mix(in oklab, var(--neon-cyan) 16%, transparent), transparent 58%),
+      repeating-linear-gradient(90deg, transparent 0 3.8rem, color-mix(in oklab, var(--neon-blue) 18%, transparent) 3.8rem 3.95rem, transparent 3.95rem 7.6rem);
+    animation: roadScanMove 6s linear infinite;
+  }
+
+  @keyframes roadScanMove {
+    to { background-position: 18rem 0, 18rem 0; }
+  }
+
+  .home-scroll-telemetry {
+    position: fixed;
+    left: max(0.7rem, calc((100vw - 88rem) / 2));
+    top: 7.5rem;
+    bottom: 6rem;
+    z-index: 30;
+    width: 1.35rem;
+    pointer-events: none;
+    opacity: 0.52;
+  }
+
+  .telemetry-rail {
+    position: absolute;
+    left: 0.62rem;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    border-radius: 999px;
+    background:
+      linear-gradient(to bottom, transparent, color-mix(in oklab, var(--neon-cyan) 50%, transparent), color-mix(in oklab, var(--neon-red) 42%, transparent), transparent),
+      repeating-linear-gradient(to bottom, transparent 0 1.2rem, rgba(255,255,255,0.18) 1.2rem 1.28rem, transparent 1.28rem 2.4rem);
+    box-shadow: 0 0 22px color-mix(in oklab, var(--neon-cyan) 24%, transparent);
+  }
+
+  .telemetry-car {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    border: 1px solid color-mix(in oklab, var(--neon-cyan) 70%, transparent);
+    background: color-mix(in oklab, var(--background) 75%, var(--neon-blue) 25%);
+    color: var(--neon-cyan);
+    font-size: 0.48rem;
+    box-shadow: 0 0 18px color-mix(in oklab, var(--neon-cyan) 45%, transparent);
+    animation: telemetryDrive 1s linear both;
+    animation-timeline: scroll(root);
+  }
+
+  .telemetry-label {
+    position: absolute;
+    left: 1.8rem;
+    top: 0.05rem;
+    font-family: var(--font-tech);
+    font-size: 0.55rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: color-mix(in oklab, var(--neon-cyan) 70%, transparent);
+    writing-mode: vertical-rl;
+  }
+
+  @keyframes telemetryDrive {
+    from { transform: translateY(0); }
+    to { transform: translateY(calc(100vh - 14rem)); }
+  }
+
+  .home-cockpit-card {
+    position: relative;
+  }
+
+  .home-cockpit-card::after {
+    content: "";
+    position: absolute;
+    inset: -0.35rem;
+    border-radius: inherit;
+    background: conic-gradient(from 180deg, transparent, color-mix(in oklab, var(--neon-cyan) 26%, transparent), transparent, color-mix(in oklab, var(--neon-red) 22%, transparent), transparent);
+    filter: blur(16px);
+    opacity: 0.62;
+    z-index: -1;
+    animation: cockpitAura 8s linear infinite;
+  }
+
+  @keyframes cockpitAura { to { transform: rotate(360deg); } }
+
+  .home-telemetry-panel {
+    box-shadow: 0 26px 90px -62px color-mix(in oklab, var(--neon-cyan) 80%, transparent);
+  }
+
+  .home-telemetry-grid {
+    background:
+      linear-gradient(90deg, color-mix(in oklab, var(--neon-blue) 10%, transparent) 1px, transparent 1px),
+      linear-gradient(color-mix(in oklab, var(--neon-blue) 10%, transparent) 1px, transparent 1px),
+      radial-gradient(circle at 18% 78%, color-mix(in oklab, var(--neon-cyan) 16%, transparent), transparent 24%),
+      radial-gradient(circle at 84% 12%, color-mix(in oklab, var(--neon-red) 12%, transparent), transparent 28%);
+    background-size: 4rem 4rem, 4rem 4rem, 100% 100%, 100% 100%;
+    opacity: 0.48;
+    animation: telemetryGridDrift 18s linear infinite;
+  }
+
+  @keyframes telemetryGridDrift { to { background-position: 4rem 0, 0 4rem, 0 0, 0 0; } }
+
+  .home-signal-card {
+    min-height: 15rem;
+    backdrop-filter: blur(18px);
+  }
+
+  .home-chapter-card {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .home-chapter-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(110deg, transparent 0 42%, rgba(255,255,255,0.08) 50%, transparent 58% 100%);
+    transform: translateX(-120%);
+    animation: chapterSweep 9s ease-in-out infinite;
+  }
+
+  @keyframes chapterSweep {
+    0%, 42% { transform: translateX(-120%); opacity: 0; }
+    54% { opacity: 0.9; }
+    70%, 100% { transform: translateX(120%); opacity: 0; }
+  }
+
+  .home-chapter-visual {
+    min-height: 15rem;
+    border-radius: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid color-mix(in oklab, var(--neon-cyan) 26%, transparent);
+    background:
+      radial-gradient(circle at 50% 50%, color-mix(in oklab, var(--neon-cyan) 18%, transparent), transparent 42%),
+      linear-gradient(135deg, rgba(8,13,34,0.92), rgba(14,10,28,0.78));
+  }
+
+  .home-visual-orb {
+    position: absolute;
+    inset: 24% 30%;
+    border-radius: 999px;
+    border: 1px solid color-mix(in oklab, var(--neon-cyan) 66%, transparent);
+    box-shadow: 0 0 32px color-mix(in oklab, var(--neon-cyan) 35%, transparent), inset 0 0 24px rgba(255,255,255,0.06);
+    animation: visualOrbPulse 4s ease-in-out infinite;
+  }
+
+  .home-visual-line {
+    position: absolute;
+    left: 12%;
+    right: 12%;
+    top: 50%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--neon-cyan), var(--neon-red), transparent);
+    box-shadow: 0 0 16px color-mix(in oklab, var(--neon-cyan) 42%, transparent);
+    animation: visualLineDrive 3.8s ease-in-out infinite;
+  }
+
+  .home-chapter-radar .home-visual-orb::before,
+  .home-chapter-autonomy .home-visual-orb::before {
+    content: "";
+    position: absolute;
+    inset: -38%;
+    border-radius: inherit;
+    border: 1px dashed color-mix(in oklab, var(--neon-cyan) 40%, transparent);
+    animation: spin 9s linear infinite;
+  }
+
+  .home-chapter-brake .home-visual-orb {
+    border-radius: 1.2rem;
+    transform: rotate(45deg);
+  }
+
+  .home-chapter-diagnostics .home-visual-line {
+    height: 7rem;
+    top: 26%;
+    background: repeating-linear-gradient(90deg, transparent 0 1rem, color-mix(in oklab, var(--neon-cyan) 45%, transparent) 1rem 1.12rem, transparent 1.12rem 2rem);
+  }
+
+  .home-chapter-linux .home-visual-orb::after {
+    content: "$_";
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-family: var(--font-mono);
+    font-size: clamp(2rem, 6vw, 4.5rem);
+    color: var(--neon-cyan);
+  }
+
+  @keyframes visualOrbPulse { 0%,100% { transform: scale(1); opacity: 0.62; } 50% { transform: scale(1.08); opacity: 1; } }
+  @keyframes visualLineDrive { 0%,100% { transform: translateX(-8%); opacity: 0.48; } 50% { transform: translateX(8%); opacity: 0.94; } }
+
+  .home-vehicle-system {
+    min-height: 38rem;
+  }
+
+  .home-vehicle-outline {
+    position: absolute;
+    inset: 5rem -6rem auto -6rem;
+    height: 18rem;
+    opacity: 0.15;
+    background:
+      radial-gradient(ellipse at 50% 80%, color-mix(in oklab, var(--neon-cyan) 26%, transparent), transparent 46%),
+      linear-gradient(12deg, transparent 15%, color-mix(in oklab, var(--neon-cyan) 32%, transparent) 15.2% 15.8%, transparent 16% 100%),
+      linear-gradient(170deg, transparent 0 48%, color-mix(in oklab, var(--neon-red) 26%, transparent) 48.2% 48.8%, transparent 49% 100%);
+    mask-image: radial-gradient(ellipse at center, black 40%, transparent 75%);
+    animation: vehicleOutlineFloat 10s ease-in-out infinite;
+  }
+
+  @keyframes vehicleOutlineFloat { 0%,100% { transform: translateX(-1.5%); } 50% { transform: translateX(1.5%); } }
+
+  .home-metaphor-card {
+    min-height: 21rem;
+  }
+
+  .build-loop-bg {
+    background:
+      radial-gradient(circle at 18% 20%, color-mix(in oklab, var(--neon-cyan) 14%, transparent), transparent 26%),
+      radial-gradient(circle at 82% 72%, color-mix(in oklab, var(--neon-red) 12%, transparent), transparent 28%);
+    opacity: 0.8;
+  }
+
+  .home-build-loop {
+    position: relative;
+    display: grid;
+    min-height: 29rem;
+    place-items: center;
+  }
+
+  .home-build-loop::before {
+    content: "";
+    position: absolute;
+    width: min(24rem, 78vw);
+    height: min(24rem, 78vw);
+    border-radius: 999px;
+    border: 1px dashed color-mix(in oklab, var(--neon-cyan) 38%, transparent);
+    box-shadow: inset 0 0 42px rgba(255,255,255,0.035), 0 0 44px color-mix(in oklab, var(--neon-blue) 16%, transparent);
+    animation: spin 24s linear infinite;
+  }
+
+  .home-build-node {
+    position: absolute;
+    width: min(12rem, 42vw);
+    min-height: 8rem;
+    border-radius: 1.25rem;
+    border: 1px solid color-mix(in oklab, var(--neon-cyan) 28%, transparent);
+    background: color-mix(in oklab, var(--background) 78%, transparent);
+    padding: 1rem;
+    backdrop-filter: blur(14px);
+    transform:
+      rotate(calc(var(--node-index) * 72deg))
+      translateY(-10.5rem)
+      rotate(calc(var(--node-index) * -72deg));
+    animation: buildNodeBreath 5s ease-in-out infinite;
+    animation-delay: calc(var(--node-index) * -0.45s);
+  }
+
+  @keyframes buildNodeBreath { 0%,100% { filter: drop-shadow(0 0 8px transparent); } 50% { filter: drop-shadow(0 0 14px color-mix(in oklab, var(--neon-cyan) 28%, transparent)); } }
+
+  @media (max-width: 900px) {
+    .home-scroll-telemetry { display: none; }
+    .home-build-loop { display: flex; flex-direction: column; gap: 1rem; min-height: auto; align-items: stretch; }
+    .home-build-loop::before { display: none; }
+    .home-build-node { position: relative; width: 100%; transform: none; }
+    .home-vehicle-system { min-height: auto; }
+  }
+}
+
+/* Additional Lyriq/EcoCAR line-art detail: more substantial crossover profile with Cadillac-Lyriq-inspired light signatures. */
+@layer utilities {
+  .lyriq-vertical-led,
+  .lyriq-rear-blade,
+  .lyriq-grille-line,
+  .lyriq-door-line {
+    fill: none;
+    stroke: url(#lyriqGlow);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .lyriq-vertical-led,
+  .lyriq-rear-blade {
+    stroke-width: 4.4;
+    opacity: 0.74;
+    animation: lyriqLightSweep 3.8s ease-in-out infinite;
+  }
+
+  .lyriq-grille-line,
+  .lyriq-door-line {
+    stroke-width: 2.2;
+    opacity: 0.46;
+  }
+
+  .lyriq-fill {
+    opacity: 0.28;
+  }
+
+  .holographic-lyriq {
+    top: 57%;
+    width: min(82rem, 88vw);
+    opacity: 0.25;
+  }
+}
+
+/* Quick page-change animation: route scan + moving vehicle cue. */
+@layer utilities {
+  .route-transition-hud {
+    position: fixed;
+    inset: 4.35rem 0 auto 0;
+    height: 2.2rem;
+    z-index: 46;
+    pointer-events: none;
+    overflow: hidden;
+    opacity: 0;
+    animation: routeHudFade 820ms ease-out both;
+  }
+
+  .route-transition-scan {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0.95rem;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, color-mix(in oklab, var(--neon-cyan) 54%, transparent), color-mix(in oklab, var(--neon-red) 44%, transparent), transparent);
+    box-shadow: 0 0 18px color-mix(in oklab, var(--neon-cyan) 36%, transparent);
+    transform-origin: left;
+    animation: routeScanBuild 780ms ease-out both;
+  }
+
+  .route-transition-car {
+    position: absolute;
+    top: 0.38rem;
+    left: -4rem;
+    width: 3rem;
+    height: 0.9rem;
+    border-top: 2px solid color-mix(in oklab, var(--neon-cyan) 78%, transparent);
+    border-bottom: 2px solid color-mix(in oklab, var(--neon-cyan) 45%, transparent);
+    border-radius: 999px 999px 0.4rem 0.4rem;
+    filter: drop-shadow(0 0 12px color-mix(in oklab, var(--neon-cyan) 50%, transparent));
+    animation: routeCarDrive 840ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .route-transition-car::before,
+  .route-transition-car::after {
+    content: "";
+    position: absolute;
+    bottom: -0.42rem;
+    width: 0.42rem;
+    height: 0.42rem;
+    border-radius: 999px;
+    border: 1px solid color-mix(in oklab, var(--neon-cyan) 70%, transparent);
+    background: var(--background);
+  }
+
+  .route-transition-car::before { left: 0.45rem; }
+  .route-transition-car::after { right: 0.45rem; }
+
+  @keyframes routeHudFade {
+    0% { opacity: 0; }
+    18% { opacity: 0.9; }
+    100% { opacity: 0; }
+  }
+
+  @keyframes routeScanBuild {
+    0% { transform: scaleX(0); }
+    100% { transform: scaleX(1); }
+  }
+
+  @keyframes routeCarDrive {
+    0% { transform: translateX(0); opacity: 0; }
+    12% { opacity: 0.88; }
+    100% { transform: translateX(calc(100vw + 7rem)); opacity: 0; }
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Global scrollbar — Journey Progress Rail                                    */
+/* Signal → Collapse → Return. The thumb is the cursor on your story.         */
+/* -------------------------------------------------------------------------- */
+
+@layer base {
+  html {
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(34, 211, 238, 0.85) rgba(3, 8, 24, 0.97);
+  }
+
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar {
+    width: 14px;
+    height: 14px;
+  }
+
+  /* Track: the full journey — dark path from origin to completion */
+  html::-webkit-scrollbar-track,
+  body::-webkit-scrollbar-track {
+    background-color: rgba(3, 8, 24, 0.98);
+    background-image:
+      /* Fine tick marks every 8px — engineering grid */
+      repeating-linear-gradient(
+        to bottom,
+        transparent 0px, transparent 7px,
+        rgba(34, 211, 238, 0.05) 7px, rgba(34, 211, 238, 0.05) 8px
+      ),
+      /* Major phase markers every 32px */
+      repeating-linear-gradient(
+        to bottom,
+        transparent 0px, transparent 31px,
+        rgba(96, 165, 250, 0.14) 31px, rgba(96, 165, 250, 0.14) 32px
+      ),
+      /* Journey gradient: cool signal at top, warm achievement at bottom */
+      linear-gradient(
+        to bottom,
+        rgba(34, 211, 238, 0.08) 0%,
+        rgba(96, 165, 250, 0.05) 30%,
+        rgba(167, 139, 250, 0.07) 55%,
+        rgba(52, 211, 153, 0.07) 78%,
+        rgba(251, 191, 36, 0.10) 100%
+      );
+    border-left: 1.5px solid rgba(34, 211, 238, 0.10);
+  }
+
+  /* Thumb: the scanner cursor — your position in the journey */
+  html::-webkit-scrollbar-thumb,
+  body::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    border: 2px solid rgba(3, 8, 24, 0.98);
+    background-clip: padding-box;
+    background-image: linear-gradient(
+      180deg,
+      #22d3ee 0%,      /* Signal: curiosity — cyan */
+      #60a5fa 28%,     /* Foundation: blue */
+      #a78bfa 54%,     /* Collapse: violet */
+      #34d399 78%,     /* Recovery: emerald */
+      #fbbf24 100%     /* The Return: amber achievement */
+    );
+    background-size: 100% 260%;
+    animation: scrollbarJourneyFlow 6s ease-in-out infinite;
+    box-shadow:
+      0 0 10px rgba(34, 211, 238, 0.75),
+      0 0 22px rgba(34, 211, 238, 0.32),
+      0 0 50px rgba(96, 165, 250, 0.16);
+  }
+
+  html::-webkit-scrollbar-thumb:hover,
+  body::-webkit-scrollbar-thumb:hover {
+    border-width: 1px;
+    box-shadow:
+      0 0 14px rgba(34, 211, 238, 0.95),
+      0 0 32px rgba(34, 211, 238, 0.48),
+      0 0 65px rgba(167, 139, 250, 0.28);
+  }
+
+  html::-webkit-scrollbar-thumb:active,
+  body::-webkit-scrollbar-thumb:active {
+    border-width: 1px;
+    background-image: linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #22d3ee 18%,
+      #60a5fa 42%,
+      #34d399 70%,
+      #fbbf24 100%
+    );
+    box-shadow:
+      0 0 18px rgba(34, 211, 238, 1.0),
+      0 0 44px rgba(34, 211, 238, 0.52),
+      0 0 88px rgba(251, 191, 36, 0.32);
+  }
+}
+
+@keyframes scrollbarJourneyFlow {
+  0%   { background-position: 0% 0%; }
+  50%  { background-position: 0% 100%; }
+  100% { background-position: 0% 0%; }
+}
+
+@layer utilities {
+  .home-road-scan {
+    opacity: 0.32;
+    mask-image: linear-gradient(90deg, transparent, black 14% 86%, transparent);
+    background:
+      radial-gradient(ellipse at 50% 100%, color-mix(in oklab, var(--neon-cyan) 14%, transparent), transparent 58%),
+      repeating-linear-gradient(90deg, transparent 0 3.8rem, color-mix(in oklab, var(--neon-blue) 16%, transparent) 3.8rem 3.95rem, transparent 3.95rem 7.6rem),
+      linear-gradient(90deg, transparent, color-mix(in oklab, var(--neon-red) 16%, transparent), transparent);
+    animation: roadScanMove 7.2s linear infinite;
+  }
+
+  .home-signal-card {
+    min-height: 16rem;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 24px 70px -54px color-mix(in oklab, var(--neon-cyan) 65%, transparent);
+  }
+
+  .home-chapter-card {
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 30px 90px -65px rgba(6, 20, 56, 0.8);
+  }
+
+  .home-chapter-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(125deg, transparent 0 44%, rgba(255,255,255,0.06) 50%, transparent 56% 100%);
+    transform: translateX(-120%);
+    opacity: 0;
+    animation: chapterSweep 10s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  .home-chapter-visual {
+    min-height: 16rem;
+    border-radius: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    border: 1px solid color-mix(in oklab, var(--neon-cyan) 24%, transparent);
+    background:
+      radial-gradient(circle at 50% 50%, color-mix(in oklab, var(--neon-cyan) 12%, transparent), transparent 40%),
+      linear-gradient(135deg, rgba(8,13,34,0.96), rgba(11,10,30,0.82));
+  }
+
+  .home-visual-grid,
+  .home-visual-track,
+  .home-visual-orb,
+  .home-visual-line {
+    position: absolute;
+  }
+
+  .home-visual-grid {
+    inset: 0;
+    background:
+      linear-gradient(90deg, color-mix(in oklab, var(--neon-blue) 10%, transparent) 1px, transparent 1px),
+      linear-gradient(color-mix(in oklab, var(--neon-blue) 10%, transparent) 1px, transparent 1px);
+    background-size: 2.8rem 2.8rem;
+    opacity: 0.44;
+    animation: telemetryGridDrift 18s linear infinite;
+  }
+
+  .home-visual-track {
+    inset: 14% 10%;
+    border-radius: 1.25rem;
+  }
+
+  .home-visual-orb {
+    border-radius: 999px;
+    box-shadow: 0 0 28px color-mix(in oklab, var(--neon-cyan) 28%, transparent), inset 0 0 26px rgba(255,255,255,0.05);
+  }
+
+  .home-visual-line {
+    left: 12%;
+    right: 12%;
+    top: 50%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--neon-cyan), var(--neon-red), transparent);
+    box-shadow: 0 0 14px color-mix(in oklab, var(--neon-cyan) 36%, transparent);
+  }
+
+  .home-chapter-radar .home-visual-track {
+    inset: 17% 12%;
+    border: 1px solid color-mix(in oklab, var(--neon-cyan) 22%, transparent);
+    border-bottom-width: 2px;
+    border-radius: 999px;
+  }
+
+  .home-chapter-radar .home-visual-track::before,
+  .home-chapter-radar .home-visual-track::after {
+    content: "";
+    position: absolute;
+    inset: 16%;
+    border-radius: inherit;
+    border: 1px dashed color-mix(in oklab, var(--neon-cyan) 28%, transparent);
+  }
+
+  .home-chapter-radar .home-visual-track::after { inset: 31%; opacity: 0.85; }
+
+  .home-chapter-radar .home-visual-orb {
+    inset: 38% auto auto 20%;
+    width: 3.4rem;
+    height: 3.4rem;
+    border: 1px solid color-mix(in oklab, var(--neon-cyan) 72%, transparent);
+    background: radial-gradient(circle at 50% 50%, rgba(116,240,255,0.34), transparent 68%);
+  }
+
+  .home-chapter-radar .home-visual-line {
+    left: 23%;
+    right: 18%;
+    top: 48%;
+    transform-origin: left center;
+    animation: radarSweep 4.5s ease-in-out infinite;
+  }
+
+  .home-chapter-foundation .home-visual-track {
+    inset: 16% 14%;
+    background:
+      linear-gradient(180deg, transparent 0 16%, color-mix(in oklab, var(--neon-blue) 16%, transparent) 16% 18%, transparent 18% 36%, color-mix(in oklab, var(--neon-blue) 16%, transparent) 36% 38%, transparent 38% 56%, color-mix(in oklab, var(--neon-blue) 16%, transparent) 56% 58%, transparent 58% 100%),
+      linear-gradient(90deg, transparent 0 8%, color-mix(in oklab, var(--neon-cyan) 20%, transparent) 8% 10%, transparent 10% 22%, color-mix(in oklab, var(--neon-cyan) 20%, transparent) 22% 24%, transparent 24% 100%);
+    border: 1px solid color-mix(in oklab, var(--neon-cyan) 18%, transparent);
+  }
+
+  .home-chapter-foundation .home-visual-track::before {
+    content: "";
+    position: absolute;
+    left: 16%;
+    right: 16%;
+    top: 56%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, color-mix(in oklab, var(--neon-cyan) 78%, transparent), color-mix(in oklab, var(--neon-red) 65%, transparent), transparent);
+    box-shadow: 0 0 18px color-mix(in oklab, var(--neon-cyan) 26%, transparent);
+    animation: routePulse 4.2s linear infinite;
+  }
+
+  .home-chapter-foundation .home-visual-orb {
+    inset: auto 16% 20% auto;
+    width: 3.2rem;
+    height: 3.2rem;
+    border: 1px solid color-mix(in oklab, var(--neon-cyan) 46%, transparent);
+    background: radial-gradient(circle at 50% 50%, rgba(116,240,255,0.28), transparent 68%);
+  }
+
+  .home-chapter-foundation .home-visual-line {
+    top: auto;
+    bottom: 24%;
+    left: 18%;
+    right: 28%;
+    animation: visualLineDrive 4.6s ease-in-out infinite;
+  }
+
+  .home-chapter-impact .home-visual-track {
+    inset: 16% 12%;
+  }
+
+  .home-chapter-impact .home-visual-track::before {
+    content: "";
+    position: absolute;
+    inset: 20% 18%;
+    border-radius: 999px;
+    border: 1px solid color-mix(in oklab, var(--neon-red) 30%, transparent);
+    box-shadow: 0 0 26px color-mix(in oklab, var(--neon-red) 14%, transparent);
+    animation: impactPulse 4.2s ease-in-out infinite;
+  }
+
+  .home-chapter-impact .home-visual-track::after {
+    content: "";
+    position: absolute;
+    left: 16%;
+    right: 16%;
+    top: 50%;
+    height: 1px;
+    background: color-mix(in oklab, var(--neon-red) 48%, transparent);
+    box-shadow: 0 0 12px color-mix(in oklab, var(--neon-red) 24%, transparent);
+  }
+
+  .home-chapter-impact .home-visual-orb {
+    inset: 38% auto auto 42%;
+    width: 4.2rem;
+    height: 4.2rem;
+    border: 1px solid color-mix(in oklab, var(--neon-red) 55%, transparent);
+    background: radial-gradient(circle at 50% 50%, rgba(200,30,70,0.36), transparent 66%);
+  }
+
+  .home-chapter-impact .home-visual-line {
+    left: 15%;
+    right: 15%;
+    top: 50%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent 0 8%, var(--neon-cyan) 8% 26%, transparent 26% 31%, var(--neon-red) 31% 46%, transparent 46% 54%, var(--neon-cyan) 54% 72%, transparent 72% 100%);
+    animation: heartbeatLine 3.6s ease-in-out infinite;
+  }
+
+  .home-chapter-recovery .home-visual-track {
+    inset: 18% 14%;
+    border-left: 2px solid color-mix(in oklab, var(--neon-cyan) 22%, transparent);
+    border-bottom: 2px solid color-mix(in oklab, var(--neon-cyan) 22%, transparent);
+    clip-path: polygon(0 0, 18% 0, 18% 68%, 45% 68%, 45% 44%, 72% 44%, 72% 22%, 100% 22%, 100% 100%, 0 100%);
+    background: linear-gradient(135deg, rgba(52,211,255,0.05), rgba(59,130,246,0.03));
+  }
+
+  .home-chapter-recovery .home-visual-track::before {
+    content: "";
+    position: absolute;
+    left: 6%;
+    right: 14%;
+    bottom: 18%;
+    top: 18%;
+    background: linear-gradient(135deg, transparent 0 20%, color-mix(in oklab, var(--neon-cyan) 50%, transparent) 20% 22%, transparent 22% 44%, color-mix(in oklab, var(--neon-cyan) 50%, transparent) 44% 46%, transparent 46% 66%, color-mix(in oklab, var(--neon-red) 48%, transparent) 66% 68%, transparent 68% 100%);
+    opacity: 0.9;
+  }
+
+  .home-chapter-recovery .home-visual-orb {
+    width: 2.75rem;
+    height: 2.75rem;
+    right: 14%;
+    top: 18%;
+    border: 1px solid color-mix(in oklab, var(--neon-cyan) 72%, transparent);
+    background: radial-gradient(circle at 50% 50%, rgba(116,240,255,0.36), transparent 66%);
+    animation: checkpointGlow 4.1s ease-in-out infinite;
+  }
+
+  .home-chapter-recovery .home-visual-line {
+    left: 10%;
+    right: 18%;
+    top: auto;
+    bottom: 20%;
+    transform: rotate(-18deg);
+    transform-origin: left center;
+    animation: recoveryClimb 4.2s ease-in-out infinite;
+  }
+
+  .home-chapter-autonomy .home-visual-track {
+    inset: 16% 12%;
+  }
+
+  .home-chapter-autonomy .home-visual-track::before,
+  .home-chapter-autonomy .home-visual-track::after {
+    content: "";
+    position: absolute;
+    left: 14%;
+    right: 20%;
+    top: 50%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, color-mix(in oklab, var(--neon-cyan) 60%, transparent), color-mix(in oklab, var(--neon-blue) 60%, transparent), transparent);
+  }
+
+  .home-chapter-autonomy .home-visual-track::before {
+    transform: translateY(-2.7rem) rotate(-16deg);
+    transform-origin: left center;
+  }
+
+  .home-chapter-autonomy .home-visual-track::after {
+    transform: translateY(2.7rem) rotate(14deg);
+    transform-origin: left center;
+  }
+
+  .home-chapter-autonomy .home-visual-orb {
+    inset: 38% auto auto 18%;
+    width: 3.4rem;
+    height: 3.4rem;
+    border: 1px solid color-mix(in oklab, var(--neon-cyan) 72%, transparent);
+    background: radial-gradient(circle at 50% 50%, rgba(116,240,255,0.34), transparent 68%);
+  }
+
+  .home-chapter-autonomy .home-visual-orb::before,
+  .home-chapter-autonomy .home-visual-orb::after {
+    content: "";
+    position: absolute;
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 999px;
+    border: 1px solid color-mix(in oklab, var(--neon-cyan) 72%, transparent);
+    background: rgba(7, 16, 38, 0.9);
+    box-shadow: 0 0 12px color-mix(in oklab, var(--neon-cyan) 28%, transparent);
+  }
+
+  .home-chapter-autonomy .home-visual-orb::before { right: -10rem; top: -3rem; }
+  .home-chapter-autonomy .home-visual-orb::after { right: -10rem; bottom: -3rem; }
+
+  .home-chapter-autonomy .home-visual-line {
+    left: 24%;
+    right: 16%;
+    top: 50%;
+    animation: autonomyRoute 4.2s ease-in-out infinite;
+  }
+
+  .home-route-story {
+    position: relative;
+  }
+
+  .home-route-story::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 14% 22%, color-mix(in oklab, var(--neon-cyan) 10%, transparent), transparent 26%),
+      radial-gradient(circle at 86% 78%, color-mix(in oklab, var(--neon-red) 10%, transparent), transparent 28%);
+    opacity: 0.8;
+    pointer-events: none;
+  }
+
+  .home-road-timeline {
+    position: relative;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .home-road-stop {
+    position: relative;
+    background: var(--gradient-card);
+    backdrop-filter: blur(16px);
+  }
+
+  .home-road-marker {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 999px;
+    border: 1px solid color-mix(in oklab, var(--neon-cyan) 42%, transparent);
+    background: linear-gradient(135deg, rgba(7,16,38,0.96), rgba(15,12,34,0.94));
+    color: var(--neon-cyan);
+    box-shadow: 0 0 0 6px rgba(6, 12, 28, 0.56), 0 0 22px color-mix(in oklab, var(--neon-cyan) 22%, transparent);
+  }
+
+  .home-vehicle-system {
+    min-height: 34rem;
+  }
+
+  .home-vehicle-outline {
+    position: absolute;
+    inset: auto 3rem 3rem 3rem;
+    height: 11rem;
+    opacity: 0.18;
+    background:
+      radial-gradient(ellipse at 50% 100%, color-mix(in oklab, var(--neon-cyan) 16%, transparent), transparent 62%),
+      linear-gradient(90deg, transparent 0 10%, color-mix(in oklab, var(--neon-cyan) 20%, transparent) 10% 10.4%, transparent 10.4% 48%, color-mix(in oklab, var(--neon-red) 16%, transparent) 48% 48.5%, transparent 48.5% 100%),
+      linear-gradient(180deg, transparent 0 38%, color-mix(in oklab, var(--neon-blue) 14%, transparent) 38% 39%, transparent 39% 100%);
+    border-radius: 2rem;
+    mask-image: linear-gradient(180deg, transparent, black 18% 82%, transparent);
+    animation: vehicleOutlineFloat 12s ease-in-out infinite;
+  }
+
+  .home-metaphor-card {
+    min-height: 22rem;
+  }
+
+  .home-metaphor-image {
+    height: 8.5rem;
+    margin: -0.45rem -0.45rem 1rem;
+    overflow: hidden;
+    border-radius: 1rem;
+    border: 1px solid color-mix(in oklab, var(--neon-cyan) 18%, transparent);
+    background: linear-gradient(135deg, rgba(8,13,34,0.96), rgba(11,10,30,0.82));
+  }
+
+  .home-metaphor-image img {
+    display: block;
+    filter: saturate(1.08) contrast(1.04);
+  }
+
+  .home-future-panel {
+    box-shadow: 0 26px 80px -52px color-mix(in oklab, var(--neon-cyan) 76%, transparent);
+  }
+
+  @keyframes radarSweep {
+    0%, 100% { transform: rotate(-26deg); opacity: 0.5; }
+    50% { transform: rotate(26deg); opacity: 0.98; }
+  }
+
+  @keyframes routePulse { to { transform: translateX(8%); } }
+
+  @keyframes impactPulse {
+    0%, 100% { transform: scale(0.92); opacity: 0.28; }
+    45% { transform: scale(1.02); opacity: 0.72; }
+    70% { transform: scale(1.12); opacity: 0.18; }
+  }
+
+  @keyframes heartbeatLine {
+    0%, 100% { transform: scaleX(0.94); opacity: 0.7; }
+    50% { transform: scaleX(1.02); opacity: 1; }
+  }
+
+  @keyframes checkpointGlow {
+    0%, 100% { transform: scale(1); opacity: 0.72; }
+    50% { transform: scale(1.08); opacity: 1; }
+  }
+
+  @keyframes recoveryClimb {
+    0%, 100% { transform: rotate(-18deg) translateX(-4%); opacity: 0.56; }
+    50% { transform: rotate(-18deg) translateX(4%); opacity: 1; }
+  }
+
+  @keyframes autonomyRoute {
+    0%, 100% { transform: translateX(-3%); opacity: 0.62; }
+    50% { transform: translateX(5%); opacity: 1; }
+  }
+
+  @media (max-width: 1180px) {
+    .home-road-timeline {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .home-road-timeline::before {
+      display: none;
+    }
+
+    .home-road-stop:nth-child(even) {
+      margin-top: 0;
+    }
+
+    .home-road-marker::after,
+    .home-road-stop:nth-child(even) .home-road-marker::after {
+      display: none;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .home-scroll-telemetry { display: none; }
+    .home-road-timeline { grid-template-columns: 1fr; }
+    .home-vehicle-system { min-height: auto; }
+  }
+}
+
+@layer utilities {
+  .lyriq-vertical-led,
+  .lyriq-rear-blade,
+  .lyriq-grille-line,
+  .lyriq-door-line {
+    fill: none;
+    stroke: url(#lyriqGlow);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .lyriq-vertical-led,
+  .lyriq-rear-blade { stroke-width: 3.2; opacity: 0.62; }
+  .lyriq-grille-line,
+  .lyriq-door-line { stroke-width: 2.2; opacity: 0.42; }
+}
+
+
+/* -------------------------------------------------------------------------- */
+/* Readability + responsive polish pass                                       */
+/* -------------------------------------------------------------------------- */
+@layer base {
+  html {
+    font-size: clamp(16px, 0.28vw + 15px, 18px);
+  }
+
+  body {
+    font-size: 1rem;
+    line-height: 1.75;
+    text-rendering: geometricPrecision;
+  }
+
+  p, li {
+    line-height: 1.8;
+  }
+}
+
+@layer utilities {
+  .text-xs { font-size: clamp(0.82rem, 0.78rem + 0.1vw, 0.92rem) !important; line-height: 1.45rem !important; }
+  .text-sm { font-size: clamp(0.96rem, 0.9rem + 0.14vw, 1.08rem) !important; line-height: 1.75rem !important; }
+  .text-base { font-size: clamp(1.03rem, 0.98rem + 0.16vw, 1.16rem) !important; line-height: 1.85rem !important; }
+  .text-lg { font-size: clamp(1.12rem, 1.04rem + 0.28vw, 1.32rem) !important; line-height: 2.05rem !important; }
+  .text-xl { font-size: clamp(1.22rem, 1.08rem + 0.45vw, 1.55rem) !important; line-height: 2.15rem !important; }
+
+  .home-story-page {
+    font-size: 1rem;
+  }
+
+  .home-story-page .home-hero {
+    min-height: calc(100svh - 4rem);
+    align-content: center;
+  }
+
+  .home-story-page .home-hero h1 {
+    font-size: clamp(2.55rem, 4.8vw, 4.75rem) !important;
+    line-height: 1 !important;
+  }
+
+  .home-story-page .home-hero p {
+    max-width: 66ch;
+  }
+
+  .home-story-page h1 {
+    font-size: clamp(2.6rem, 6.4vw, 5.9rem) !important;
+    line-height: 1.03 !important;
+  }
+
+  .home-story-page h2 {
+    font-size: clamp(2rem, 4.5vw, 4.15rem) !important;
+    line-height: 1.08 !important;
+  }
+
+  .home-story-page h3 {
+    font-size: clamp(1.35rem, 2vw, 2rem) !important;
+    line-height: 1.2 !important;
+  }
+
+  .home-story-page p {
+    max-width: 72ch;
+  }
+
+  .home-chapter-visual::after {
+    position: absolute;
+    left: 1rem;
+    bottom: 0.85rem;
+    z-index: 3;
+    border: 1px solid color-mix(in oklab, var(--neon-cyan) 28%, transparent);
+    border-radius: 999px;
+    padding: 0.35rem 0.7rem;
+    background: rgba(5, 10, 25, 0.68);
+    color: color-mix(in oklab, var(--neon-cyan) 78%, white 22%);
+    font-family: var(--font-tech);
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    backdrop-filter: blur(10px);
+  }
+
+  .home-chapter-radar::after { content: "Perception: learning how machines see"; }
+  .home-chapter-foundation::after { content: "Foundation: cloud, networks, software"; }
+  .home-chapter-impact::after { content: "Impact: safety became personal"; }
+  .home-chapter-recovery::after { content: "Recovery: rebuild one step at a time"; }
+  .home-chapter-autonomy::after { content: "Autonomy: systems that help people"; }
+
+  .home-signal-card,
+  .home-chapter-card,
+  .home-road-stop,
+  .home-metaphor-card {
+    overflow-wrap: anywhere;
+  }
+
+  @media (max-width: 900px) {
+    .home-story-page {
+      padding-inline: 1rem !important;
+    }
+
+    .home-story-page .home-hero {
+      min-height: auto;
+    }
+
+    .home-story-page section {
+      padding-block: 2.25rem !important;
+    }
+
+    .home-story-page h1 {
+      font-size: clamp(2.25rem, 12vw, 3.6rem) !important;
+    }
+
+    .home-story-page .home-hero h1 {
+      font-size: clamp(2.15rem, 10vw, 3.25rem) !important;
+      line-height: 1.03 !important;
+    }
+
+    .home-story-page h2 {
+      font-size: clamp(1.8rem, 8vw, 2.9rem) !important;
+    }
+
+    .home-story-page .brand-button,
+    .home-story-page .brand-button-lg {
+      width: 100%;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .home-chapter-card,
+    .home-telemetry-panel,
+    .home-route-story,
+    .home-vehicle-system {
+      border-radius: 1.35rem !important;
+      padding: 1rem !important;
+    }
+
+    .home-chapter-visual {
+      min-height: 12rem !important;
+    }
+
+    .home-chapter-visual::after {
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      max-width: calc(100% - 2rem);
+      white-space: normal;
+      border-radius: 0.9rem;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .text-xs { font-size: 0.78rem !important; line-height: 1.25rem !important; }
+    .text-sm { font-size: 0.96rem !important; line-height: 1.65rem !important; }
+    .text-base { font-size: 1rem !important; line-height: 1.7rem !important; }
+    .text-lg { font-size: 1.08rem !important; line-height: 1.8rem !important; }
+    .text-xl { font-size: 1.16rem !important; line-height: 1.9rem !important; }
+
+    .home-story-page h1 {
+      font-size: clamp(2rem, 13vw, 3.1rem) !important;
+    }
+
+    .home-story-page .home-hero h1 {
+      font-size: clamp(2rem, 11vw, 2.85rem) !important;
+    }
+  }
+}
