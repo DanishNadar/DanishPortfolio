@@ -9,26 +9,28 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as StudentOrganizationsRouteImport } from './routes/student-organizations'
 import { Route as StackMapRouteImport } from './routes/stack-map'
 import { Route as SkillsRouteImport } from './routes/skills'
 import { Route as ResumeRouteImport } from './routes/resume'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as PostsRouteImport } from './routes/posts'
+import { Route as LeadershipAcademyRouteImport } from './routes/leadership-academy'
+import { Route as JourneyRouteImport } from './routes/journey'
+import { Route as InspirationsRouteImport } from './routes/inspirations'
+import { Route as IllinoisTechRouteImport } from './routes/illinois-tech'
+import { Route as GalleryRouteImport } from './routes/gallery'
+import { Route as FriendsRouteImport } from './routes/friends'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AvatarRouteImport } from './routes/avatar'
-import { Route as AboutRouteImport } from './routes/about'
 import { Route as AutonomousVehiclesRouteImport } from './routes/autonomous-vehicles'
-import { Route as FriendsRouteImport } from './routes/friends'
-import { Route as GalleryRouteImport } from './routes/gallery'
-import { Route as IllinoisTechRouteImport } from './routes/illinois-tech'
-import { Route as InspirationsRouteImport } from './routes/inspirations'
-import { Route as LeadershipAcademyRouteImport } from './routes/leadership-academy'
-import { Route as StudentOrganizationsRouteImport } from './routes/student-organizations'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as ProjectsSlugRouteImport } from './routes/projects.$slug'
 import { Route as PostsSlugRouteImport } from './routes/posts.$slug'
+import { Route as FriendsSlugRouteImport } from './routes/friends.$slug'
 import { Route as AdminProjectsRouteImport } from './routes/admin/projects'
 import { Route as AdminPostsRouteImport } from './routes/admin/posts'
 import { Route as AdminMediaRouteImport } from './routes/admin/media'
@@ -36,6 +38,11 @@ import { Route as AdminLoginRouteImport } from './routes/admin/login'
 import { Route as AdminIntegrationsRouteImport } from './routes/admin/integrations'
 import { Route as AdminContactRouteImport } from './routes/admin/contact'
 
+const StudentOrganizationsRoute = StudentOrganizationsRouteImport.update({
+  id: '/student-organizations',
+  path: '/student-organizations',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const StackMapRoute = StackMapRouteImport.update({
   id: '/stack-map',
   path: '/stack-map',
@@ -61,6 +68,36 @@ const PostsRoute = PostsRouteImport.update({
   path: '/posts',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LeadershipAcademyRoute = LeadershipAcademyRouteImport.update({
+  id: '/leadership-academy',
+  path: '/leadership-academy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JourneyRoute = JourneyRouteImport.update({
+  id: '/journey',
+  path: '/journey',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InspirationsRoute = InspirationsRouteImport.update({
+  id: '/inspirations',
+  path: '/inspirations',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IllinoisTechRoute = IllinoisTechRouteImport.update({
+  id: '/illinois-tech',
+  path: '/illinois-tech',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GalleryRoute = GalleryRouteImport.update({
+  id: '/gallery',
+  path: '/gallery',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FriendsRoute = FriendsRouteImport.update({
+  id: '/friends',
+  path: '/friends',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
@@ -71,44 +108,14 @@ const AvatarRoute = AvatarRouteImport.update({
   path: '/avatar',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AutonomousVehiclesRoute = AutonomousVehiclesRouteImport.update({
   id: '/autonomous-vehicles',
   path: '/autonomous-vehicles',
   getParentRoute: () => rootRouteImport,
 } as any)
-const FriendsRoute = FriendsRouteImport.update({
-  id: '/friends',
-  path: '/friends',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const GalleryRoute = GalleryRouteImport.update({
-  id: '/gallery',
-  path: '/gallery',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IllinoisTechRoute = IllinoisTechRouteImport.update({
-  id: '/illinois-tech',
-  path: '/illinois-tech',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const InspirationsRoute = InspirationsRouteImport.update({
-  id: '/inspirations',
-  path: '/inspirations',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LeadershipAcademyRoute = LeadershipAcademyRouteImport.update({
-  id: '/leadership-academy',
-  path: '/leadership-academy',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const StudentOrganizationsRoute = StudentOrganizationsRouteImport.update({
-  id: '/student-organizations',
-  path: '/student-organizations',
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminRouteRoute = AdminRouteRouteImport.update({
@@ -135,6 +142,11 @@ const PostsSlugRoute = PostsSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
   getParentRoute: () => PostsRoute,
+} as any)
+const FriendsSlugRoute = FriendsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => FriendsRoute,
 } as any)
 const AdminProjectsRoute = AdminProjectsRouteImport.update({
   id: '/projects',
@@ -172,25 +184,27 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/autonomous-vehicles': typeof AutonomousVehiclesRoute
-  '/friends': typeof FriendsRoute
+  '/avatar': typeof AvatarRoute
+  '/contact': typeof ContactRoute
+  '/friends': typeof FriendsRouteWithChildren
   '/gallery': typeof GalleryRoute
   '/illinois-tech': typeof IllinoisTechRoute
   '/inspirations': typeof InspirationsRoute
+  '/journey': typeof JourneyRoute
   '/leadership-academy': typeof LeadershipAcademyRoute
-  '/student-organizations': typeof StudentOrganizationsRoute
-  '/avatar': typeof AvatarRoute
-  '/contact': typeof ContactRoute
   '/posts': typeof PostsRouteWithChildren
   '/projects': typeof ProjectsRouteWithChildren
   '/resume': typeof ResumeRoute
   '/skills': typeof SkillsRoute
   '/stack-map': typeof StackMapRoute
+  '/student-organizations': typeof StudentOrganizationsRoute
   '/admin/contact': typeof AdminContactRoute
   '/admin/integrations': typeof AdminIntegrationsRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/media': typeof AdminMediaRoute
   '/admin/posts': typeof AdminPostsRoute
   '/admin/projects': typeof AdminProjectsRoute
+  '/friends/$slug': typeof FriendsSlugRoute
   '/posts/$slug': typeof PostsSlugRoute
   '/projects/$slug': typeof ProjectsSlugRoute
   '/admin/': typeof AdminIndexRoute
@@ -199,25 +213,27 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/autonomous-vehicles': typeof AutonomousVehiclesRoute
-  '/friends': typeof FriendsRoute
+  '/avatar': typeof AvatarRoute
+  '/contact': typeof ContactRoute
+  '/friends': typeof FriendsRouteWithChildren
   '/gallery': typeof GalleryRoute
   '/illinois-tech': typeof IllinoisTechRoute
   '/inspirations': typeof InspirationsRoute
+  '/journey': typeof JourneyRoute
   '/leadership-academy': typeof LeadershipAcademyRoute
-  '/student-organizations': typeof StudentOrganizationsRoute
-  '/avatar': typeof AvatarRoute
-  '/contact': typeof ContactRoute
   '/posts': typeof PostsRouteWithChildren
   '/projects': typeof ProjectsRouteWithChildren
   '/resume': typeof ResumeRoute
   '/skills': typeof SkillsRoute
   '/stack-map': typeof StackMapRoute
+  '/student-organizations': typeof StudentOrganizationsRoute
   '/admin/contact': typeof AdminContactRoute
   '/admin/integrations': typeof AdminIntegrationsRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/media': typeof AdminMediaRoute
   '/admin/posts': typeof AdminPostsRoute
   '/admin/projects': typeof AdminProjectsRoute
+  '/friends/$slug': typeof FriendsSlugRoute
   '/posts/$slug': typeof PostsSlugRoute
   '/projects/$slug': typeof ProjectsSlugRoute
   '/admin': typeof AdminIndexRoute
@@ -228,25 +244,27 @@ export interface FileRoutesById {
   '/admin': typeof AdminRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/autonomous-vehicles': typeof AutonomousVehiclesRoute
-  '/friends': typeof FriendsRoute
+  '/avatar': typeof AvatarRoute
+  '/contact': typeof ContactRoute
+  '/friends': typeof FriendsRouteWithChildren
   '/gallery': typeof GalleryRoute
   '/illinois-tech': typeof IllinoisTechRoute
   '/inspirations': typeof InspirationsRoute
+  '/journey': typeof JourneyRoute
   '/leadership-academy': typeof LeadershipAcademyRoute
-  '/student-organizations': typeof StudentOrganizationsRoute
-  '/avatar': typeof AvatarRoute
-  '/contact': typeof ContactRoute
   '/posts': typeof PostsRouteWithChildren
   '/projects': typeof ProjectsRouteWithChildren
   '/resume': typeof ResumeRoute
   '/skills': typeof SkillsRoute
   '/stack-map': typeof StackMapRoute
+  '/student-organizations': typeof StudentOrganizationsRoute
   '/admin/contact': typeof AdminContactRoute
   '/admin/integrations': typeof AdminIntegrationsRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/media': typeof AdminMediaRoute
   '/admin/posts': typeof AdminPostsRoute
   '/admin/projects': typeof AdminProjectsRoute
+  '/friends/$slug': typeof FriendsSlugRoute
   '/posts/$slug': typeof PostsSlugRoute
   '/projects/$slug': typeof ProjectsSlugRoute
   '/admin/': typeof AdminIndexRoute
@@ -258,25 +276,27 @@ export interface FileRouteTypes {
     | '/admin'
     | '/about'
     | '/autonomous-vehicles'
+    | '/avatar'
+    | '/contact'
     | '/friends'
     | '/gallery'
     | '/illinois-tech'
     | '/inspirations'
+    | '/journey'
     | '/leadership-academy'
-    | '/student-organizations'
-    | '/avatar'
-    | '/contact'
     | '/posts'
     | '/projects'
     | '/resume'
     | '/skills'
     | '/stack-map'
+    | '/student-organizations'
     | '/admin/contact'
     | '/admin/integrations'
     | '/admin/login'
     | '/admin/media'
     | '/admin/posts'
     | '/admin/projects'
+    | '/friends/$slug'
     | '/posts/$slug'
     | '/projects/$slug'
     | '/admin/'
@@ -285,25 +305,27 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/autonomous-vehicles'
+    | '/avatar'
+    | '/contact'
     | '/friends'
     | '/gallery'
     | '/illinois-tech'
     | '/inspirations'
+    | '/journey'
     | '/leadership-academy'
-    | '/student-organizations'
-    | '/avatar'
-    | '/contact'
     | '/posts'
     | '/projects'
     | '/resume'
     | '/skills'
     | '/stack-map'
+    | '/student-organizations'
     | '/admin/contact'
     | '/admin/integrations'
     | '/admin/login'
     | '/admin/media'
     | '/admin/posts'
     | '/admin/projects'
+    | '/friends/$slug'
     | '/posts/$slug'
     | '/projects/$slug'
     | '/admin'
@@ -313,25 +335,27 @@ export interface FileRouteTypes {
     | '/admin'
     | '/about'
     | '/autonomous-vehicles'
+    | '/avatar'
+    | '/contact'
     | '/friends'
     | '/gallery'
     | '/illinois-tech'
     | '/inspirations'
+    | '/journey'
     | '/leadership-academy'
-    | '/student-organizations'
-    | '/avatar'
-    | '/contact'
     | '/posts'
     | '/projects'
     | '/resume'
     | '/skills'
     | '/stack-map'
+    | '/student-organizations'
     | '/admin/contact'
     | '/admin/integrations'
     | '/admin/login'
     | '/admin/media'
     | '/admin/posts'
     | '/admin/projects'
+    | '/friends/$slug'
     | '/posts/$slug'
     | '/projects/$slug'
     | '/admin/'
@@ -342,24 +366,31 @@ export interface RootRouteChildren {
   AdminRouteRoute: typeof AdminRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   AutonomousVehiclesRoute: typeof AutonomousVehiclesRoute
-  FriendsRoute: typeof FriendsRoute
+  AvatarRoute: typeof AvatarRoute
+  ContactRoute: typeof ContactRoute
+  FriendsRoute: typeof FriendsRouteWithChildren
   GalleryRoute: typeof GalleryRoute
   IllinoisTechRoute: typeof IllinoisTechRoute
   InspirationsRoute: typeof InspirationsRoute
+  JourneyRoute: typeof JourneyRoute
   LeadershipAcademyRoute: typeof LeadershipAcademyRoute
-  StudentOrganizationsRoute: typeof StudentOrganizationsRoute
-  AvatarRoute: typeof AvatarRoute
-
-  ContactRoute: typeof ContactRoute
   PostsRoute: typeof PostsRouteWithChildren
   ProjectsRoute: typeof ProjectsRouteWithChildren
   ResumeRoute: typeof ResumeRoute
   SkillsRoute: typeof SkillsRoute
   StackMapRoute: typeof StackMapRoute
+  StudentOrganizationsRoute: typeof StudentOrganizationsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/student-organizations': {
+      id: '/student-organizations'
+      path: '/student-organizations'
+      fullPath: '/student-organizations'
+      preLoaderRoute: typeof StudentOrganizationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/stack-map': {
       id: '/stack-map'
       path: '/stack-map'
@@ -395,6 +426,48 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PostsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/leadership-academy': {
+      id: '/leadership-academy'
+      path: '/leadership-academy'
+      fullPath: '/leadership-academy'
+      preLoaderRoute: typeof LeadershipAcademyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/journey': {
+      id: '/journey'
+      path: '/journey'
+      fullPath: '/journey'
+      preLoaderRoute: typeof JourneyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/inspirations': {
+      id: '/inspirations'
+      path: '/inspirations'
+      fullPath: '/inspirations'
+      preLoaderRoute: typeof InspirationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/illinois-tech': {
+      id: '/illinois-tech'
+      path: '/illinois-tech'
+      fullPath: '/illinois-tech'
+      preLoaderRoute: typeof IllinoisTechRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gallery': {
+      id: '/gallery'
+      path: '/gallery'
+      fullPath: '/gallery'
+      preLoaderRoute: typeof GalleryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/friends': {
+      id: '/friends'
+      path: '/friends'
+      fullPath: '/friends'
+      preLoaderRoute: typeof FriendsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
@@ -409,13 +482,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AvatarRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/autonomous-vehicles': {
       id: '/autonomous-vehicles'
       path: '/autonomous-vehicles'
@@ -423,46 +489,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AutonomousVehiclesRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/friends': {
-      id: '/friends'
-      path: '/friends'
-      fullPath: '/friends'
-      preLoaderRoute: typeof FriendsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/gallery': {
-      id: '/gallery'
-      path: '/gallery'
-      fullPath: '/gallery'
-      preLoaderRoute: typeof GalleryRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/illinois-tech': {
-      id: '/illinois-tech'
-      path: '/illinois-tech'
-      fullPath: '/illinois-tech'
-      preLoaderRoute: typeof IllinoisTechRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/inspirations': {
-      id: '/inspirations'
-      path: '/inspirations'
-      fullPath: '/inspirations'
-      preLoaderRoute: typeof InspirationsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/leadership-academy': {
-      id: '/leadership-academy'
-      path: '/leadership-academy'
-      fullPath: '/leadership-academy'
-      preLoaderRoute: typeof LeadershipAcademyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/student-organizations': {
-      id: '/student-organizations'
-      path: '/student-organizations'
-      fullPath: '/student-organizations'
-      preLoaderRoute: typeof StudentOrganizationsRouteImport
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin': {
@@ -499,6 +530,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/posts/$slug'
       preLoaderRoute: typeof PostsSlugRouteImport
       parentRoute: typeof PostsRoute
+    }
+    '/friends/$slug': {
+      id: '/friends/$slug'
+      path: '/$slug'
+      fullPath: '/friends/$slug'
+      preLoaderRoute: typeof FriendsSlugRouteImport
+      parentRoute: typeof FriendsRoute
     }
     '/admin/projects': {
       id: '/admin/projects'
@@ -569,6 +607,17 @@ const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
   AdminRouteRouteChildren,
 )
 
+interface FriendsRouteChildren {
+  FriendsSlugRoute: typeof FriendsSlugRoute
+}
+
+const FriendsRouteChildren: FriendsRouteChildren = {
+  FriendsSlugRoute: FriendsSlugRoute,
+}
+
+const FriendsRouteWithChildren =
+  FriendsRoute._addFileChildren(FriendsRouteChildren)
+
 interface PostsRouteChildren {
   PostsSlugRoute: typeof PostsSlugRoute
 }
@@ -596,30 +645,21 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRouteRoute: AdminRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   AutonomousVehiclesRoute: AutonomousVehiclesRoute,
-  FriendsRoute: FriendsRoute,
+  AvatarRoute: AvatarRoute,
+  ContactRoute: ContactRoute,
+  FriendsRoute: FriendsRouteWithChildren,
   GalleryRoute: GalleryRoute,
   IllinoisTechRoute: IllinoisTechRoute,
   InspirationsRoute: InspirationsRoute,
+  JourneyRoute: JourneyRoute,
   LeadershipAcademyRoute: LeadershipAcademyRoute,
-  StudentOrganizationsRoute: StudentOrganizationsRoute,
-  AvatarRoute: AvatarRoute,
-  ContactRoute: ContactRoute,
   PostsRoute: PostsRouteWithChildren,
   ProjectsRoute: ProjectsRouteWithChildren,
   ResumeRoute: ResumeRoute,
   SkillsRoute: SkillsRoute,
   StackMapRoute: StackMapRoute,
+  StudentOrganizationsRoute: StudentOrganizationsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

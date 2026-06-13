@@ -3,6 +3,7 @@
 This file is the long-form source document for the DN Response Engine. It is intentionally detailed so the Groq-powered guide can answer questions about Danish without falling back to generic or repeated responses.
 
 ## Identity
+
 - Name: Danish Nadar
 - Title: AI Engineer
 - Location: Chicago · Illinois Tech
@@ -11,12 +12,14 @@ This file is the long-form source document for the DN Response Engine. It is int
 - GitHub: https://github.com/DanishNadar
 
 ## Positioning
+
 - Headline: AI engineer building robotics, autonomy, and intelligent products from idea to working prototype.
 - Mission: Build useful AI systems that move beyond demos: accessibility robotics, safer autonomous systems, security automation, and tools that help people understand technology instead of feeling pushed away by it.
 - Voice: Professional, direct, technical when needed, warm enough for recruiters and collaborators. Avoid sounding like a generic resume bot.
 - Audiences: recruiters, engineering managers, robotics teams, AI/ML collaborators, hackathon judges, students and mentors
 
 ## Navigation Routes
+
 - Home: `/`
 - Projects: `/projects`
 - Posts: `/posts`
@@ -28,38 +31,51 @@ This file is the long-form source document for the DN Response Engine. It is int
 - Contact: `/contact`
 
 ## Focus Lanes
+
 ### Accessibility Robotics
+
 OBSERV-E, GRVI, DRVI, and HRVI connect assistive robotics with direct user feedback.
+
 - Guide robot for visually impaired users
 - Drone support for broader perception
 - Haptic receiver with direct Bluetooth cues
 
 ### Applied AI
-Models, agents, and voice systems that move past demo mode.
+
+Models, agents, and voice systems shaped into tools people can understand, trust, and use.
+
 - LLM and speech prototypes
 - Classification and anomaly detection
 - Workflows that connect to useful outcomes
 
 ### Robotics
+
 Real-time validation, perception, and autonomy support.
+
 - Sensor fusion with RTMaps + C++
 - Lead vehicle and driver monitoring work
 - Requirements, testing, and integration coverage
 
 ### Security Automation
+
 Operational tools that reduce manual effort and improve visibility.
+
 - SPF, DKIM, and DMARC automation
 - Reporting and downstream integrations
 - Monitoring-minded architecture
 
 ### Product Systems
+
 Cloud tooling, product clarity, and practical delivery.
+
 - Azure, Supabase, and deployment tooling
 - Internal tools and AI-facing product work
 - Interfaces designed around clarity and useful routing
 
 ## Projects
+
 ### OBSERV-E Accessibility Robotics Ecosystem
+
 - Slug: observ-e
 - Domain: Robotics
 - Role: Founder / technical product lead
@@ -81,6 +97,7 @@ Cloud tooling, product clarity, and practical delivery.
   - python: Prototype logic and perception experiments can be supported through Python-based robotics tooling.
 
 ### Selvam Valuations · ScarletHacks M&A Intelligence Prototype
+
 - Slug: selvam-valuations
 - Domain: Applied AI / Finance
 - Role: AI/product engineering contributor
@@ -91,7 +108,7 @@ Cloud tooling, product clarity, and practical delivery.
 - Outcomes:
   - Created a team prototype for M&A/valuation intelligence during ScarletHacks.
   - Explored how LLM-assisted summaries and structured data can support company comparison and deal reasoning.
-  - Identified practical full-stack reliability issues around live APIs, CORS, environment variables, and deployment.
+  - Identified practical reliability issues around live APIs, CORS, environment variables, and deployment.
 - Implementation notes:
   - Financial AI product concept: Company data, article analysis, valuation context, and merger-lab workflows.
   - Backend and API planning: FastAPI/Python backend direction with financial API and LLM-assisted analysis integration.
@@ -102,6 +119,7 @@ Cloud tooling, product clarity, and practical delivery.
   - product: The project emphasized product value and explainability, not only technical implementation.
 
 ### Monocular Lane Detection Improvement Study
+
 - Slug: lane-detection-salad
 - Domain: Applied AI
 - Role: Computer vision research project
@@ -123,6 +141,7 @@ Cloud tooling, product clarity, and practical delivery.
   - ml: The project focused on model performance, robustness, and architecture tradeoffs.
 
 ### A Little Tech For You · In-progress AI Guide for Older Adults
+
 - Slug: a-little-tech-for-you
 - Domain: Applied AI
 - Role: Founder / AI product builder
@@ -144,6 +163,7 @@ Cloud tooling, product clarity, and practical delivery.
   - accessibility: Product framing centers clarity, patience, plain language, large readable UI, and support paths for non-technical users.
 
 ### Reinforcement Learning Lane-Keeping Simulator
+
 - Slug: rl-autonomous-driving
 - Domain: Robotics
 - Role: RL simulation and evaluation project
@@ -165,6 +185,7 @@ Cloud tooling, product clarity, and practical delivery.
   - robotics: The task modeled autonomous lane keeping and sensor-based decision making.
 
 ### DNS Email Authentication Scanner
+
 - Slug: dns-security-scanner
 - Domain: Cybersecurity
 - Role: Software Automation Engineer project direction
@@ -187,6 +208,7 @@ Cloud tooling, product clarity, and practical delivery.
   - data: Results are structured for downstream review and operations.
 
 ### AILA · AI Leadership Avatar
+
 - Slug: aila-avatar
 - Domain: Applied AI
 - Role: Voice and AI portfolio assistant concept
@@ -199,7 +221,7 @@ Cloud tooling, product clarity, and practical delivery.
   - Connects AI orchestration with design, narrative, and accessibility.
   - Acts as both a prototype and a statement about Danish’s direction in applied AI.
 - Implementation notes:
-  - Avatar render: Place a hero render or 3D scene still here.
+  - Avatar render: Use a cinematic avatar or leadership-interface visual that shows the AI guide as an immersive, human-centered system.
   - Conversation flow: Show prompt -> response -> speech -> UI feedback.
   - Accessibility note: Use this card for fast-loading or low-friction UX notes.
 - Artifacts/context:
@@ -208,6 +230,7 @@ Cloud tooling, product clarity, and practical delivery.
   - apis: Voice and inference services are stitched together through backend service calls.
 
 ### JTR · AI Job-Seeking Agent
+
 - Slug: jtr-agent
 - Domain: Applied AI
 - Role: Agent workflow and product direction
@@ -228,6 +251,7 @@ Cloud tooling, product clarity, and practical delivery.
   - apis: External job, messaging, and enrichment workflows rely on API-first integration patterns.
 
 ### EcoCAR Sensor Fusion Lead
+
 - Slug: ecocar-sensor-fusion
 - Domain: Robotics
 - Role: Connected Automated Vehicle Engineer · Sensor Fusion Lead
@@ -249,6 +273,7 @@ Cloud tooling, product clarity, and practical delivery.
   - robotics: The entire project is grounded in autonomous vehicle perception and validation.
 
 ### AI Headshot Platform Contribution
+
 - Slug: ai-headshot-platform
 - Domain: Product
 - Role: Production contribution on AI product tooling
@@ -270,6 +295,7 @@ Cloud tooling, product clarity, and practical delivery.
   - apis: Payments and service interactions required dependable integration work.
 
 ### Phishing Detection Model
+
 - Slug: phishing-detector
 - Domain: Applied AI
 - Role: Model design, preprocessing, and evaluation
@@ -291,6 +317,7 @@ Cloud tooling, product clarity, and practical delivery.
   - data: The project required structured feature preparation and model evaluation.
 
 ### Course Recommendation System
+
 - Slug: course-recommendation
 - Domain: Applied AI
 - Role: Recommendation logic and similarity system build
@@ -311,6 +338,7 @@ Cloud tooling, product clarity, and practical delivery.
   - sklearn: Vectorization and similarity methods fit naturally into a scikit-learn style workflow.
 
 ### Credit Card Fraud Detection
+
 - Slug: fraud-detection
 - Domain: Applied AI
 - Role: Anomaly detection experimentation and evaluation
@@ -332,6 +360,7 @@ Cloud tooling, product clarity, and practical delivery.
   - security: Fraud analytics support security and risk-oriented problem solving.
 
 ### Spiron Virtual Assistant
+
 - Slug: spiron-assistant
 - Domain: Product
 - Role: Early voice-assistant build
@@ -352,6 +381,7 @@ Cloud tooling, product clarity, and practical delivery.
   - apis: Even when local-first, the system reflects integration-oriented thinking.
 
 ### Automated Shopping Bot
+
 - Slug: shopping-bot
 - Domain: Product
 - Role: Browser automation workflow
@@ -372,6 +402,7 @@ Cloud tooling, product clarity, and practical delivery.
   - apis: Even with browser automation, the project reflects integration-style thinking.
 
 ### TTP DNS Screening & Outreach Automation
+
 - Slug: ttp-outreach-automation
 - Domain: Security Automation
 - Role: Automation engineer / product builder
@@ -393,83 +424,102 @@ Cloud tooling, product clarity, and practical delivery.
   - product: Wraps technical automation in a Streamlit interface designed for a boss or client to use.
 
 ## Experience
+
 ### Software Automation Engineer · Technology Transition Paradigm
+
 - Period: Aug 2025 – Present
 - Building a DNS/security outreach automation pipeline around SPF, DKIM, DMARC, dark-web indicators, Microsoft Graph email delivery, and tracking workflows.
 - Developing Python tooling that turns manual client security checks into repeatable reporting and outreach operations.
 - Designing structured CSV/JSON outputs, database persistence, and validation steps against external tools such as EasyDMARC.
 
 ### AI Software Development Intern · OfficePro, Inc.
+
 - Period: May 2025 – Aug 2025
 - Developed AI instructor and training-support prototypes using Azure Cognitive Services, Speech Services, Azure Functions, and web tooling.
 - Automated and supported a 50+ computer training fleet with Python, PowerShell, and operational scripting.
 - Contributed to AIHeadShotMasters production workflows involving Production App Workflows, Supabase, Vercel CI/CD, Stripe checkout, and debugging deployment issues.
 
 ### Connected Automated Vehicle Engineer · Sensor Fusion Lead · EcoCAR EV Challenge
+
 - Period: Aug 2024 – Present
 - Authored requirements and validation test cases for perception, lead-vehicle detection, and driver-monitoring modules.
 - Implemented real-time C++ and RTMaps workflows across camera, radar, LiDAR, and vehicle-state signals.
 - Built practical understanding of autonomy systems, signal routing, and test-driven validation for connected automated vehicles.
 
 ### Founder / Technical Product Lead · OBSERV-E
+
 - Period: 2026 – Present
 - Defining OBSERV-E as an accessibility robotics umbrella for GRVI, DRVI, and HRVI.
 - Shifting the architecture toward direct Bluetooth robot-to-user feedback rather than relying on a web app as the main signal path.
 - Building pitch materials around service-dog-inspired robotics, computer vision, haptics, and accessible navigation.
 
 ### Treasurer · Instructor · Developer · Illinois Tech Robotics
+
 - Period: Nov 2024 – Present
 - Secured budget approvals and coordinated purchasing, workshops, and student robotics operations.
 - Led and supported workshops across AI/ML, Linux, Python, systems programming, and robotics fundamentals.
 - Represented Illinois Tech Robotics in competitions and collaborative projects, including a winning StarkHacks 2026 build.
 
 ### Leadership Academy Scholar · M.A. and Lila Self Leadership Academy · Illinois Tech
+
 - Period: 2025 – Present
 - Selected for leadership development focused on service, execution, and interdisciplinary teamwork.
 - Serves in student leadership contexts that connect engineering, communication, and community impact.
 - Uses leadership training to strengthen project planning, technical storytelling, and team accountability.
 
 ## Education
-- Illinois Institute of Technology: Bachelor of Science & Master of Science, Artificial Intelligence · GPA 3.42 Expected May 2027 
-- Montgomery College: Associate of Applied Sciences, Cloud Computing & Network Technology · GPA 3.89 Apr 2023 
+
+- Illinois Institute of Technology: Bachelor of Science & Master of Science, Artificial Intelligence · GPA 3.42 Expected May 2027
+- Montgomery College: Associate of Applied Sciences, Cloud Computing & Network Technology · GPA 3.89 Apr 2023
 
 ## Resume Stats
+
 - AI: BS/MS Artificial Intelligence
 - OBSERV-E: Accessibility robotics venture
 - 2026: StarkHacks winner
 - 6: Current roles highlighted
 
 ## Resume Wins
+
 - Builds across AI, robotics, autonomy, cloud tooling, and cybersecurity automation.
 - Connects technical execution with pitch storytelling, product strategy, and user impact.
 - Has hands-on work in Python, C++, Production App Workflows, RTMaps, Supabase, Vercel, Stripe, and Azure tooling.
 - Brings leadership experience from Illinois Tech Robotics, EcoCAR, Leadership Academy, and OBSERV-E.
 
 ## Achievements
+
 ### StarkHacks 2026 Qualcomm Robotics Track winner
+
 Team win connected to OBSERV-E, an accessibility robotics concept for visually impaired navigation.
 Route: `/projects/observ-e`
 
 ### EcoCAR sensor-fusion and autonomy work
+
 Real-time autonomy work involving sensors, driver attention, lead-vehicle detection, RTMaps/C++, and vehicle-level constraints.
 Route: `/projects/ecocar-sensor-fusion`
 
 ### AI and robotics project portfolio
+
 Built and documented projects across RL driving, lane detection, AI avatars, security automation, phishing/scam education, and recommendation systems.
 Route: `/projects`
 
 ### Hackathon and product prototyping experience
+
 Projects include OBSERV-E, Selvam Valuations, ScamMantha, and rapid AI product prototypes.
 Route: `/projects`
 
 ### Technical storytelling and public writing
+
 Posts connect engineering work to reflections, lessons learned, portfolio updates, and project narratives.
 Route: `/posts`
 
 ## Autonomous Vehicle Story
+
 - route: /autonomous-vehicles
 - coreMessage: Autonomy is where AI has to become dependable engineering. The portfolio connects real vehicle work, lane detection, reinforcement learning simulation, and sensor-fusion thinking.
+
 ### themes
+
 - sensor fusion
 - lane detection
 - driver attention
@@ -478,12 +528,15 @@ Route: `/posts`
 - simulation-to-real gap
 - real-time constraints
 - safe system design
+
 ### relatedProjects
+
 - ecocar-sensor-fusion
 - rl-autonomous-driving
 - lane-detection-salad
 
 ## Hobbies and Personal Texture
+
 - Guitar and music: Shows creativity, practice, performance discipline, and comfort improving through feedback.
 - Astronomy and curiosity: Connects to a long-running interest in big technical questions and systems thinking.
 - Fitness and sports: Reflects discipline, consistency, and the habit of rebuilding through effort.
@@ -492,12 +545,14 @@ Route: `/posts`
 - Mentoring and community: Connects to helping others learn, explaining technical topics clearly, and building inclusive spaces.
 
 ## Articles / Posts
+
 - OBSERV-E: accessibility robotics beyond a single robot: How GRVI, DRVI, and HRVI work together as an assistive ecosystem.
-- Moving an AI idea past demo mode: How useful systems get shipped.
+- Moving an AI idea toward useful service: How useful systems get shipped.
 - Sensor fusion lessons from robotics: Validation, teamwork, and real-time constraints.
 - Email auth automation for operations: Turning security checks into repeatable workflows.
 
 ## Skills and Stack
+
 - C++ (Language): Real-time autonomy and systems language used across EcoCAR sensor-fusion and controller work. Projects: ecocar-sensor-fusion, rl-autonomous-driving
 - Java (Language): Object-oriented programming foundation used in coursework and the P33 Chicago financial-literacy text adventure project. Projects: scammantha, jtr-agent
 - MATLAB (Language): Math, modeling, and engineering-computation language to support controls, signal processing, and simulation-oriented coursework. Projects: ecocar-sensor-fusion, rl-autonomous-driving
@@ -608,6 +663,7 @@ Route: `/posts`
 - Stakeholder Engagement (Leadership & Professional): Working with students, leadership, clients, and technical teams to deliver useful outcomes. Projects: aila-avatar, ai-headshot-platform, ttp-outreach-automation
 
 ## API and Integration Context
+
 - Azure Cognitive Services / Speech: Used in avatar-style and training prototypes to connect speech, interaction, and AI behavior.
 - Microsoft Graph: Relevant for secure enterprise messaging flows and automation patterns in Microsoft environments.
 - Stripe: Used in product work where payments and subscriptions connect to a user-facing service.
@@ -615,6 +671,7 @@ Route: `/posts`
 - Apollo.io / Enrichment-style Integrations: Representative of outreach and enrichment integrations around job and sales-style automation workflows.
 
 ## GitHub Repositories
+
 - DanishNadarPortfolio: Portfolio site with avatar page, project case studies, and OpenVoice-ready local backend.
 - AILA: The Illinois Tech Leadership Academy’s AI Leadership Avatar (AILA).
 - JTR: Repository for the JTR job-seeking system, with separate backend and product interface folders.
@@ -626,11 +683,15 @@ Route: `/posts`
 - PropagandaDetection: A machine learning model built for propaganda detection.
 
 ## Guardrails for the AI Guide
+
 ### neverClaim
+
 - Do not claim a project is deployed if the source says prototype, draft, or in-progress.
 - Do not invent employers, degrees, awards, exact dates, or publications.
 - Do not reveal private API keys or environment variables.
+
 ### prefer
+
 - Use project-specific examples.
 - Mention uncertainty when the file lacks detail.
 - Offer a route to explore next.
@@ -638,6 +699,7 @@ Route: `/posts`
 - format: Return JSON with reply, suggestedRoute, suggestedLabel, and confidence.
 
 ## Featured Recognition: Intelligent Systems for Safer Roads
+
 - Original article: https://www.iit.edu/student-experience/student-and-alumni-stories/intelligent-systems-safer-roads
 - LinkedIn post: https://www.linkedin.com/feed/update/urn:li:activity:7442364085289070593/
 - Portfolio post route: `/posts/intelligent-systems-for-safer-roads`
@@ -646,6 +708,6 @@ Route: `/posts`
 - The article connects Danish's work with EcoCAR and the Elevate initiative to AI, autonomy, computer vision, sensor fusion, reducing human error, and improving decision-making in complex transportation environments.
 - When answering questions about Danish's mission, road safety, or autonomy, the DN Engine should reference this story naturally when relevant, but not force it into unrelated answers.
 
-
 ### Linux-first development workflow
+
 Danish uses Linux-oriented development as the foundation for AI, robotics, autonomy, security automation, and deployment work: Bash, Git, Docker, Python environments, CLI debugging, local services, repeatable launch scripts, and production-minded build checks.

@@ -16,6 +16,7 @@ import { postPages } from "@/content/postPages";
 import { MotionPage } from "@/components/MotionPage";
 import { SectionReveal } from "@/components/SectionReveal";
 import { ImageSlot } from "@/components/ImageSlot";
+import { ImmersiveImage } from "@/components/ImmersiveImage";
 import { StableSearchBox } from "@/components/StableSearchBox";
 
 interface PortfolioSkill {
@@ -34,6 +35,110 @@ type StackRecord = PortfolioSkill & {
 };
 
 const STACK_ITEMS_PER_PAGE = 12;
+
+/*
+ * Employer-first ordering for an AI engineering scan:
+ * fundamentals -> model building -> modern AI -> production -> applied systems.
+ * Explicit priorities keep the strongest evidence on page one; remaining skills
+ * fall back to category relevance and the amount of linked portfolio evidence.
+ */
+const AI_ENGINEER_PRIORITY = [
+  "python",
+  "applied-machine-learning",
+  "pytorch",
+  "llms",
+  "computer-vision",
+  "agentic-systems",
+  "model-deployment",
+  "data-pipelines",
+  "sensor-fusion",
+  "systems-integration",
+  "fastapi",
+  "linux-development",
+  "sql",
+  "postgresql",
+  "sklearn",
+  "deep-learning",
+  "model-evaluation",
+  "evaluation-metrics",
+  "feature-engineering",
+  "natural-language-processing",
+  "vlms",
+  "autonomous-systems",
+  "opencv",
+  "yolo",
+  "tensorflow",
+  "cpp",
+  "rest-apis",
+  "apis",
+  "cloud-architecture",
+  "azure-ai-foundry",
+  "azure",
+  "aws",
+  "supabase",
+  "vercel",
+  "testing",
+  "classification",
+  "data-science",
+  "data-eda",
+  "reinforcement-learning",
+  "ppo",
+  "ros2",
+  "rtmaps",
+  "can-bus",
+  "signal-processing",
+  "typescript",
+  "java",
+  "process-automation",
+  "serverless-functions",
+  "cloud-automation",
+  "hugging-face",
+  "hf-inference-providers",
+  "hugging-face-spaces",
+  "prompt-engineering",
+  "github-copilot",
+  "claude",
+  "chatgpt",
+] as const;
+
+const AI_CATEGORY_PRIORITY = [
+  "ML",
+  "Language",
+  "Robotics",
+  "Backend & Integrations",
+  "Cloud",
+  "AI Tools & Workflow",
+  "Leadership & Professional",
+  "Security & Domain",
+] as const;
+
+const aiPriorityBySlug = new Map<string, number>(
+  AI_ENGINEER_PRIORITY.map((slug, index) => [slug, index]),
+);
+
+function aiEngineerRank(skill: StackRecord) {
+  const explicitRank = aiPriorityBySlug.get(skill.slug);
+  if (explicitRank !== undefined) return explicitRank;
+
+  const categoryRank = AI_CATEGORY_PRIORITY.indexOf(
+    skill.category as (typeof AI_CATEGORY_PRIORITY)[number],
+  );
+  return (
+    AI_ENGINEER_PRIORITY.length +
+    (categoryRank === -1 ? AI_CATEGORY_PRIORITY.length : categoryRank) * 100
+  );
+}
+
+function compareForAiEngineering(a: StackRecord, b: StackRecord) {
+  const rankDifference = aiEngineerRank(a) - aiEngineerRank(b);
+  if (rankDifference !== 0) return rankDifference;
+
+  const evidenceDifference =
+    b.linkedProjects.length +
+    b.linkedPosts.length -
+    (a.linkedProjects.length + a.linkedPosts.length);
+  return evidenceDifference || a.name.localeCompare(b.name);
+}
 
 export const Route = createFileRoute("/stack-map")({
   validateSearch: (search: Record<string, unknown>) => ({
@@ -55,7 +160,11 @@ export const Route = createFileRoute("/stack-map")({
 });
 
 function slugify(value: string) {
-  return value.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+  return value
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
 }
 
 function jumpTo(id: string) {
@@ -71,20 +180,27 @@ function getStackMatches(skill: PortfolioSkill) {
   const linkedProjects = projectPages.filter((project) => {
     const explicit = skill.projects.includes(project.slug);
     const stackHit = project.stackMap.some((item) => {
-      const haystack = `${item.name} ${item.category} ${item.usedFor} ${item.context ?? ""}`.toLowerCase();
+      const haystack =
+        `${item.name} ${item.category} ${item.usedFor} ${item.context ?? ""}`.toLowerCase();
       return haystack.includes(lowerName) || haystack.includes(lowerSlug);
     });
-    const bodyHit = `${project.title} ${project.subtitle} ${project.heroStatement} ${project.recruiterTakeaway}`
-      .toLowerCase()
-      .includes(lowerName);
+    const bodyHit =
+      `${project.title} ${project.subtitle} ${project.heroStatement} ${project.recruiterTakeaway}`
+        .toLowerCase()
+        .includes(lowerName);
     return explicit || stackHit || bodyHit;
   });
   const linkedPosts = postPages.filter((post) => {
     const stackHit = post.relatedStack.some(
-      (item) => item.toLowerCase() === lowerSlug || item.toLowerCase() === lowerName || item.toLowerCase().includes(lowerName),
+      (item) =>
+        item.toLowerCase() === lowerSlug ||
+        item.toLowerCase() === lowerName ||
+        item.toLowerCase().includes(lowerName),
     );
     const tagHit = post.tags.some((tag) => tag.toLowerCase().includes(lowerName));
-    const bodyHit = `${post.title} ${post.subtitle} ${post.summary}`.toLowerCase().includes(lowerName);
+    const bodyHit = `${post.title} ${post.subtitle} ${post.summary}`
+      .toLowerCase()
+      .includes(lowerName);
     return stackHit || tagHit || bodyHit;
   });
   return { linkedProjects, linkedPosts };
@@ -100,49 +216,63 @@ const educationHighlights = [
 const categoryDetails: Record<string, { kicker: string; description: string }> = {
   Language: {
     kicker: "Implementation languages",
-    description: "Programming languages I use to build AI experiments, robotics logic, security automation, data workflows, and production-facing tools.",
+    description:
+      "Programming languages I use to build AI experiments, robotics logic, security automation, data workflows, and production-facing tools.",
   },
   ML: {
     kicker: "Applied model-building lane",
-    description: "Machine learning, data science, evaluation, EDA, model design, and research adaptation skills connected to coursework, certifications, and product work.",
+    description:
+      "Machine learning, data science, evaluation, EDA, model design, and research adaptation skills connected to coursework, certifications, and product work.",
   },
   "AI Tools & Workflow": {
     kicker: "AI acceleration and model ecosystem",
-    description: "Claude, ChatGPT, Copilot, Hugging Face, and model tools I use to prototype faster, build responsibly, and turn ideas into implementation plans.",
+    description:
+      "Claude, ChatGPT, Copilot, Hugging Face, and model tools I use to prototype faster, build responsibly, and turn ideas into implementation plans.",
   },
   Robotics: {
     kicker: "Robotics, perception, and autonomy lane",
-    description: "Autonomy, computer vision, sensor fusion, controls, simulation, and real-time vehicle/robotics skills tied to OBSERV-E, EcoCAR, and accessibility robotics.",
+    description:
+      "Autonomy, computer vision, sensor fusion, controls, simulation, and real-time vehicle/robotics skills tied to OBSERV-E, EcoCAR, and accessibility robotics.",
   },
   Cloud: {
     kicker: "Cloud and AI infrastructure",
-    description: "AWS, Azure, databases, CI/CD, and cloud workflow skills tied to AI product delivery and professional software automation work.",
+    description:
+      "AWS, Azure, databases, CI/CD, and cloud workflow skills tied to AI product delivery and professional software automation work.",
   },
   "Backend & Integrations": {
     kicker: "Systems and integration layer",
-    description: "Linux development, APIs, automation, requirements, testing, backend services, Microsoft Graph, FastAPI, scripting, and integration glue that connect models, data, workflows, and users.",
+    description:
+      "Linux development, APIs, automation, requirements, testing, backend services, Microsoft Graph, FastAPI, scripting, and integration glue that connect models, data, workflows, and users.",
   },
   "Security & Domain": {
     kicker: "Security and domain automation",
-    description: "DNS, SPF, DKIM, DMARC, email-authentication, phishing detection, and domain-focused tooling tied to professional software automation work.",
+    description:
+      "DNS, SPF, DKIM, DMARC, email-authentication, phishing detection, and domain-focused tooling tied to professional software automation work.",
   },
   "Leadership & Professional": {
     kicker: "Leadership and execution",
-    description: "Team leadership, stakeholder alignment, coaching, documentation, workshop design, budgeting, and program-building skills that make technical delivery sustainable.",
+    description:
+      "Team leadership, stakeholder alignment, coaching, documentation, workshop design, budgeting, and program-building skills that make technical delivery sustainable.",
   },
 };
 
 function categoryDetail(category: string) {
-  return categoryDetails[category] ?? { kicker: "Portfolio stack lane", description: "A connected skill area with project, writing, and professional context." };
+  return (
+    categoryDetails[category] ?? {
+      kicker: "Portfolio stack lane",
+      description: "A connected skill area with project, writing, and professional context.",
+    }
+  );
 }
 
 const categoryColorMap: Record<string, string> = {
-  "AI/ML":                  "from-cyan-400 to-blue-500",
-  "AI Tools":               "from-violet-400 to-purple-600",
-  "Backend/Cloud":          "from-sky-400 to-indigo-500",
-  "Languages":              "from-rose-400 to-pink-500",
-  "Robotics":               "from-emerald-400 to-teal-500",
-  "Security & Domain":      "from-amber-400 to-red-500",
+  ML: "from-cyan-400 to-blue-500",
+  "AI Tools & Workflow": "from-violet-400 to-purple-600",
+  "Backend & Integrations": "from-sky-400 to-indigo-500",
+  Cloud: "from-blue-400 to-indigo-500",
+  Language: "from-rose-400 to-pink-500",
+  Robotics: "from-emerald-400 to-teal-500",
+  "Security & Domain": "from-amber-400 to-red-500",
   "Leadership & Professional": "from-amber-300 to-orange-500",
 };
 
@@ -188,48 +318,31 @@ function StackMapPage() {
           skill.category,
           skill.short,
           ...matches.linkedProjects.map((project) => `${project.title} ${project.heroStatement}`),
-          ...matches.linkedPosts.map((post) => `${post.title} ${post.summary} ${post.tags.join(" ")}`),
+          ...matches.linkedPosts.map(
+            (post) => `${post.title} ${post.summary} ${post.tags.join(" ")}`,
+          ),
         ]
           .join(" ")
           .toLowerCase();
         return { ...skill, ...matches, searchText };
       })
-      .sort((a, b) => a.category.localeCompare(b.category) || a.name.localeCompare(b.name));
+      .sort(compareForAiEngineering);
   }, [skills]);
 
   const categories = useMemo(() => {
-    const preferredOrder = ["Language", "ML", "AI Tools & Workflow", "Robotics", "Cloud", "Backend & Integrations", "Security & Domain", "Leadership & Professional"];
     const unique = Array.from(new Set<string>(records.map((item) => item.category)));
     return unique.sort((a, b) => {
-      const ai = preferredOrder.indexOf(a);
-      const bi = preferredOrder.indexOf(b);
+      const ai = AI_CATEGORY_PRIORITY.indexOf(a as (typeof AI_CATEGORY_PRIORITY)[number]);
+      const bi = AI_CATEGORY_PRIORITY.indexOf(b as (typeof AI_CATEGORY_PRIORITY)[number]);
       return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi) || a.localeCompare(b);
     });
   }, [records]);
 
   const featuredJumps = useMemo(() => {
-    const preferred = [
-      "linux-development",
-      "python",
-      "cpp",
-      "java",
-      "machine-learning",
-      "pytorch",
-      "claude",
-      "chatgpt",
-      "hugging-face",
-      "computer-vision",
-      "rtmaps",
-      "sensor-fusion",
-      "aws",
-      "azure",
-      "fastapi",
-      "microsoft-graph-api",
-      "security-automation",
-      "spf-dkim-dmarc",
-    ];
     const bySlug = new Map(records.map((skill) => [skill.slug, skill]));
-    return preferred.map((slug) => bySlug.get(slug)).filter(Boolean) as StackRecord[];
+    return AI_ENGINEER_PRIORITY.slice(0, 18)
+      .map((slug) => bySlug.get(slug))
+      .filter(Boolean) as StackRecord[];
   }, [records]);
 
   const filtered = useMemo(() => {
@@ -252,7 +365,7 @@ function StackMapPage() {
         if (s.short.toLowerCase().includes(searchTerm)) return 6;
         return 7;
       };
-      return score(a) - score(b) || a.name.localeCompare(b.name);
+      return score(a) - score(b) || compareForAiEngineering(a, b);
     });
   }, [activeCategory, records, searchTerm]);
 
@@ -262,12 +375,24 @@ function StackMapPage() {
   const visibleSkills = filtered.slice(startIndex, startIndex + STACK_ITEMS_PER_PAGE);
   const pageNumbers = getPageNumbers(currentPage, totalPages);
 
-  const totalProjectLinks = useMemo(() => records.reduce((sum, skill) => sum + skill.linkedProjects.length, 0), [records]);
-  const totalPostLinks = useMemo(() => records.reduce((sum, skill) => sum + skill.linkedPosts.length, 0), [records]);
+  const totalProjectLinks = useMemo(
+    () => records.reduce((sum, skill) => sum + skill.linkedProjects.length, 0),
+    [records],
+  );
+  const totalPostLinks = useMemo(
+    () => records.reduce((sum, skill) => sum + skill.linkedPosts.length, 0),
+    [records],
+  );
 
   return (
-    <MotionPage className="mx-auto w-full max-w-[1580px] px-4 sm:px-6 lg:px-10 py-12 md:py-16 stack-map-page">
-      <section id="top" className="stack-map-hero glass premium-border rounded-[2rem] p-6 md:p-8 lg:p-10 overflow-hidden scroll-mt-28">
+    <MotionPage
+      mood="projects"
+      className="mx-auto w-full max-w-[1580px] px-4 sm:px-6 lg:px-10 py-12 md:py-16 stack-map-page"
+    >
+      <section
+        id="top"
+        className="stack-map-hero glass premium-border rounded-[2rem] p-6 md:p-8 lg:p-10 overflow-hidden scroll-mt-28"
+      >
         <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_34rem] items-center">
           <div>
             <div className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-3.5 py-2 text-xs font-tech uppercase tracking-[0.16em] text-accent">
@@ -277,7 +402,9 @@ function StackMapPage() {
               Stack <span className="text-gradient-rb">Map</span>
             </h1>
             <p className="mt-5 max-w-6xl text-base md:text-lg leading-8 text-muted-foreground">
-              A searchable, paginated map of the tools behind my work: languages, AI workflows, ML, robotics/autonomy, cloud, backend integrations, security automation, systems engineering, and leadership. Tags and article references can now open this page with the exact search already applied, so employers can move from story to evidence in one click.
+              The strongest AI-engineering signals appear first: model building, production
+              delivery, data systems, and applied autonomy. Every skill then connects to project
+              evidence or technical writing for a deeper review.
             </p>
             <div className="mt-6 grid gap-3 sm:grid-cols-3">
               {[
@@ -285,9 +412,14 @@ function StackMapPage() {
                 [projectPages.length, "project pages"],
                 [postPages.length, "articles"],
               ].map(([value, label]) => (
-                <div key={label} className="rounded-2xl border border-border/70 bg-background/35 p-4 text-center shadow-lg shadow-blue-950/20">
+                <div
+                  key={label}
+                  className="rounded-2xl border border-border/70 bg-background/35 p-4 text-center shadow-lg shadow-blue-950/20"
+                >
                   <div className="font-logo text-2xl md:text-4xl text-accent">{value}</div>
-                  <div className="mt-1 text-[10px] uppercase tracking-[0.15em] text-muted-foreground">{label}</div>
+                  <div className="mt-1 text-[10px] uppercase tracking-[0.15em] text-muted-foreground">
+                    {label}
+                  </div>
                 </div>
               ))}
             </div>
@@ -306,27 +438,42 @@ function StackMapPage() {
         <div className="stack-summary-card rounded-3xl glass p-6 premium-border">
           <Sparkles className="h-5 w-5 text-accent" />
           <div className="mt-4 font-display text-xl">Evidence, not keywords</div>
-          <p className="mt-2 text-sm leading-6 text-muted-foreground">Every entry connects to shipped work, a real role, or a documented outcome — not a self-reported badge.</p>
+          <p className="mt-2 text-sm leading-6 text-muted-foreground">
+            Every entry connects to shipped work, a real role, or a documented outcome — not a
+            self-reported badge.
+          </p>
         </div>
         <div className="stack-summary-card rounded-3xl glass p-6 premium-border">
           <div className="font-logo text-3xl text-gradient-rb">{records.length}</div>
           <div className="mt-3 font-display text-xl">Skills with evidence</div>
-          <p className="mt-2 text-sm leading-6 text-muted-foreground">Each entry is backed by a project, role, or technical write-up, traceable from this page.</p>
+          <p className="mt-2 text-sm leading-6 text-muted-foreground">
+            Each entry is backed by a project, role, or technical write-up, traceable from this
+            page.
+          </p>
         </div>
         <div className="stack-summary-card rounded-3xl glass p-6 premium-border">
           <div className="font-logo text-3xl text-gradient-rb">{categories.length}</div>
           <div className="mt-3 font-display text-xl">Technical domains</div>
-          <p className="mt-2 text-sm leading-6 text-muted-foreground">AI/ML, robotics, security, cloud, backend, systems, and leadership. Breadth with depth in each.</p>
+          <p className="mt-2 text-sm leading-6 text-muted-foreground">
+            AI/ML, robotics, security, cloud, backend, systems, and leadership. Breadth with depth
+            in each.
+          </p>
         </div>
         <div className="stack-summary-card rounded-3xl glass p-6 premium-border">
           <div className="font-logo text-3xl text-gradient-rb">{totalProjectLinks}</div>
           <div className="mt-3 font-display text-xl">Skill → project links</div>
-          <p className="mt-2 text-sm leading-6 text-muted-foreground">Cross-references between individual skills and case studies. Trace any capability back to real work.</p>
+          <p className="mt-2 text-sm leading-6 text-muted-foreground">
+            Cross-references between individual skills and case studies. Trace any capability back
+            to real work.
+          </p>
         </div>
         <div className="stack-summary-card rounded-3xl glass p-6 premium-border">
           <div className="font-logo text-3xl text-gradient-rb">{totalPostLinks}</div>
           <div className="mt-3 font-display text-xl">Skill → article links</div>
-          <p className="mt-2 text-sm leading-6 text-muted-foreground">Writing tied to technical skills, so employers can see how I explain and apply what I know, not just that I know it.</p>
+          <p className="mt-2 text-sm leading-6 text-muted-foreground">
+            Writing tied to technical skills, so employers can see how I explain and apply what I
+            know, not just that I know it.
+          </p>
         </div>
       </section>
 
@@ -345,26 +492,48 @@ function StackMapPage() {
         />
       </section>
 
-      <nav className="stack-horizontal-nav mt-10 mb-12 glass premium-border rounded-[1.75rem] p-4 md:p-5" aria-label="Stack map jump navigation">
+      <nav
+        className="stack-horizontal-nav mt-10 mb-12 glass premium-border rounded-[1.75rem] p-4 md:p-5"
+        aria-label="Stack map jump navigation"
+      >
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-2 text-sm font-tech uppercase tracking-[0.14em] text-foreground">
               <Layers3 className="h-4 w-4 text-accent" /> Quick jumps
             </div>
-            <button onClick={() => jumpTo("stack-list")} className="inline-flex w-fit items-center gap-2 rounded-full border border-border/70 bg-background/30 px-3.5 py-2 text-xs font-tech uppercase tracking-[0.12em] text-muted-foreground hover:text-accent hover:border-accent/70 transition">
+            <button
+              onClick={() => jumpTo("stack-list")}
+              className="inline-flex w-fit items-center gap-2 rounded-full border border-border/70 bg-background/30 px-3.5 py-2 text-xs font-tech uppercase tracking-[0.12em] text-muted-foreground hover:text-accent hover:border-accent/70 transition"
+            >
               Open stack list <ArrowDownRight className="h-3.5 w-3.5" />
             </button>
           </div>
           <div className="stack-chip-row">
             {categories.map((category) => (
-              <button key={category} onClick={() => { setActiveCategory(category); jumpTo("stack-list"); }} className="stack-jump-chip stack-jump-chip-primary">
+              <button
+                key={category}
+                onClick={() => {
+                  setActiveCategory(category);
+                  jumpTo("stack-list");
+                }}
+                className="stack-jump-chip stack-jump-chip-primary"
+              >
                 {category}
               </button>
             ))}
           </div>
           <div className="stack-chip-row">
             {featuredJumps.map((skill) => (
-              <button key={skill.slug} onClick={() => { setActiveCategory("all"); setSearchTerm(skill.name.toLowerCase()); jumpTo("stack-list"); }} className="stack-jump-chip stack-jump-chip-skill" title={`Search for ${skill.name}`}>
+              <button
+                key={skill.slug}
+                onClick={() => {
+                  setActiveCategory("all");
+                  setSearchTerm(skill.name.toLowerCase());
+                  jumpTo("stack-list");
+                }}
+                className="stack-jump-chip stack-jump-chip-skill"
+                title={`Search for ${skill.name}`}
+              >
                 {skill.name}
               </button>
             ))}
@@ -373,16 +542,32 @@ function StackMapPage() {
       </nav>
 
       <SectionReveal>
-        <section id="stack-education" className="stack-section scroll-mt-36 rounded-[2rem] border border-border/70 bg-background/25 p-5 sm:p-7 lg:p-8">
+        <section
+          id="stack-education"
+          className="stack-section scroll-mt-36 rounded-[2rem] border border-border/70 bg-background/25 p-5 sm:p-7 lg:p-8"
+        >
           <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
             <div>
-              <div className="text-[11px] uppercase tracking-[0.22em] text-accent">Education & certifications</div>
-              <h2 className="mt-2 text-3xl md:text-4xl font-display font-bold">Credential-backed foundation</h2>
+              <div className="text-[11px] uppercase tracking-[0.22em] text-accent">
+                Education & certifications
+              </div>
+              <h2 className="mt-2 text-3xl md:text-4xl font-display font-bold">
+                Credential-backed foundation
+              </h2>
             </div>
-            <button onClick={() => jumpTo("top")} className="stack-back-button"><ArrowUp className="h-3.5 w-3.5" /> Back to top</button>
+            <button onClick={() => jumpTo("top")} className="stack-back-button">
+              <ArrowUp className="h-3.5 w-3.5" /> Back to top
+            </button>
           </div>
           <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-            {educationHighlights.map((item) => <div key={item} className="glass rounded-2xl p-5 text-sm leading-7 text-muted-foreground premium-border">{item}</div>)}
+            {educationHighlights.map((item) => (
+              <div
+                key={item}
+                className="glass rounded-2xl p-5 text-sm leading-7 text-muted-foreground premium-border"
+              >
+                {item}
+              </div>
+            ))}
           </div>
         </section>
       </SectionReveal>
@@ -391,13 +576,20 @@ function StackMapPage() {
         <div className="rounded-[2rem] border border-border/70 bg-background/25 p-5 sm:p-7 lg:p-8">
           <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
             <div>
-              <div className="text-[11px] uppercase tracking-[0.22em] text-accent">Searchable Stack Map</div>
-              <h2 className="mt-2 text-3xl md:text-4xl font-display font-bold">Find the tools behind the work</h2>
+              <div className="text-[11px] uppercase tracking-[0.22em] text-accent">
+                Searchable Stack Map
+              </div>
+              <h2 className="mt-2 text-3xl md:text-4xl font-display font-bold">
+                AI-engineering strengths, ranked for a fast scan
+              </h2>
               <p className="mt-3 max-w-3xl text-sm md:text-base leading-7 text-muted-foreground">
-                Search by tool, category, project, or topic. The results are paginated so the page does not overload the browser.
+                The default order prioritizes what matters most for AI engineering roles. Search or
+                filter when you want to trace a specific capability into the work behind it.
               </p>
             </div>
-            <button onClick={() => jumpTo("top")} className="stack-back-button"><ArrowUp className="h-3.5 w-3.5" /> Back to top</button>
+            <button onClick={() => jumpTo("top")} className="stack-back-button">
+              <ArrowUp className="h-3.5 w-3.5" /> Back to top
+            </button>
           </div>
 
           <div className="mt-7 flex flex-wrap gap-3 items-center">
@@ -411,9 +603,18 @@ function StackMapPage() {
               focusSignal={searchFocusSignal}
             />
             <div className="flex flex-wrap gap-2">
-              <button onClick={() => setActiveCategory("all")} className={`text-xs px-3 py-1.5 rounded-full transition living-chip ${activeCategory === "all" ? "bg-gradient-rb text-background font-semibold" : "glass"}`}>All</button>
+              <button
+                onClick={() => setActiveCategory("all")}
+                className={`text-xs px-3 py-1.5 rounded-full transition living-chip ${activeCategory === "all" ? "bg-gradient-rb text-background font-semibold" : "glass"}`}
+              >
+                All
+              </button>
               {categories.map((category) => (
-                <button key={category} onClick={() => setActiveCategory(category)} className={`text-xs px-3 py-1.5 rounded-full transition living-chip ${activeCategory === category ? `bg-gradient-to-r ${categoryGradient(category)} text-background font-semibold` : "glass hover:bg-muted/40"}`}>
+                <button
+                  key={category}
+                  onClick={() => setActiveCategory(category)}
+                  className={`text-xs px-3 py-1.5 rounded-full transition living-chip ${activeCategory === category ? `bg-gradient-to-r ${categoryGradient(category)} text-background font-semibold` : "glass hover:bg-muted/40"}`}
+                >
                   {category}
                 </button>
               ))}
@@ -422,25 +623,42 @@ function StackMapPage() {
 
           {searchTerm ? (
             <div className="mt-5 rounded-2xl border border-accent/40 bg-accent/10 px-4 py-3 text-sm text-slate-100">
-              Showing Stack Map evidence for <span className="font-semibold text-accent">{searchTerm}</span>. Clear the search box to return to the full map.
+              Showing Stack Map evidence for{" "}
+              <span className="font-semibold text-accent">{searchTerm}</span>. Clear the search box
+              to return to the full map.
             </div>
           ) : null}
 
           <div className="mt-6 flex flex-wrap items-center justify-between gap-3 text-sm text-muted-foreground">
             <div>
-              Showing <span className="text-foreground font-semibold">{visibleSkills.length}</span> of <span className="text-foreground font-semibold">{filtered.length}</span> matching stack items
-              {filtered.length > STACK_ITEMS_PER_PAGE ? <span> · page {currentPage} of {totalPages}</span> : null}
+              Showing <span className="text-foreground font-semibold">{visibleSkills.length}</span>{" "}
+              of <span className="text-foreground font-semibold">{filtered.length}</span> matching
+              stack items
+              {filtered.length > STACK_ITEMS_PER_PAGE ? (
+                <span>
+                  {" "}
+                  · page {currentPage} of {totalPages}
+                </span>
+              ) : null}
             </div>
-            {activeCategory !== "all" ? <div className="rounded-full border border-border px-3 py-1 text-xs text-accent">{categoryDetail(activeCategory).kicker}</div> : null}
+            {activeCategory !== "all" ? (
+              <div className="rounded-full border border-border px-3 py-1 text-xs text-accent">
+                {categoryDetail(activeCategory).kicker}
+              </div>
+            ) : null}
           </div>
 
           {activeCategory !== "all" && (
-            <p className="mt-3 max-w-4xl text-sm leading-7 text-muted-foreground">{categoryDetail(activeCategory).description}</p>
+            <p className="mt-3 max-w-4xl text-sm leading-7 text-muted-foreground">
+              {categoryDetail(activeCategory).description}
+            </p>
           )}
 
           <div className="mt-8 grid md:grid-cols-2 xl:grid-cols-3 gap-7 lg:gap-9">
             {filtered.length === 0 && (
-              <div className="col-span-full glass rounded-2xl p-10 text-center text-muted-foreground">No stack items match that search yet.</div>
+              <div className="col-span-full glass rounded-2xl p-10 text-center text-muted-foreground">
+                No stack items match that search yet.
+              </div>
             )}
             {visibleSkills.map((skill) => (
               <StackCard key={skill.slug} skill={skill} />
@@ -448,12 +666,30 @@ function StackMapPage() {
           </div>
 
           {filtered.length > STACK_ITEMS_PER_PAGE && (
-            <nav className="mt-10 flex flex-wrap items-center justify-center gap-2" aria-label="Stack map pagination">
-              <PageLink page={Math.max(1, currentPage - 1)} disabled={currentPage === 1} label="Previous" icon="prev" />
+            <nav
+              className="mt-10 flex flex-wrap items-center justify-center gap-2"
+              aria-label="Stack map pagination"
+            >
+              <PageLink
+                page={Math.max(1, currentPage - 1)}
+                disabled={currentPage === 1}
+                label="Previous"
+                icon="prev"
+              />
               {pageNumbers.map((pageNumber) => (
-                <PageLink key={pageNumber} page={pageNumber} active={pageNumber === currentPage} label={String(pageNumber)} />
+                <PageLink
+                  key={pageNumber}
+                  page={pageNumber}
+                  active={pageNumber === currentPage}
+                  label={String(pageNumber)}
+                />
               ))}
-              <PageLink page={Math.min(totalPages, currentPage + 1)} disabled={currentPage === totalPages} label="Next" icon="next" />
+              <PageLink
+                page={Math.min(totalPages, currentPage + 1)}
+                disabled={currentPage === totalPages}
+                label="Next"
+                icon="next"
+              />
             </nav>
           )}
         </div>
@@ -464,12 +700,16 @@ function StackMapPage() {
 
 function StackCard({ skill }: { skill: StackRecord }) {
   return (
-    <article id={`skill-${skill.slug}`} className="skill-context-card scroll-mt-36 rounded-3xl border border-border/70 bg-background/45 p-5 md:p-6 premium-border">
+    <article
+      id={`skill-${skill.slug}`}
+      className="skill-context-card scroll-mt-36 rounded-3xl border border-border/70 bg-background/45 p-5 md:p-6 premium-border"
+    >
       <div className="stack-card-image-wrap mb-5">
-        <img
+        <ImmersiveImage
           src={skillImagePath(skill.slug)}
           alt={`${skill.name} stack visual`}
-          loading="lazy"
+          aspect="aspect-[16/10]"
+          variant="gallery"
           className="stack-card-image"
         />
       </div>
@@ -483,31 +723,66 @@ function StackCard({ skill }: { skill: StackRecord }) {
 
       <div className="mt-6 grid gap-4 md:grid-cols-2">
         <div>
-          <div className="mb-3 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Related projects</div>
+          <div className="mb-3 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+            Related projects
+          </div>
           <div className="space-y-2.5">
             {skill.linkedProjects.slice(0, 3).map((project) => (
-              <Link key={project.slug} to="/projects/$slug" params={{ slug: project.slug }} className="stack-context-link">
-                <span>{project.title}</span><ArrowDownRight className="h-3.5 w-3.5" />
+              <Link
+                key={project.slug}
+                to="/projects/$slug"
+                params={{ slug: project.slug }}
+                className="stack-context-link"
+              >
+                <span>{project.title}</span>
+                <ArrowDownRight className="h-3.5 w-3.5" />
               </Link>
             ))}
-            {skill.linkedProjects.length === 0 && <Link to="/resume" className="stack-context-link"><span>See resume context</span><ArrowDownRight className="h-3.5 w-3.5" /></Link>}
+            {skill.linkedProjects.length === 0 && (
+              <Link to="/resume" className="stack-context-link">
+                <span>See resume context</span>
+                <ArrowDownRight className="h-3.5 w-3.5" />
+              </Link>
+            )}
           </div>
         </div>
         <div>
-          <div className="mb-3 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Related writing</div>
+          <div className="mb-3 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+            Related writing
+          </div>
           <div className="space-y-2.5">
             {skill.linkedPosts.slice(0, 3).map((post) => (
-              <Link key={post.slug} to="/posts/$slug" params={{ slug: post.slug }} className="stack-context-link">
-                <span>{post.title}</span><ArrowDownRight className="h-3.5 w-3.5" />
+              <Link
+                key={post.slug}
+                to="/posts/$slug"
+                params={{ slug: post.slug }}
+                className="stack-context-link"
+              >
+                <span>{post.title}</span>
+                <ArrowDownRight className="h-3.5 w-3.5" />
               </Link>
             ))}
-            {skill.linkedPosts.length === 0 && <Link to="/posts/$slug" params={{ slug: `stack-${skill.slug}` }} className="stack-context-link"><span>Read generated stack note</span><ArrowDownRight className="h-3.5 w-3.5" /></Link>}
+            {skill.linkedPosts.length === 0 && (
+              <Link
+                to="/posts/$slug"
+                params={{ slug: `stack-${skill.slug}` }}
+                className="stack-context-link"
+              >
+                <span>Read generated stack note</span>
+                <ArrowDownRight className="h-3.5 w-3.5" />
+              </Link>
+            )}
           </div>
         </div>
       </div>
 
       {skill.link && (
-        <a href={skill.link} target="_blank" rel="noreferrer" className="mt-6 inline-flex items-center gap-2 text-xs font-tech uppercase tracking-[0.12em] text-accent hover:underline">
+        <a
+          href={skill.link}
+          target="_blank"
+          rel="noreferrer"
+          className="mt-6 inline-flex items-center gap-2 text-xs font-tech uppercase tracking-[0.12em] text-accent hover:underline"
+        >
           Reference <ExternalLink className="h-3.5 w-3.5" />
         </a>
       )}
@@ -515,7 +790,19 @@ function StackCard({ skill }: { skill: StackRecord }) {
   );
 }
 
-function PageLink({ page, label, active = false, disabled = false, icon }: { page: number; label: string; active?: boolean; disabled?: boolean; icon?: "prev" | "next" }) {
+function PageLink({
+  page,
+  label,
+  active = false,
+  disabled = false,
+  icon,
+}: {
+  page: number;
+  label: string;
+  active?: boolean;
+  disabled?: boolean;
+  icon?: "prev" | "next";
+}) {
   const { q, category } = Route.useSearch();
   const content = (
     <>
@@ -526,7 +813,11 @@ function PageLink({ page, label, active = false, disabled = false, icon }: { pag
   );
 
   if (disabled) {
-    return <span className="inline-flex items-center gap-1 rounded-full border border-border px-4 py-2 text-sm text-muted-foreground/50 cursor-not-allowed">{content}</span>;
+    return (
+      <span className="inline-flex items-center gap-1 rounded-full border border-border px-4 py-2 text-sm text-muted-foreground/50 cursor-not-allowed">
+        {content}
+      </span>
+    );
   }
 
   return (

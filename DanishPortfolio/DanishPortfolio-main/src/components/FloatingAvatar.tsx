@@ -68,6 +68,7 @@ function ScreenAvatarStage({ media, open, speaking }: { media: AvatarMedia; open
 export function FloatingAvatar() {
   const [open, setOpen] = useState(false);
   const [minimized, setMinimized] = useState(false);
+  const [hasUnreadResponse, setHasUnreadResponse] = useState(false);
   const [speaking, setSpeaking] = useState(false);
   const [avatarStatus, setAvatarStatus] = useState<AvatarBridgeStatus | null>(null);
   const [avatarMedia, setAvatarMedia] = useState<AvatarMedia>({ kind: "image", src: "/avatar/danish.jpg", status: "offline" });
@@ -79,6 +80,7 @@ export function FloatingAvatar() {
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const requestIdRef = useRef(0);
+  const panelVisibleRef = useRef(false);
 
   // Add/remove dn-engine-open on <html> when the panel opens or closes.
   // No separate dn-input-active toggle — that extra DOM mutation on focus
@@ -86,6 +88,7 @@ export function FloatingAvatar() {
   useEffect(() => {
     const root = document.documentElement;
     const body = document.body;
+    panelVisibleRef.current = open && !minimized;
     if (open && !minimized) {
       root.classList.add("dn-engine-open");
       body.classList.add("dn-engine-open");
@@ -235,6 +238,7 @@ export function FloatingAvatar() {
         msgsRef.current = next;
         return next;
       });
+      if (!panelVisibleRef.current) setHasUnreadResponse(true);
       let speechHandled = false;
       ttsFallbackTimeoutRef.current = window.setTimeout(() => {
         if (requestIdRef.current !== requestId || speechHandled) return;
@@ -278,11 +282,13 @@ export function FloatingAvatar() {
         msgsRef.current = next;
         return next;
       });
+      if (!panelVisibleRef.current) setHasUnreadResponse(true);
       stopSpeakingSoon(1200);
     }
   }, [playGeneratedSpeech, speakReply, stopSpeakingSoon]);
 
   const closePanel = useCallback(() => {
+    panelVisibleRef.current = false;
     setOpen(false);
     setSpeaking(false);
     if ("speechSynthesis" in window) window.speechSynthesis.cancel();
@@ -298,15 +304,36 @@ export function FloatingAvatar() {
     if (speakingTimeoutRef.current) window.clearTimeout(speakingTimeoutRef.current);
   }, []);
 
+  const openPanel = useCallback(() => {
+    panelVisibleRef.current = true;
+    setHasUnreadResponse(false);
+    setMinimized(false);
+    setOpen(true);
+  }, []);
+
+  const togglePanel = useCallback(() => {
+    if (open) {
+      closePanel();
+      return;
+    }
+    openPanel();
+  }, [closePanel, open, openPanel]);
+
   if (minimized) {
     return (
       <button
         type="button"
-        onClick={() => { setMinimized(false); setOpen(true); }}
+        onClick={openPanel}
         className="dn-response-trigger"
-        aria-label="Open Danish AI guide"
+        aria-label={hasUnreadResponse ? "Open unread DN Engine response" : "Open Danish AI guide"}
       >
         <FloatingDNLogo speaking={speaking} />
+        {hasUnreadResponse && (
+          <span
+            className="absolute right-2 top-2 h-3.5 w-3.5 rounded-full bg-secondary ring-2 ring-background"
+            aria-hidden="true"
+          />
+        )}
       </button>
     );
   }
@@ -315,13 +342,24 @@ export function FloatingAvatar() {
     <>
       <button
         type="button"
-        onClick={() => setOpen((v) => !v)}
+        onClick={togglePanel}
         className="dn-response-trigger group"
-        aria-label={open ? "Close Danish AI guide" : "Talk to Danish's AI guide"}
+        aria-label={
+          open
+            ? "Close Danish AI guide"
+            : hasUnreadResponse
+              ? "Open unread DN Engine response"
+              : "Talk to Danish's AI guide"
+        }
         aria-expanded={open}
       >
         <FloatingDNLogo speaking={speaking} />
-        <span className="absolute right-2 top-2 h-3.5 w-3.5 rounded-full bg-secondary ring-2 ring-background" />
+        {hasUnreadResponse && (
+          <span
+            className="absolute right-2 top-2 h-3.5 w-3.5 rounded-full bg-secondary ring-2 ring-background"
+            aria-hidden="true"
+          />
+        )}
         <span className="dn-response-hover-label pointer-events-none absolute whitespace-nowrap px-3 py-1 rounded-full text-xs opacity-0 group-hover:opacity-100 transition">
           Ask the DN response engine
         </span>
@@ -350,7 +388,15 @@ export function FloatingAvatar() {
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <button type="button" onClick={() => setMinimized(true)} className="p-2 text-muted-foreground hover:text-foreground" aria-label="Minimize">
+                <button
+                  type="button"
+                  onClick={() => {
+                    panelVisibleRef.current = false;
+                    setMinimized(true);
+                  }}
+                  className="p-2 text-muted-foreground hover:text-foreground"
+                  aria-label="Minimize"
+                >
                   <Minimize2 className="h-4 w-4" />
                 </button>
                 <button type="button" onClick={closePanel} className="p-2 text-muted-foreground hover:text-foreground" aria-label="Close">

@@ -1252,32 +1252,6 @@ export const generatedStackPosts: PostPageContent[] = [
     "nextActions": []
   },
   {
-    "slug": "stack-triposr",
-    "title": "Stability AI TripoSR: How I Use It to Build Stronger AI Systems",
-    "subtitle": "A complete stack note on Stability AI TripoSR and how it supports my AI Tools & Workflow work.",
-    "postType": "stack_note",
-    "status": "published",
-    "writtenDate": "2026-05-29",
-    "summary": "Stability AI TripoSR supports my portfolio as a AI engineering workflow layer: Single-image 3D reconstruction model tested during the avatar pipeline before pivoting to rigged avatars and stronger portfolio visuals.",
-    "body": "![Stability AI TripoSR visual](/portfolio_images/stackmap/triposr.jpg)\n\n## Why Stability AI TripoSR belongs in my stack\n\nStability AI TripoSR is part of how I turn ideas into systems that can be explained, tested, and improved. In my portfolio, it is not listed as decoration; it shows up because it supports real work across projects, prototypes, research, automation, or leadership.\n\n## How I use it\n\nSingle-image 3D reconstruction model tested during the avatar pipeline before pivoting to rigged avatars and stronger portfolio visuals.\n\nFor me, the value of Stability AI TripoSR is practical: it helps me move from uncertainty to a clearer implementation path. I use it to break down problems, compare options, build faster, communicate tradeoffs, and keep the work connected to outcomes instead of just tools.\n\n![Stability AI TripoSR in the Stack Map](/portfolio_images/stackmap/triposr.jpg)\n\n## Where it appears in my work\n\nThis stack item connects to AILA · AI Leadership Avatar.\n\nThat connection is important. A strong portfolio should not read like a keyword list. It should show how each capability helps build something useful.\n\n## What an employer should notice\n\nStability AI TripoSR shows my ability to work across the AI engineering workflow layer. It reflects the way I approach engineering: understand the problem, choose the right tool, build under constraints, validate the result, and explain the work clearly.\n\n![AI engineering workstation](/portfolio_images/stackmap/workstation-stack.jpg)\n\n## My standard for using it well\n\nI want every tool in my stack to serve a purpose. If it helps me prototype faster, test more honestly, deploy more reliably, or communicate more clearly, then it earns its place. Stability AI TripoSR earns its place because it helps me build with more precision and more impact.",
-    "tags": [
-      "AI Tools & Workflow",
-      "Stability AI TripoSR",
-      "Stack Map",
-      "AI Engineering"
-    ],
-    "relatedProjectSlugs": [
-      "aila-avatar"
-    ],
-    "relatedStack": [
-      "triposr",
-      "Stability AI TripoSR",
-      "AI Tools & Workflow"
-    ],
-    "suggestedImages": [],
-    "nextActions": []
-  },
-  {
     "slug": "stack-coqui-xtts-v2",
     "title": "coqui XTTS-v2: How I Use It to Build Stronger AI Systems",
     "subtitle": "A complete stack note on coqui XTTS-v2 and how it supports my AI Tools & Workflow work.",
@@ -2542,33 +2516,6 @@ export const generatedStackPosts: PostPageContent[] = [
     "relatedStack": [
       "software-development-life-cycle",
       "Software Development Life Cycle",
-      "Backend & Integrations"
-    ],
-    "suggestedImages": [],
-    "nextActions": []
-  },
-  {
-    "slug": "stack-streamlit",
-    "title": "Streamlit: How I Use It to Build Stronger AI Systems",
-    "subtitle": "A complete stack note on Streamlit and how it supports my Backend & Integrations work.",
-    "postType": "stack_note",
-    "status": "published",
-    "writtenDate": "2026-05-29",
-    "summary": "Streamlit supports my portfolio as a integration layer: Python-to-web internal tool framework used to make automation accessible to non-technical users.",
-    "body": "![Streamlit visual](/portfolio_images/stackmap/streamlit.jpg)\n\n## Why Streamlit belongs in my stack\n\nStreamlit is part of how I turn ideas into systems that can be explained, tested, and improved. In my portfolio, it is not listed as decoration; it shows up because it supports real work across projects, prototypes, research, automation, or leadership.\n\n## How I use it\n\nPython-to-web internal tool framework used to make automation accessible to non-technical users.\n\nFor me, the value of Streamlit is practical: it helps me move from uncertainty to a clearer implementation path. I use it to break down problems, compare options, build faster, communicate tradeoffs, and keep the work connected to outcomes instead of just tools.\n\n![Streamlit in the Stack Map](/portfolio_images/stackmap/streamlit.jpg)\n\n## Where it appears in my work\n\nThis stack item connects to TTP DNS Screening & Outreach Automation, A Little Tech For You · In-progress AI Guide for Older Adults.\n\nThat connection is important. A strong portfolio should not read like a keyword list. It should show how each capability helps build something useful.\n\n## What an employer should notice\n\nStreamlit shows my ability to work across the integration layer. It reflects the way I approach engineering: understand the problem, choose the right tool, build under constraints, validate the result, and explain the work clearly.\n\n![AI engineering workstation](/portfolio_images/stackmap/workstation-stack.jpg)\n\n## My standard for using it well\n\nI want every tool in my stack to serve a purpose. If it helps me prototype faster, test more honestly, deploy more reliably, or communicate more clearly, then it earns its place. Streamlit earns its place because it helps me build with more precision and more impact.",
-    "tags": [
-      "Backend & Integrations",
-      "Streamlit",
-      "Stack Map",
-      "AI Engineering"
-    ],
-    "relatedProjectSlugs": [
-      "ttp-outreach-automation",
-      "a-little-tech-for-you"
-    ],
-    "relatedStack": [
-      "streamlit",
-      "Streamlit",
       "Backend & Integrations"
     ],
     "suggestedImages": [],

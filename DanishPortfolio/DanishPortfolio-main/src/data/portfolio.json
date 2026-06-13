@@ -10,7 +10,7 @@
   "homeMetrics": [
     {
       "value": "16+",
-      "label": "Deep technical case studies"
+      "label": "Purposeful technical chapters"
     },
     {
       "value": "244+",
@@ -29,7 +29,7 @@
     {
       "icon": "roboticsLane",
       "title": "Accessibility Robotics",
-      "copy": "OBSERV-E, GRVI, DRVI, and HRVI connect assistive robotics with direct user feedback.",
+      "copy": "OBSERV-E, GRVI, DRVI, and HRVI connect assistive robotics with guidance designed around dignity, patience, and direct user feedback.",
       "points": [
         "Guide robot for visually impaired users",
         "Drone support for broader perception",
@@ -39,7 +39,7 @@
     {
       "icon": "appliedAI",
       "title": "Applied AI",
-      "copy": "Models, agents, and voice systems that move past demo mode.",
+      "copy": "Models, agents, and voice systems shaped into tools people can understand, trust, and use.",
       "points": [
         "LLM and speech prototypes",
         "Classification and anomaly detection",
@@ -49,7 +49,7 @@
     {
       "icon": "roboticsLane",
       "title": "Robotics",
-      "copy": "Real-time validation, perception, and autonomy support.",
+      "copy": "Real-time validation, perception, and autonomy work grounded in safer movement.",
       "points": [
         "Sensor fusion with RTMaps + C++",
         "Lead vehicle and driver monitoring work",
@@ -59,7 +59,7 @@
     {
       "icon": "securityLane",
       "title": "Cybersecurity",
-      "copy": "Operational tools that reduce manual effort and improve visibility.",
+      "copy": "Operational tools that reduce manual effort, improve visibility, and give teams more room for judgment.",
       "points": [
         "SPF, DKIM, and DMARC automation",
         "Reporting and downstream integrations",
@@ -69,7 +69,7 @@
     {
       "icon": "productLane",
       "title": "Product Systems",
-      "copy": "Cloud tooling, product clarity, and practical delivery.",
+      "copy": "Cloud tooling, product clarity, and practical delivery for ideas that need to become dependable.",
       "points": [
         "Azure, Supabase, and deployment tooling",
         "Internal tools and AI-facing product work",
@@ -105,11 +105,11 @@
       "period": "2026\u2013Present",
       "role": "Founder / technical product lead",
       "summary": "OBSERV-E is an accessibility robotics umbrella focused on helping visually impaired users perceive, navigate, and receive environmental guidance through robots, drones, and haptic feedback.",
-      "showcase": "Special section for GRVI, DRVI, and HRVI as one connected accessibility system.",
+      "showcase": "A chapter about turning robotics curiosity into service: GRVI, DRVI, and HRVI as one connected accessibility system.",
       "visualType": "sensor",
       "visualLabel": "OBSERV-E system map",
       "visualHint": "Robot vision, direct Bluetooth signaling, and haptic user feedback.",
-      "image": "project-observ-e.svg",
+      "image": "/portfolio_images/articles/starkhacks-observ-e-article.jpg",
       "skills": [
         "Robotics",
         "Computer Vision",
@@ -152,11 +152,11 @@
       "period": "ScarletHacks \u00b7 2026",
       "role": "AI/product engineering contributor",
       "summary": "Built a team M&A intelligence prototype at ScarletHacks, exploring financial-data workflows, LLM-assisted article analysis, valuation context, ESG-style graphing, and merger-lab comparisons.",
-      "showcase": "A financial AI prototype that demonstrates domain research, product judgment, API planning, and deployment/debugging awareness.",
+      "showcase": "A financial AI prototype shaped around domain research, careful assumptions, product judgment, API planning, and deployment/debugging awareness.",
       "visualType": "workflow",
       "visualLabel": "M&A intelligence flow",
       "visualHint": "Financial data, news context, LLM insight extraction, valuation assumptions, and merger comparison.",
-      "image": "project-starkhacks.svg",
+      "image": "/portfolio_images/stackmap/business-strategy.jpg",
       "skills": [
         "Python",
         "FastAPI",
@@ -169,7 +169,7 @@
       "outcomes": [
         "Created a team prototype for M&A/valuation intelligence during ScarletHacks.",
         "Explored how LLM-assisted summaries and structured data can support company comparison and deal reasoning.",
-        "Identified practical full-stack reliability issues around live APIs, CORS, environment variables, and deployment."
+        "Identified practical reliability issues around live APIs, CORS, environment variables, and deployment."
       ],
       "proof": {
         "python": "Project work involved practical prototype logic and demo-ready implementation.",
@@ -200,18 +200,12 @@
       "period": "2026",
       "role": "Computer vision research project",
       "summary": "Compared backbone architectures and data augmentation strategies for lane detection, simplifying the original 3D problem into a feasible 2D lane-coordinate prediction pipeline.",
-      "showcase": "Research-style ML project comparing robustness, accuracy, and efficiency tradeoffs.",
+      "showcase": "Research-style ML project comparing robustness, accuracy, and efficiency tradeoffs with humility about scope and evidence.",
       "visualType": "classifier",
       "visualLabel": "Lane model comparison",
       "visualHint": "Backbone comparison, augmentation impact, and SALAD-style evaluation.",
-      "image": "project-lane-detection.svg",
-      "skills": [
-        "Python",
-        "Computer Vision",
-        "PyTorch",
-        "Data Augmentation",
-        "Model Evaluation"
-      ],
+      "image": "/portfolio_images/articles/lane-detection-article.jpg",
+      "skills": ["Python", "Computer Vision", "PyTorch", "Data Augmentation", "Model Evaluation"],
       "outcomes": [
         "Compared ResNet-18, EfficientNet-B0, and MobileNetV2 to study accuracy versus efficiency.",
         "Used augmentation such as blur, noise, brightness changes, and shadow simulation to test robustness.",
@@ -246,11 +240,11 @@
       "period": "2026\u2013Present",
       "role": "Founder / AI product builder",
       "summary": "A friendly AI education and tech-support platform that helps older adults understand everyday technology through simple chats, short videos, accessible explainers, and private consulting workflows.",
-      "showcase": "Accessible AI product in progress for baby boomers and families who need patient, practical, plain-language technology guidance.",
+      "showcase": "Accessible AI product in progress for older adults and families who need patient, practical, plain-language technology guidance.",
       "visualType": "ai-guide",
       "visualLabel": "AI tech-guide product loop",
       "visualHint": "Question \u2192 simple explanation \u2192 short tutorial \u2192 optional consulting support.",
-      "image": "project-aila.svg",
+      "image": "/portfolio_images/projects/a-little-tech-for-you-logo.png",
       "skills": [
         "Claude",
         "ChatGPT",
@@ -301,14 +295,8 @@
       "visualType": "sensor",
       "visualLabel": "RL driving simulator",
       "visualHint": "Policy, reward, sensor stack, and lane-keeping behavior.",
-      "image": "project-rl-driving.svg",
-      "skills": [
-        "Python",
-        "Reinforcement Learning",
-        "PPO",
-        "Simulation",
-        "Evaluation"
-      ],
+      "image": "/portfolio_images/articles/rl-lane-article.jpg",
+      "skills": ["Python", "Reinforcement Learning", "PPO", "Simulation", "Evaluation"],
       "outcomes": [
         "Compared Camera, Camera+LiDAR, and full-stack sensing configurations using driving metrics.",
         "Tracked reward, collision rate, off-road rate, task completion, lane deviation, and distance traveled.",
@@ -349,13 +337,7 @@
       "visualType": "terminal",
       "visualLabel": "DNS security automation console",
       "visualHint": "Drop terminal output, dashboard shots, or JSON/CSV reporting visuals here.",
-      "skills": [
-        "Python",
-        "APIs",
-        "JSON/CSV",
-        "Automation",
-        "Security"
-      ],
+      "skills": ["Python", "APIs", "JSON/CSV", "Automation", "Security"],
       "outcomes": [
         "Built a reusable Python workflow for domain email-auth checks.",
         "Designed JSON and CSV reporting for operational use.",
@@ -397,13 +379,7 @@
       "visualType": "voice",
       "visualLabel": "AI avatar experience",
       "visualHint": "Ideal for a rendered avatar still, voice UI, or system architecture snapshot.",
-      "skills": [
-        "Python",
-        "Azure",
-        "Speech",
-        "LLMs",
-        "Product"
-      ],
+      "skills": ["Python", "Azure", "Speech", "LLMs", "Product"],
       "outcomes": [
         "Explores how speech, presence, and guidance can feel more human on the web.",
         "Connects AI orchestration with design, narrative, and accessibility.",
@@ -417,7 +393,7 @@
       "detailCards": [
         {
           "title": "Avatar render",
-          "note": "Place a hero render or 3D scene still here."
+          "note": "Use a cinematic avatar or leadership-interface visual that shows the AI guide as an immersive, human-centered system."
         },
         {
           "title": "Conversation flow",
@@ -444,12 +420,7 @@
       "visualType": "workflow",
       "visualLabel": "Agent workflow architecture",
       "visualHint": "Use for agent routing, job-matching pipeline, or outreach workflow visuals.",
-      "skills": [
-        "Python",
-        "APIs",
-        "Automation",
-        "ML"
-      ],
+      "skills": ["Python", "APIs", "Automation", "ML"],
       "outcomes": [
         "Frames job-seeking as an operations problem, not just a chat problem.",
         "Connects matching, outreach, and automation into a single system direction.",
@@ -487,13 +458,7 @@
       "visualType": "sensor",
       "visualLabel": "Sensor-fusion system view",
       "visualHint": "Great place for sensor diagrams, RTMaps screenshots, or test visuals.",
-      "skills": [
-        "C++",
-        "RTMaps",
-        "Validation",
-        "Sensor Fusion",
-        "Robotics"
-      ],
+      "skills": ["C++", "RTMaps", "Validation", "Sensor Fusion", "Robotics"],
       "outcomes": [
         "Wrote requirements and test cases with full validation coverage in mind.",
         "Implemented real-time C++ modules for lead vehicle and driver attention work.",
@@ -532,13 +497,7 @@
       "visualType": "dashboard",
       "visualLabel": "Product dashboard interface",
       "visualHint": "Use for deployment flow, billing UI, or issue-resolution snapshots.",
-      "skills": [
-        "Production App Workflows",
-        "Supabase",
-        "Vercel",
-        "Stripe",
-        "CI/CD"
-      ],
+      "skills": ["Production App Workflows", "Supabase", "Vercel", "Stripe", "CI/CD"],
       "outcomes": [
         "Contributed to production fixes rather than only local prototypes.",
         "Touched deployment, backend support, and payments-related flows.",
@@ -577,12 +536,7 @@
       "visualType": "classifier",
       "visualLabel": "Model pipeline overview",
       "visualHint": "Good for feature charts, confusion matrix, or dataset-processing screenshots.",
-      "skills": [
-        "Python",
-        "Scikit-learn",
-        "Data Prep",
-        "Classification"
-      ],
+      "skills": ["Python", "Scikit-learn", "Data Prep", "Classification"],
       "outcomes": [
         "Handled preprocessing, model training, and evaluation end to end.",
         "Reached a reported detection accuracy of 92%.",
@@ -621,12 +575,7 @@
       "visualType": "ranking",
       "visualLabel": "Recommendation engine interface",
       "visualHint": "Use for ranking results, similarity views, or recommendation output.",
-      "skills": [
-        "Python",
-        "NLP",
-        "Scikit-learn",
-        "Ranking"
-      ],
+      "skills": ["Python", "NLP", "Scikit-learn", "Ranking"],
       "outcomes": [
         "Used vectorization and cosine similarity to compare courses.",
         "Framed recommendation as a structured ranking problem.",
@@ -664,11 +613,7 @@
       "visualType": "anomaly",
       "visualLabel": "Fraud detection anomaly view",
       "visualHint": "Best for anomaly maps, flagged transactions, or evaluation views.",
-      "skills": [
-        "Python",
-        "Scikit-learn",
-        "Anomaly Detection"
-      ],
+      "skills": ["Python", "Scikit-learn", "Anomaly Detection"],
       "outcomes": [
         "Compared anomaly-detection approaches for fraud-style data.",
         "Used unsupervised and semi-supervised style methods to flag outliers.",
@@ -707,11 +652,7 @@
       "visualType": "assistant",
       "visualLabel": "Voice assistant product interface",
       "visualHint": "Use for command examples, interaction flow, or assistant UI concepts.",
-      "skills": [
-        "Python",
-        "Speech",
-        "Automation"
-      ],
+      "skills": ["Python", "Speech", "Automation"],
       "outcomes": [
         "Built an early voice-first system around commands and automation.",
         "Explored how interaction changes when voice becomes the primary interface.",
@@ -749,11 +690,7 @@
       "visualType": "browser",
       "visualLabel": "Browser automation workflow",
       "visualHint": "Good for Selenium flows, page-state screenshots, or checkout automation visuals.",
-      "skills": [
-        "Python",
-        "Selenium",
-        "Automation"
-      ],
+      "skills": ["Python", "Selenium", "Automation"],
       "outcomes": [
         "Automated scraping and browser-driven actions from user inputs.",
         "Shows early comfort with web workflows and repetitive-task automation.",
@@ -791,7 +728,7 @@
       "visualType": "security",
       "visualLabel": "Batch outreach pipeline",
       "visualHint": "CSV contacts, DNS scanner, SQLite logging, Graph API sending, and Streamlit controls.",
-      "image": "project-dns-scanner.svg",
+      "image": "/portfolio_images/articles/dns-automation-article.jpg",
       "skills": [
         "Python",
         "Streamlit",
@@ -836,10 +773,7 @@
       "category": "Language",
       "short": "Real-time autonomy and systems language used across EcoCAR sensor-fusion and controller work.",
       "link": "https://isocpp.org/",
-      "projects": [
-        "ecocar-sensor-fusion",
-        "rl-autonomous-driving"
-      ]
+      "projects": ["ecocar-sensor-fusion", "rl-autonomous-driving"]
     },
     {
       "slug": "java",
@@ -848,10 +782,7 @@
       "category": "Language",
       "short": "Object-oriented programming foundation used in coursework and the P33 Chicago financial-literacy text adventure project.",
       "link": "https://www.java.com/",
-      "projects": [
-        "scammantha",
-        "jtr-agent"
-      ]
+      "projects": ["scammantha", "jtr-agent"]
     },
     {
       "slug": "matlab",
@@ -860,10 +791,7 @@
       "category": "Language",
       "short": "Math, modeling, and engineering-computation language to support controls, signal processing, and simulation-oriented coursework.",
       "link": "https://www.mathworks.com/products/matlab.html",
-      "projects": [
-        "ecocar-sensor-fusion",
-        "rl-autonomous-driving"
-      ]
+      "projects": ["ecocar-sensor-fusion", "rl-autonomous-driving"]
     },
     {
       "slug": "python",
@@ -889,24 +817,16 @@
       "category": "Language",
       "short": "Querying and relational data skill used across Supabase, analytics, and data-backed product workflows.",
       "link": "https://www.postgresql.org/",
-      "projects": [
-        "ai-headshot-platform",
-        "fraud-detection",
-        "course-recommendation"
-      ]
+      "projects": ["ai-headshot-platform", "fraud-detection", "course-recommendation"]
     },
     {
       "slug": "typescript",
       "name": "Production App Workflows",
       "icon": "code",
       "category": "Language",
-      "short": "Typed AI-assisted product engineering across portfolio systems, AI product prototypes, and production-ready web applications.",
+      "short": "Typed AI-assisted product engineering across portfolio systems, AI product prototypes, and dependable web applications.",
       "link": "https://www.typescriptlang.org/",
-      "projects": [
-        "ai-headshot-platform",
-        "aila-avatar",
-        "selvam-valuations"
-      ]
+      "projects": ["ai-headshot-platform", "aila-avatar", "selvam-valuations"]
     },
     {
       "slug": "applied-machine-learning",
@@ -929,11 +849,7 @@
       "icon": "tool",
       "category": "ML",
       "short": "Supervised-learning framing for fraud detection, security analysis, driver/scene states, and decision-support workflows.",
-      "projects": [
-        "fraud-detection",
-        "dns-security-scanner",
-        "ecocar-sensor-fusion"
-      ]
+      "projects": ["fraud-detection", "dns-security-scanner", "ecocar-sensor-fusion"]
     },
     {
       "slug": "computer-vision-ml",
@@ -941,11 +857,7 @@
       "icon": "tool",
       "category": "ML",
       "short": "Vision-model thinking for lane detection, OBSERV-E perception, object recognition, and camera-based autonomy workflows.",
-      "projects": [
-        "observ-e",
-        "lane-detection-salad",
-        "ecocar-sensor-fusion"
-      ]
+      "projects": ["observ-e", "lane-detection-salad", "ecocar-sensor-fusion"]
     },
     {
       "slug": "cnn",
@@ -953,10 +865,7 @@
       "icon": "ml",
       "category": "ML",
       "short": "Computer-vision model family used in lane detection, perception, and image understanding contexts.",
-      "projects": [
-        "lane-detection-salad",
-        "observ-e"
-      ]
+      "projects": ["lane-detection-salad", "observ-e"]
     },
     {
       "slug": "data-eda",
@@ -978,11 +887,7 @@
       "icon": "analytics",
       "category": "ML",
       "short": "Analysis and reporting mindset across security automation, product decisions, and ML evaluation.",
-      "projects": [
-        "dns-security-scanner",
-        "ttp-outreach-automation",
-        "fraud-detection"
-      ]
+      "projects": ["dns-security-scanner", "ttp-outreach-automation", "fraud-detection"]
     },
     {
       "slug": "data-pipelines",
@@ -990,11 +895,7 @@
       "icon": "tool",
       "category": "ML",
       "short": "Data movement, transformation, and analysis workflows across Founders Frequency, TTP automation, and applied AI projects.",
-      "projects": [
-        "ttp-outreach-automation",
-        "dns-security-scanner",
-        "selvam-valuations"
-      ]
+      "projects": ["ttp-outreach-automation", "dns-security-scanner", "selvam-valuations"]
     },
     {
       "slug": "data-science",
@@ -1016,11 +917,7 @@
       "icon": "analytics",
       "category": "ML",
       "short": "Structured thinking for recommendations, autonomous decision systems, and business/AI product strategy.",
-      "projects": [
-        "course-recommendation",
-        "rl-autonomous-driving",
-        "selvam-valuations"
-      ]
+      "projects": ["course-recommendation", "rl-autonomous-driving", "selvam-valuations"]
     },
     {
       "slug": "deep-learning",
@@ -1028,11 +925,7 @@
       "icon": "ml",
       "category": "ML",
       "short": "Neural-modeling foundation for perception, VLMs, and advanced ML experimentation.",
-      "projects": [
-        "lane-detection-salad",
-        "observ-e",
-        "ai-headshot-platform"
-      ]
+      "projects": ["lane-detection-salad", "observ-e", "ai-headshot-platform"]
     },
     {
       "slug": "evaluation-metrics",
@@ -1040,11 +933,7 @@
       "icon": "tool",
       "category": "ML",
       "short": "MSE, MAE, lane accuracy, collision rate, task completion, model scoring, and employer-facing measurement discipline.",
-      "projects": [
-        "lane-detection-salad",
-        "rl-autonomous-driving",
-        "fraud-detection"
-      ]
+      "projects": ["lane-detection-salad", "rl-autonomous-driving", "fraud-detection"]
     },
     {
       "slug": "feature-engineering",
@@ -1052,11 +941,7 @@
       "icon": "tool",
       "category": "ML",
       "short": "Transforms raw data into useful signals for ML experiments, data pipelines, security scoring, and recommendation/ranking systems.",
-      "projects": [
-        "fraud-detection",
-        "course-recommendation",
-        "dns-security-scanner"
-      ]
+      "projects": ["fraud-detection", "course-recommendation", "dns-security-scanner"]
     },
     {
       "slug": "llms",
@@ -1064,11 +949,7 @@
       "icon": "ml",
       "category": "ML",
       "short": "Large-language-model product concepts, portfolio guide work, and insight extraction systems.",
-      "projects": [
-        "aila-avatar",
-        "selvam-valuations",
-        "spiron-assistant"
-      ]
+      "projects": ["aila-avatar", "selvam-valuations", "spiron-assistant"]
     },
     {
       "slug": "linear-regression",
@@ -1076,10 +957,7 @@
       "icon": "ml",
       "category": "ML",
       "short": "Statistical modeling foundation used in coursework and interpretable ML workflows.",
-      "projects": [
-        "fraud-detection",
-        "course-recommendation"
-      ]
+      "projects": ["fraud-detection", "course-recommendation"]
     },
     {
       "slug": "machine-learning",
@@ -1104,11 +982,7 @@
       "category": "ML",
       "short": "Visualization library for ML reports, metrics plots, and experiment communication.",
       "link": "https://matplotlib.org/",
-      "projects": [
-        "lane-detection-salad",
-        "rl-autonomous-driving",
-        "fraud-detection"
-      ]
+      "projects": ["lane-detection-salad", "rl-autonomous-driving", "fraud-detection"]
     },
     {
       "slug": "model-deployment",
@@ -1116,11 +990,7 @@
       "icon": "tool",
       "category": "ML",
       "short": "Connects trained/experimental models to usable software systems, interfaces, and cloud-hosted product workflows.",
-      "projects": [
-        "aila-avatar",
-        "ai-headshot-platform",
-        "selvam-valuations"
-      ]
+      "projects": ["aila-avatar", "ai-headshot-platform", "selvam-valuations"]
     },
     {
       "slug": "model-evaluation",
@@ -1128,11 +998,7 @@
       "icon": "analytics",
       "category": "ML",
       "short": "Metrics-driven assessment including MSE, MAE, accuracy, task completion, and simulation outcomes.",
-      "projects": [
-        "lane-detection-salad",
-        "rl-autonomous-driving",
-        "fraud-detection"
-      ]
+      "projects": ["lane-detection-salad", "rl-autonomous-driving", "fraud-detection"]
     },
     {
       "slug": "natural-language-processing",
@@ -1140,11 +1006,7 @@
       "icon": "tool",
       "category": "ML",
       "short": "Language-model and text-processing ideas for summaries, AI assistants, outreach generation, and conversational tools.",
-      "projects": [
-        "aila-avatar",
-        "spiron-assistant",
-        "ttp-outreach-automation"
-      ]
+      "projects": ["aila-avatar", "spiron-assistant", "ttp-outreach-automation"]
     },
     {
       "slug": "neural-networks",
@@ -1152,10 +1014,7 @@
       "icon": "tool",
       "category": "ML",
       "short": "Core deep-learning concept behind CNNs, perception pipelines, classification systems, and applied ML experimentation.",
-      "projects": [
-        "lane-detection-salad",
-        "rl-autonomous-driving"
-      ]
+      "projects": ["lane-detection-salad", "rl-autonomous-driving"]
     },
     {
       "slug": "ppo",
@@ -1163,9 +1022,7 @@
       "icon": "ml",
       "category": "ML",
       "short": "Policy-gradient RL algorithm used in the autonomous driving simulator.",
-      "projects": [
-        "rl-autonomous-driving"
-      ]
+      "projects": ["rl-autonomous-driving"]
     },
     {
       "slug": "pytorch",
@@ -1174,10 +1031,7 @@
       "category": "ML",
       "short": "Neural-network experimentation and lane-detection research workflows.",
       "link": "https://pytorch.org/",
-      "projects": [
-        "lane-detection-salad",
-        "rl-autonomous-driving"
-      ]
+      "projects": ["lane-detection-salad", "rl-autonomous-driving"]
     },
     {
       "slug": "recommendation-systems",
@@ -1185,10 +1039,7 @@
       "icon": "tool",
       "category": "ML",
       "short": "Ranking and recommendation logic for job tracking, course recommendation, and user-facing decision-support tools.",
-      "projects": [
-        "course-recommendation",
-        "jtr-agent"
-      ]
+      "projects": ["course-recommendation", "jtr-agent"]
     },
     {
       "slug": "regression",
@@ -1196,9 +1047,7 @@
       "icon": "tool",
       "category": "ML",
       "short": "Regression modeling used for lane coordinate prediction, continuous-value estimation, and model-evaluation practice.",
-      "projects": [
-        "lane-detection-salad"
-      ]
+      "projects": ["lane-detection-salad"]
     },
     {
       "slug": "reinforcement-learning",
@@ -1206,9 +1055,7 @@
       "icon": "ml",
       "category": "ML",
       "short": "PPO-based simulation work for autonomous lane keeping and driving decision-making.",
-      "projects": [
-        "rl-autonomous-driving"
-      ]
+      "projects": ["rl-autonomous-driving"]
     },
     {
       "slug": "sklearn",
@@ -1217,11 +1064,7 @@
       "category": "ML",
       "short": "Classical ML, classification, recommender, ranking, and evaluation workflows.",
       "link": "https://scikit-learn.org/stable/",
-      "projects": [
-        "fraud-detection",
-        "course-recommendation",
-        "phishing-detector"
-      ]
+      "projects": ["fraud-detection", "course-recommendation", "phishing-detector"]
     },
     {
       "slug": "tensorflow",
@@ -1230,10 +1073,7 @@
       "category": "ML",
       "short": "Deep-learning framework knowledge connected to AI/ML coursework and robotics learning pipelines.",
       "link": "https://www.tensorflow.org/",
-      "projects": [
-        "lane-detection-salad",
-        "fraud-detection"
-      ]
+      "projects": ["lane-detection-salad", "fraud-detection"]
     },
     {
       "slug": "vlms",
@@ -1241,9 +1081,7 @@
       "icon": "ml",
       "category": "ML",
       "short": "Vision-language model planning for scene descriptions and accessibility robotics.",
-      "projects": [
-        "observ-e"
-      ]
+      "projects": ["observ-e"]
     },
     {
       "slug": "agentic-systems",
@@ -1251,11 +1089,7 @@
       "icon": "ai",
       "category": "AI Tools & Workflow",
       "short": "Designing assistants that can route questions, suggest pages, summarize context, and support user workflows across portfolio/product experiences.",
-      "projects": [
-        "a-little-tech-for-you",
-        "aila-avatar",
-        "spiron-assistant"
-      ],
+      "projects": ["a-little-tech-for-you", "aila-avatar", "spiron-assistant"],
       "link": "https://www.anthropic.com/"
     },
     {
@@ -1265,11 +1099,7 @@
       "category": "AI Tools & Workflow",
       "short": "AI ideation, debugging, learning support, content drafting, and project planning tool used across technical and communication workflows.",
       "link": "https://chatgpt.com/",
-      "projects": [
-        "a-little-tech-for-you",
-        "aila-avatar",
-        "spiron-assistant"
-      ]
+      "projects": ["a-little-tech-for-you", "aila-avatar", "spiron-assistant"]
     },
     {
       "slug": "claude",
@@ -1278,11 +1108,7 @@
       "category": "AI Tools & Workflow",
       "short": "AI coding, writing, refactoring, and architecture partner used to accelerate portfolio/project iteration while keeping human review in the loop.",
       "link": "https://www.anthropic.com/claude",
-      "projects": [
-        "a-little-tech-for-you",
-        "aila-avatar",
-        "spiron-assistant"
-      ]
+      "projects": ["a-little-tech-for-you", "aila-avatar", "spiron-assistant"]
     },
     {
       "slug": "copilot-studio",
@@ -1291,10 +1117,7 @@
       "category": "AI Tools & Workflow",
       "short": "Agent-building environment for designing, testing, and publishing Microsoft Copilot-style agents and workflow assistants.",
       "link": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/",
-      "projects": [
-        "a-little-tech-for-you",
-        "aila-avatar"
-      ]
+      "projects": ["a-little-tech-for-you", "aila-avatar"]
     },
     {
       "slug": "github-copilot",
@@ -1303,11 +1126,7 @@
       "category": "AI Tools & Workflow",
       "short": "AI pair-programming assistant used to speed up implementation, refactoring, and editor-based code exploration.",
       "link": "https://github.com/features/copilot",
-      "projects": [
-        "a-little-tech-for-you",
-        "aila-avatar",
-        "ai-headshot-platform"
-      ]
+      "projects": ["a-little-tech-for-you", "aila-avatar", "ai-headshot-platform"]
     },
     {
       "slug": "hugging-face",
@@ -1316,11 +1135,7 @@
       "category": "AI Tools & Workflow",
       "short": "Model hub, Spaces, inference, and open-source AI ecosystem used for TTS, 3D generation experiments, and model-driven product prototypes.",
       "link": "https://huggingface.co/",
-      "projects": [
-        "a-little-tech-for-you",
-        "aila-avatar",
-        "observ-e"
-      ]
+      "projects": ["a-little-tech-for-you", "aila-avatar", "observ-e"]
     },
     {
       "slug": "hf-inference-providers",
@@ -1329,10 +1144,7 @@
       "category": "AI Tools & Workflow",
       "short": "Serverless model access path for connecting AI models into apps without managing every model runtime directly.",
       "link": "https://huggingface.co/docs/inference-providers/en/index",
-      "projects": [
-        "a-little-tech-for-you",
-        "spiron-assistant"
-      ]
+      "projects": ["a-little-tech-for-you", "spiron-assistant"]
     },
     {
       "slug": "hugging-face-spaces",
@@ -1341,10 +1153,7 @@
       "category": "AI Tools & Workflow",
       "short": "Hosted AI app and demo environment explored for rapid experiments in speech synthesis, 3D generation, and model demos.",
       "link": "https://huggingface.co/spaces",
-      "projects": [
-        "a-little-tech-for-you",
-        "aila-avatar"
-      ]
+      "projects": ["a-little-tech-for-you", "aila-avatar"]
     },
     {
       "slug": "microsoft-copilot",
@@ -1353,10 +1162,7 @@
       "category": "AI Tools & Workflow",
       "short": "Microsoft AI assistant ecosystem used for productivity, research, and workflow acceleration.",
       "link": "https://copilot.microsoft.com/",
-      "projects": [
-        "officepro-ai-internship",
-        "a-little-tech-for-you"
-      ]
+      "projects": ["officepro-ai-internship", "a-little-tech-for-you"]
     },
     {
       "slug": "prompt-engineering",
@@ -1365,11 +1171,7 @@
       "category": "AI Tools & Workflow",
       "short": "Structured prompting and AI-assisted iteration used to turn vague goals into working code, content, and product requirements.",
       "link": "https://platform.openai.com/docs/guides/prompt-engineering",
-      "projects": [
-        "a-little-tech-for-you",
-        "aila-avatar",
-        "spiron-assistant"
-      ]
+      "projects": ["a-little-tech-for-you", "aila-avatar", "spiron-assistant"]
     },
     {
       "slug": "resembleai-chatterbox",
@@ -1378,20 +1180,7 @@
       "category": "AI Tools & Workflow",
       "short": "Open-source TTS model planned as the primary narration engine for A Little Tech For You voice tutorials.",
       "link": "https://huggingface.co/ResembleAI/chatterbox",
-      "projects": [
-        "a-little-tech-for-you"
-      ]
-    },
-    {
-      "slug": "triposr",
-      "name": "Stability AI TripoSR",
-      "icon": "ai",
-      "category": "AI Tools & Workflow",
-      "short": "Single-image 3D reconstruction model tested during the avatar pipeline before pivoting to rigged avatars and stronger portfolio visuals.",
-      "link": "https://huggingface.co/stabilityai/TripoSR",
-      "projects": [
-        "aila-avatar"
-      ]
+      "projects": ["a-little-tech-for-you"]
     },
     {
       "slug": "coqui-xtts-v2",
@@ -1400,10 +1189,7 @@
       "category": "AI Tools & Workflow",
       "short": "Voice-cloning TTS fallback model explored for cloned-voice narration and multilingual speech generation.",
       "link": "https://huggingface.co/coqui/XTTS-v2",
-      "projects": [
-        "a-little-tech-for-you",
-        "aila-avatar"
-      ]
+      "projects": ["a-little-tech-for-you", "aila-avatar"]
     },
     {
       "slug": "adas",
@@ -1411,9 +1197,7 @@
       "icon": "sensor",
       "category": "Robotics",
       "short": "Advanced driver-assistance systems framing from EcoCAR driver monitoring and perception work.",
-      "projects": [
-        "ecocar-sensor-fusion"
-      ]
+      "projects": ["ecocar-sensor-fusion"]
     },
     {
       "slug": "autonomous-systems",
@@ -1421,11 +1205,7 @@
       "icon": "robot",
       "category": "Robotics",
       "short": "End-to-end interest area across EcoCAR, RL driving simulation, sensor fusion, and accessibility robotics.",
-      "projects": [
-        "ecocar-sensor-fusion",
-        "rl-autonomous-driving",
-        "observ-e"
-      ]
+      "projects": ["ecocar-sensor-fusion", "rl-autonomous-driving", "observ-e"]
     },
     {
       "slug": "can-bus",
@@ -1433,9 +1213,7 @@
       "icon": "sensor",
       "category": "Robotics",
       "short": "Vehicle signal/networking skill connected to DMS, sensor fusion, and real-time automotive workflows.",
-      "projects": [
-        "ecocar-sensor-fusion"
-      ]
+      "projects": ["ecocar-sensor-fusion"]
     },
     {
       "slug": "computer-vision",
@@ -1443,11 +1221,7 @@
       "icon": "ml",
       "category": "Robotics",
       "short": "Vision/perception skill tied to OBSERV-E accessibility robotics, YOLO tracking, and lane detection.",
-      "projects": [
-        "observ-e",
-        "lane-detection-salad",
-        "rl-autonomous-driving"
-      ]
+      "projects": ["observ-e", "lane-detection-salad", "rl-autonomous-driving"]
     },
     {
       "slug": "dms",
@@ -1455,9 +1229,7 @@
       "icon": "sensor",
       "category": "Robotics",
       "short": "Driver-attention/state logic connected to CAN-signal validation and autonomy safety systems.",
-      "projects": [
-        "ecocar-sensor-fusion"
-      ]
+      "projects": ["ecocar-sensor-fusion"]
     },
     {
       "slug": "opencv",
@@ -1466,10 +1238,7 @@
       "category": "Robotics",
       "short": "Computer-vision library used in robotics/accessibility and perception pipelines.",
       "link": "https://opencv.org/",
-      "projects": [
-        "observ-e",
-        "lane-detection-salad"
-      ]
+      "projects": ["observ-e", "lane-detection-salad"]
     },
     {
       "slug": "ros2",
@@ -1478,10 +1247,7 @@
       "category": "Robotics",
       "short": "Robotics middleware knowledge connected to autonomy and sensor-fusion systems.",
       "link": "https://docs.ros.org/",
-      "projects": [
-        "ecocar-sensor-fusion",
-        "observ-e"
-      ]
+      "projects": ["ecocar-sensor-fusion", "observ-e"]
     },
     {
       "slug": "rtmaps",
@@ -1490,10 +1256,7 @@
       "category": "Robotics",
       "short": "Synchronized real-time sensor and autonomy workflow tool used in EcoCAR planning and controller integration.",
       "link": "https://intempora.com/products/rtmaps/",
-      "projects": [
-        "ecocar-sensor-fusion",
-        "rl-autonomous-driving"
-      ]
+      "projects": ["ecocar-sensor-fusion", "rl-autonomous-driving"]
     },
     {
       "slug": "sensor-fusion",
@@ -1501,10 +1264,7 @@
       "icon": "sensor",
       "category": "Robotics",
       "short": "Integration of LiDAR, radar, camera, and vehicle signals for autonomy perception and validation.",
-      "projects": [
-        "ecocar-sensor-fusion",
-        "rl-autonomous-driving"
-      ]
+      "projects": ["ecocar-sensor-fusion", "rl-autonomous-driving"]
     },
     {
       "slug": "signal-processing",
@@ -1512,9 +1272,7 @@
       "icon": "analytics",
       "category": "Robotics",
       "short": "Signal and sensor-processing thinking for vehicle data, perception, and validation.",
-      "projects": [
-        "ecocar-sensor-fusion"
-      ]
+      "projects": ["ecocar-sensor-fusion"]
     },
     {
       "slug": "simulink",
@@ -1523,9 +1281,7 @@
       "category": "Robotics",
       "short": "Model-based engineering context for controls, vehicle logic, and simulation handoff.",
       "link": "https://www.mathworks.com/products/simulink.html",
-      "projects": [
-        "ecocar-sensor-fusion"
-      ]
+      "projects": ["ecocar-sensor-fusion"]
     },
     {
       "slug": "socketcan",
@@ -1533,9 +1289,7 @@
       "icon": "sensor",
       "category": "Robotics",
       "short": "Linux CAN interface concept used in live vehicle-signal pipeline planning and autonomy debugging.",
-      "projects": [
-        "ecocar-sensor-fusion"
-      ]
+      "projects": ["ecocar-sensor-fusion"]
     },
     {
       "slug": "systems-integration",
@@ -1543,11 +1297,7 @@
       "icon": "integrations",
       "category": "Robotics",
       "short": "Connecting data streams, subsystems, APIs, vehicle signals, and deployment constraints into working systems.",
-      "projects": [
-        "ecocar-sensor-fusion",
-        "ttp-outreach-automation",
-        "ai-headshot-platform"
-      ]
+      "projects": ["ecocar-sensor-fusion", "ttp-outreach-automation", "ai-headshot-platform"]
     },
     {
       "slug": "vehicle-dynamics",
@@ -1555,10 +1305,7 @@
       "icon": "robot",
       "category": "Robotics",
       "short": "Vehicle behavior and control context used in autonomy/lane-centering systems.",
-      "projects": [
-        "ecocar-sensor-fusion",
-        "rl-autonomous-driving"
-      ]
+      "projects": ["ecocar-sensor-fusion", "rl-autonomous-driving"]
     },
     {
       "slug": "yolo",
@@ -1566,9 +1313,7 @@
       "icon": "ml",
       "category": "Robotics",
       "short": "Object/person-detection family used for user tracking and hazard awareness concepts.",
-      "projects": [
-        "observ-e"
-      ]
+      "projects": ["observ-e"]
     },
     {
       "slug": "aws",
@@ -1577,10 +1322,7 @@
       "category": "Cloud",
       "short": "Cloud platform skill listed among top profile skills and relevant to scalable AI/backend deployment thinking.",
       "link": "https://aws.amazon.com/",
-      "projects": [
-        "selvam-valuations",
-        "spiron-assistant"
-      ]
+      "projects": ["selvam-valuations", "spiron-assistant"]
     },
     {
       "slug": "azure-ai-foundry",
@@ -1588,11 +1330,7 @@
       "icon": "cloud",
       "category": "Cloud",
       "short": "AI prototyping platform used during OfficePro AI software development internship.",
-      "projects": [
-        "aila-avatar",
-        "ai-headshot-platform",
-        "a-little-tech-for-you"
-      ]
+      "projects": ["aila-avatar", "ai-headshot-platform", "a-little-tech-for-you"]
     },
     {
       "slug": "azure-cognitive-services",
@@ -1600,9 +1338,7 @@
       "icon": "cloud",
       "category": "Cloud",
       "short": "AI/speech/service layer used for cloud-native AI instructor and training workflows.",
-      "projects": [
-        "aila-avatar"
-      ]
+      "projects": ["aila-avatar"]
     },
     {
       "slug": "azure-functions",
@@ -1610,10 +1346,7 @@
       "icon": "cloud",
       "category": "Cloud",
       "short": "Serverless cloud pattern used in AI prototype and automation architecture.",
-      "projects": [
-        "aila-avatar",
-        "ai-headshot-platform"
-      ]
+      "projects": ["aila-avatar", "ai-headshot-platform"]
     },
     {
       "slug": "azure-speech-services",
@@ -1621,10 +1354,7 @@
       "icon": "tool",
       "category": "Cloud",
       "short": "Speech and AI service foundation from OfficePro AI-instructor prototyping and voice-enabled learning workflows.",
-      "projects": [
-        "aila-avatar",
-        "ai-headshot-platform"
-      ]
+      "projects": ["aila-avatar", "ai-headshot-platform"]
     },
     {
       "slug": "cloud-architecture",
@@ -1632,11 +1362,7 @@
       "icon": "tool",
       "category": "Cloud",
       "short": "Cloud-system design across OfficePro, AI platform architecture, Supabase/Vercel apps, and Leadership Academy technology planning.",
-      "projects": [
-        "ai-headshot-platform",
-        "aila-avatar",
-        "selvam-valuations"
-      ]
+      "projects": ["ai-headshot-platform", "aila-avatar", "selvam-valuations"]
     },
     {
       "slug": "cloud-automation",
@@ -1644,10 +1370,7 @@
       "icon": "tool",
       "category": "Cloud",
       "short": "Automating cloud/product operations with Python, PowerShell, Vercel, Azure, and scalable deployment workflows.",
-      "projects": [
-        "ai-headshot-platform",
-        "ttp-outreach-automation"
-      ]
+      "projects": ["ai-headshot-platform", "ttp-outreach-automation"]
     },
     {
       "slug": "cloud-computing",
@@ -1655,11 +1378,7 @@
       "icon": "cloud",
       "category": "Cloud",
       "short": "Cloud/network foundation from Montgomery College and internship/project work.",
-      "projects": [
-        "ai-headshot-platform",
-        "selvam-valuations",
-        "ttp-outreach-automation"
-      ]
+      "projects": ["ai-headshot-platform", "selvam-valuations", "ttp-outreach-automation"]
     },
     {
       "slug": "azure",
@@ -1668,11 +1387,7 @@
       "category": "Cloud",
       "short": "Cloud platform used in AI instructor prototyping and Azure AI product work.",
       "link": "https://azure.microsoft.com/",
-      "projects": [
-        "aila-avatar",
-        "ai-headshot-platform",
-        "a-little-tech-for-you"
-      ]
+      "projects": ["aila-avatar", "ai-headshot-platform", "a-little-tech-for-you"]
     },
     {
       "slug": "microsoft-copilot-studio",
@@ -1680,10 +1395,7 @@
       "icon": "cloud",
       "category": "Cloud",
       "short": "Low-code/AI assistant tooling connected to robotics/leadership technology and Microsoft ecosystem work.",
-      "projects": [
-        "aila-avatar",
-        "spiron-assistant"
-      ]
+      "projects": ["aila-avatar", "spiron-assistant"]
     },
     {
       "slug": "postgresql",
@@ -1692,10 +1404,7 @@
       "category": "Cloud",
       "short": "Relational database foundation behind Supabase-backed products and data storage.",
       "link": "https://www.postgresql.org/",
-      "projects": [
-        "ai-headshot-platform",
-        "selvam-valuations"
-      ]
+      "projects": ["ai-headshot-platform", "selvam-valuations"]
     },
     {
       "slug": "sqlite",
@@ -1704,9 +1413,7 @@
       "category": "Cloud",
       "short": "Lightweight local database useful for internal automation logging and batch workflows.",
       "link": "https://www.sqlite.org/",
-      "projects": [
-        "ttp-outreach-automation"
-      ]
+      "projects": ["ttp-outreach-automation"]
     },
     {
       "slug": "serverless-functions",
@@ -1714,10 +1421,7 @@
       "icon": "tool",
       "category": "Cloud",
       "short": "Serverless Azure Functions and API-style workflows used to prototype AI instructor and cloud-connected product systems.",
-      "projects": [
-        "ai-headshot-platform",
-        "aila-avatar"
-      ]
+      "projects": ["ai-headshot-platform", "aila-avatar"]
     },
     {
       "slug": "stripe",
@@ -1726,9 +1430,7 @@
       "category": "Cloud",
       "short": "Payments integration experience from AI headshot/product development work.",
       "link": "https://stripe.com/",
-      "projects": [
-        "ai-headshot-platform"
-      ]
+      "projects": ["ai-headshot-platform"]
     },
     {
       "slug": "stripe-integration",
@@ -1736,9 +1438,7 @@
       "icon": "tool",
       "category": "Cloud",
       "short": "Payment integration experience from production web product work on aiheadshotmasters.com.",
-      "projects": [
-        "ai-headshot-platform"
-      ]
+      "projects": ["ai-headshot-platform"]
     },
     {
       "slug": "supabase",
@@ -1747,11 +1447,7 @@
       "category": "Cloud",
       "short": "Database/auth/storage layer used in production-flavored web products.",
       "link": "https://supabase.com/",
-      "projects": [
-        "ai-headshot-platform",
-        "aila-avatar",
-        "a-little-tech-for-you"
-      ]
+      "projects": ["ai-headshot-platform", "aila-avatar", "a-little-tech-for-you"]
     },
     {
       "slug": "vercel",
@@ -1760,11 +1456,7 @@
       "category": "Cloud",
       "short": "Deployment platform and CI/CD target used for portfolio, AI headshot product work, and product interface shipping workflows.",
       "link": "https://vercel.com/",
-      "projects": [
-        "ai-headshot-platform",
-        "aila-avatar",
-        "selvam-valuations"
-      ]
+      "projects": ["ai-headshot-platform", "aila-avatar", "selvam-valuations"]
     },
     {
       "slug": "vercel-ci-cd",
@@ -1772,10 +1464,7 @@
       "icon": "tool",
       "category": "Cloud",
       "short": "Product deployment and production-debugging workflow used across web apps, AI headshot platform work, and this portfolio.",
-      "projects": [
-        "ai-headshot-platform",
-        "aila-avatar"
-      ]
+      "projects": ["ai-headshot-platform", "aila-avatar"]
     },
     {
       "slug": "wordpress",
@@ -1784,9 +1473,7 @@
       "category": "Cloud",
       "short": "Web operations, SEO, accessibility, and content management experience from OfficePro work.",
       "link": "https://wordpress.org/",
-      "projects": [
-        "ai-headshot-platform"
-      ]
+      "projects": ["ai-headshot-platform"]
     },
     {
       "slug": "apis",
@@ -1807,9 +1494,7 @@
       "icon": "tool",
       "category": "Backend & Integrations",
       "short": "Using engagement metrics, research aggregation, and workflow analysis to guide AI platform direction and leadership-project decisions.",
-      "projects": [
-        "aila-avatar"
-      ]
+      "projects": ["aila-avatar"]
     },
     {
       "slug": "fastapi",
@@ -1818,11 +1503,7 @@
       "category": "Backend & Integrations",
       "short": "Python API framework used in Full-Stack AI/Data product concepts.",
       "link": "https://fastapi.tiangolo.com/",
-      "projects": [
-        "selvam-valuations",
-        "spiron-assistant",
-        "a-little-tech-for-you"
-      ]
+      "projects": ["selvam-valuations", "spiron-assistant", "a-little-tech-for-you"]
     },
     {
       "slug": "functional-requirements",
@@ -1830,10 +1511,7 @@
       "icon": "tool",
       "category": "Backend & Integrations",
       "short": "Requirements analysis and engineering used to make systems testable and aligned with stakeholders.",
-      "projects": [
-        "ecocar-sensor-fusion",
-        "aila-avatar"
-      ]
+      "projects": ["ecocar-sensor-fusion", "aila-avatar"]
     },
     {
       "slug": "microsoft-graph-api",
@@ -1841,9 +1519,7 @@
       "icon": "integrations",
       "category": "Backend & Integrations",
       "short": "Microsoft 365 email automation for controlled test/live outreach and business workflows.",
-      "projects": [
-        "ttp-outreach-automation"
-      ]
+      "projects": ["ttp-outreach-automation"]
     },
     {
       "slug": "powershell",
@@ -1851,9 +1527,7 @@
       "icon": "tool",
       "category": "Backend & Integrations",
       "short": "Automation scripting for IT operations, lab deployment workflows, and repeatable environment setup.",
-      "projects": [
-        "ai-headshot-platform"
-      ]
+      "projects": ["ai-headshot-platform"]
     },
     {
       "slug": "process-automation",
@@ -1861,11 +1535,7 @@
       "icon": "tool",
       "category": "Backend & Integrations",
       "short": "Automating repeated business/technical processes with scripts, pipelines, and app interfaces.",
-      "projects": [
-        "ttp-outreach-automation",
-        "dns-security-scanner",
-        "ai-headshot-platform"
-      ]
+      "projects": ["ttp-outreach-automation", "dns-security-scanner", "ai-headshot-platform"]
     },
     {
       "slug": "rest-apis",
@@ -1873,11 +1543,7 @@
       "icon": "integrations",
       "category": "Backend & Integrations",
       "short": "Backend integration pattern for AI, product, financial, and automation systems.",
-      "projects": [
-        "selvam-valuations",
-        "ai-headshot-platform",
-        "ttp-outreach-automation"
-      ]
+      "projects": ["selvam-valuations", "ai-headshot-platform", "ttp-outreach-automation"]
     },
     {
       "slug": "requirements-engineering",
@@ -1885,11 +1551,7 @@
       "icon": "tool",
       "category": "Backend & Integrations",
       "short": "Requirements, testing, and validation discipline from EcoCAR, Founders Frequency, Leadership Academy, and product delivery work.",
-      "projects": [
-        "ecocar-sensor-fusion",
-        "aila-avatar",
-        "ttp-outreach-automation"
-      ]
+      "projects": ["ecocar-sensor-fusion", "aila-avatar", "ttp-outreach-automation"]
     },
     {
       "slug": "scripting",
@@ -1897,10 +1559,7 @@
       "icon": "tool",
       "category": "Backend & Integrations",
       "short": "Python, PowerShell, Bash, and Linux automation used across security, cloud, robotics, and lab-management workflows.",
-      "projects": [
-        "ttp-outreach-automation",
-        "dns-security-scanner"
-      ]
+      "projects": ["ttp-outreach-automation", "dns-security-scanner"]
     },
     {
       "slug": "selenium",
@@ -1909,10 +1568,7 @@
       "category": "Backend & Integrations",
       "short": "Browser automation skill from AI/software development internship workflows.",
       "link": "https://www.selenium.dev/",
-      "projects": [
-        "ai-headshot-platform",
-        "spiron-assistant"
-      ]
+      "projects": ["ai-headshot-platform", "spiron-assistant"]
     },
     {
       "slug": "software-development-life-cycle",
@@ -1920,23 +1576,7 @@
       "icon": "tool",
       "category": "Backend & Integrations",
       "short": "Planning, development, testing, deployment, and documentation across internships, client projects, and campus leadership systems.",
-      "projects": [
-        "selvam-valuations",
-        "ai-headshot-platform",
-        "ttp-outreach-automation"
-      ]
-    },
-    {
-      "slug": "streamlit",
-      "name": "Streamlit",
-      "icon": "tool",
-      "category": "Backend & Integrations",
-      "short": "Python-to-web internal tool framework used to make automation accessible to non-technical users.",
-      "link": "https://streamlit.io/",
-      "projects": [
-        "ttp-outreach-automation",
-        "a-little-tech-for-you"
-      ]
+      "projects": ["selvam-valuations", "ai-headshot-platform", "ttp-outreach-automation"]
     },
     {
       "slug": "testing",
@@ -1944,11 +1584,7 @@
       "icon": "tool",
       "category": "Backend & Integrations",
       "short": "Validation mindset across production product work, vehicle systems, and automation pipelines.",
-      "projects": [
-        "ecocar-sensor-fusion",
-        "ai-headshot-platform",
-        "ttp-outreach-automation"
-      ]
+      "projects": ["ecocar-sensor-fusion", "ai-headshot-platform", "ttp-outreach-automation"]
     },
     {
       "slug": "business-analysis",
@@ -1956,11 +1592,7 @@
       "icon": "analytics",
       "category": "Security & Domain",
       "short": "Business-facing analysis skill used to connect technical systems to stakeholder needs and outcomes.",
-      "projects": [
-        "selvam-valuations",
-        "ttp-outreach-automation",
-        "ai-headshot-platform"
-      ]
+      "projects": ["selvam-valuations", "ttp-outreach-automation", "ai-headshot-platform"]
     },
     {
       "slug": "business-strategy",
@@ -1968,11 +1600,7 @@
       "icon": "analytics",
       "category": "Security & Domain",
       "short": "Strategic framing skill for product, startup/client work, and leadership technology initiatives.",
-      "projects": [
-        "selvam-valuations",
-        "ai-headshot-platform",
-        "aila-avatar"
-      ]
+      "projects": ["selvam-valuations", "ai-headshot-platform", "aila-avatar"]
     },
     {
       "slug": "dns",
@@ -1980,10 +1608,7 @@
       "icon": "shield",
       "category": "Security & Domain",
       "short": "Domain Name System analysis used in SPF/DKIM/DMARC checks and security posture workflows.",
-      "projects": [
-        "dns-security-scanner",
-        "ttp-outreach-automation"
-      ]
+      "projects": ["dns-security-scanner", "ttp-outreach-automation"]
     },
     {
       "slug": "domain-name-system",
@@ -1991,10 +1616,7 @@
       "icon": "tool",
       "category": "Security & Domain",
       "short": "DNS expertise used in SPF/DKIM/DMARC validation, security screening, and MSP-style automation workflows.",
-      "projects": [
-        "dns-security-scanner",
-        "ttp-outreach-automation"
-      ]
+      "projects": ["dns-security-scanner", "ttp-outreach-automation"]
     },
     {
       "slug": "email-security",
@@ -2002,10 +1624,7 @@
       "icon": "shield",
       "category": "Security & Domain",
       "short": "Security posture area connecting DNS records, outreach, compliance, and business protection.",
-      "projects": [
-        "dns-security-scanner",
-        "ttp-outreach-automation"
-      ]
+      "projects": ["dns-security-scanner", "ttp-outreach-automation"]
     },
     {
       "slug": "phishing-awareness",
@@ -2013,11 +1632,7 @@
       "icon": "shield",
       "category": "Security & Domain",
       "short": "Security education and awareness through DNS tooling and Scammantha-style learning concepts.",
-      "projects": [
-        "dns-security-scanner",
-        "scammantha",
-        "phishing-detector"
-      ]
+      "projects": ["dns-security-scanner", "scammantha", "phishing-detector"]
     },
     {
       "slug": "spf-dkim-dmarc",
@@ -2025,10 +1640,7 @@
       "icon": "shield",
       "category": "Security & Domain",
       "short": "Email-authentication protocols used to detect misconfiguration, spoofing risk, and phishing exposure.",
-      "projects": [
-        "dns-security-scanner",
-        "ttp-outreach-automation"
-      ]
+      "projects": ["dns-security-scanner", "ttp-outreach-automation"]
     },
     {
       "slug": "security-automation",
@@ -2036,10 +1648,7 @@
       "icon": "shield",
       "category": "Security & Domain",
       "short": "Business-facing security automation through DNS/email authentication screening and reporting.",
-      "projects": [
-        "dns-security-scanner",
-        "ttp-outreach-automation"
-      ]
+      "projects": ["dns-security-scanner", "ttp-outreach-automation"]
     },
     {
       "slug": "agile-project-management",
@@ -2047,10 +1656,7 @@
       "icon": "leadership",
       "category": "Leadership & Professional",
       "short": "Sprint/task coordination and team execution skill from Leadership Academy and project-team work.",
-      "projects": [
-        "aila-avatar",
-        "selvam-valuations"
-      ]
+      "projects": ["aila-avatar", "selvam-valuations"]
     },
     {
       "slug": "budget-management",
@@ -2058,9 +1664,7 @@
       "icon": "leadership",
       "category": "Leadership & Professional",
       "short": "Treasury, annual budgets, funding approval, and organizational resource tracking.",
-      "projects": [
-        "aila-avatar"
-      ]
+      "projects": ["aila-avatar"]
     },
     {
       "slug": "documentation",
@@ -2068,11 +1672,7 @@
       "icon": "tool",
       "category": "Leadership & Professional",
       "short": "Reusable guides, structured project docs, workshop material, and technical knowledge systems.",
-      "projects": [
-        "ttp-outreach-automation",
-        "ecocar-sensor-fusion",
-        "aila-avatar"
-      ]
+      "projects": ["ttp-outreach-automation", "ecocar-sensor-fusion", "aila-avatar"]
     },
     {
       "slug": "leadership",
@@ -2081,12 +1681,7 @@
       "category": "Leadership & Professional",
       "short": "Leadership context across ML@IIT, Illinois Tech Robotics, Leadership Academy, Career Services, P-TECH, campus organizations, workshops, budgeting, and stakeholder communication.",
       "link": "/resume#resume-leadership",
-      "projects": [
-        "aila-avatar",
-        "observ-e",
-        "scammantha",
-        "ttp-outreach-automation"
-      ]
+      "projects": ["aila-avatar", "observ-e", "scammantha", "ttp-outreach-automation"]
     },
     {
       "slug": "professional-communication",
@@ -2094,10 +1689,7 @@
       "icon": "leadership",
       "category": "Leadership & Professional",
       "short": "Resume, LinkedIn, career coaching, workshops, stakeholder communication, and technical storytelling.",
-      "projects": [
-        "aila-avatar",
-        "scammantha"
-      ]
+      "projects": ["aila-avatar", "scammantha"]
     },
     {
       "slug": "stakeholder-engagement",
@@ -2105,11 +1697,7 @@
       "icon": "leadership",
       "category": "Leadership & Professional",
       "short": "Working with students, leadership, clients, and technical teams to deliver useful outcomes.",
-      "projects": [
-        "aila-avatar",
-        "ai-headshot-platform",
-        "ttp-outreach-automation"
-      ]
+      "projects": ["aila-avatar", "ai-headshot-platform", "ttp-outreach-automation"]
     },
     {
       "slug": "linux-development",
@@ -2229,11 +1817,7 @@
       "name": "Stripe",
       "type": "Payments",
       "summary": "Used in product work where payments and subscriptions connect to a user-facing service.",
-      "uses": [
-        "AI product payments",
-        "Checkout flow support",
-        "Operational issue resolution"
-      ],
+      "uses": ["AI product payments", "Checkout flow support", "Operational issue resolution"],
       "link": "https://stripe.com/docs/api"
     },
     {
@@ -2251,11 +1835,7 @@
       "name": "Apollo.io / Enrichment-style Integrations",
       "type": "Workflow",
       "summary": "Representative of outreach and enrichment integrations around job and sales-style automation workflows.",
-      "uses": [
-        "Lead or job workflow enrichment",
-        "Automation chains",
-        "External data lookup"
-      ],
+      "uses": ["Lead or job workflow enrichment", "Automation chains", "External data lookup"],
       "link": "https://docs.apollo.io/"
     }
   ],
@@ -2366,7 +1946,7 @@
     },
     {
       "kicker": "Coming soon",
-      "title": "Moving an AI idea past demo mode",
+      "title": "Moving an AI idea toward useful service",
       "summary": "How useful systems get shipped.",
       "cta": "Request early access"
     },

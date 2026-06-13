@@ -33,7 +33,7 @@ export const project: ProjectPageContent = {
     { title: "Financial data layer", body: "Company fundamentals, market data, news/article context, and ESG-style signals feed the product's analysis surface." },
     { title: "Insight layer", body: "LLM-assisted summarization and structured analysis convert articles and financial inputs into comparison-ready observations." },
     { title: "Merger lab", body: "Users compare companies, review valuation assumptions, and reason about strategic fit through a guided interface." },
-    { title: "Deployment/debugging layer", body: "The project surfaced practical full-stack issues such as API configuration, CORS, entrypoints, environment variables, and production build reliability." }
+    { title: "Deployment/debugging layer", body: "The project surfaced practical reliability issues such as API configuration, CORS, entrypoints, environment variables, and production build reliability." }
   ],
   stackMap: [
     { name: "Python", category: "Implementation language", usedFor: "Financial-data processing, backend logic, and analysis utilities." },
@@ -50,7 +50,7 @@ export const project: ProjectPageContent = {
   ],
   challengeSolutions: [
     { title: "Challenge: avoid fake precision", body: "Valuation tools can look authoritative even with prototype data. The solution path is to label assumptions clearly, connect outputs to sources, and distinguish prototype logic from live financial advice." },
-    { title: "Challenge: full-stack reliability", body: "The app needed frontend, backend, API keys, and deployment settings to align. Debugging CORS, API routing, and Vercel/FastAPI structure became part of the learning outcome." }
+    { title: "Challenge: reliability", body: "The app needed frontend, backend, API keys, and deployment settings to align. Debugging CORS, API routing, and Vercel/FastAPI structure became part of the learning outcome." }
   ],
   outcomes: [
     { title: "Separate project identity", body: "Selvam is now represented as its own ScarletHacks M&A intelligence prototype, not as the StarkHacks robotics-winning project." },
@@ -74,7 +74,7 @@ export const project: ProjectPageContent = {
     "How the product could mature into a real M&A research assistant."
   ],
   resumeBullets: [
-    "Contributed to Selvam Valuations, a ScarletHacks M&A intelligence prototype combining financial data, LLM-assisted article analysis, valuation workflows, and full-stack deployment debugging.",
+    "Contributed to Selvam Valuations, a ScarletHacks M&A intelligence prototype combining financial data, LLM-assisted article analysis, valuation workflows, and deployment debugging.",
     "Mapped financial-AI product requirements into backend/API, data, and user-facing comparison workflows while identifying reliability gaps around live data, CORS, environment configuration, and deployment."
   ],
   futureWork: [

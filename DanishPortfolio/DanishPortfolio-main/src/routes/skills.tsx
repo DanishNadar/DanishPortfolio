@@ -4,7 +4,7 @@ import { skillsQuery } from "@/lib/queries";
 
 export const Route = createFileRoute("/skills")({
   loader: ({ context }) => context.queryClient.ensureQueryData(skillsQuery),
-  head: () => ({ meta: [{ title: "Skills — Danish Nadar" }] }),
+  head: () => ({ meta: [{ title: "Tools for the Work - Danish Nadar" }] }),
   component: SkillsPage,
 });
 
@@ -18,7 +18,7 @@ function SkillsPage() {
   return (
     <div className="mx-auto max-w-5xl px-6 py-16">
       <h1 className="text-4xl md:text-5xl font-display font-bold">Skills &amp; <span className="text-gradient-rb">Tech Stack</span></h1>
-      <p className="mt-3 text-muted-foreground">The toolkit behind the projects.</p>
+      <p className="mt-3 text-muted-foreground">The tools behind the work, organized around building systems that are useful, reliable, and explainable.</p>
       <div className="mt-10 grid md:grid-cols-2 gap-6">
         {Object.entries(grouped).map(([cat, items]) => (
           <div key={cat} className="glass rounded-2xl p-6">

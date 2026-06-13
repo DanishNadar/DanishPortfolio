@@ -20,6 +20,13 @@ export interface ProjectPageImage {
   alt: string;
   caption?: string;
 }
+export interface PeerReview {
+  name: string;
+  role: string;
+  quote: string;
+  context?: string;
+}
+
 export interface ProjectPageContent {
   slug: string;
   title: string;
@@ -45,4 +52,5 @@ export interface ProjectPageContent {
   resumeBullets: string[];
   futureWork: string[];
   links: ProjectPageLink[];
+  peerReviews?: PeerReview[];
 }

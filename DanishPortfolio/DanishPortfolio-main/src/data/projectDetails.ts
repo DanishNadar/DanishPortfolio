@@ -27,7 +27,7 @@ export const projectDetails: Record<string, ProjectDetail> = {
     problem:
       "Visually impaired people navigate environments designed for sighted users. Existing assistive tools are either expensive specialized hardware (guide dogs, costly wearables) or limited single-purpose apps. There is no integrated, affordable robotics platform that combines perception, guidance, and tactile feedback in one system.",
     motivation:
-      "Inspired by WALL-E and grounded by conversations with users who rely on assistive technology daily. The right north star is not 'a cool robot' — it is 'the user reaches their destination safely without needing to think about the tool'.",
+      "Inspired by early robotics curiosity and grounded by conversations with users who rely on assistive technology daily. The north star is not novelty; it is helping the user reach their destination safely without needing to fight the tool.",
     whatIBuilt:
       "OBSERV-E is an umbrella ecosystem with three subsystems: GRVI (a ground robot that acts as a guide companion), DRVI (an aerial drone for broader environmental perception), and HRVI (a wearable haptic receiver). Together they form a perception → guidance → tactile feedback loop.",
     architecture:
@@ -50,7 +50,7 @@ export const projectDetails: Record<string, ProjectDetail> = {
       },
     ],
     recruiterTakeaway:
-      "Demonstrates founder-mode product thinking, embedded robotics fundamentals, and the discipline to redesign an architecture when the first one is wrong.",
+      "Shows product thinking, embedded robotics fundamentals, and the humility to redesign an architecture when the first version does not serve the user well enough.",
     interviewPoints: [
       "Why we restructured robot → web → user into robot → user direct",
       "How GRVI / DRVI / HRVI split responsibility cleanly",
@@ -81,7 +81,7 @@ export const projectDetails: Record<string, ProjectDetail> = {
       "Financial workflow: company data + market/news context → LLM-assisted insight extraction → valuation assumptions → merger comparison/reporting surface.",
     challenges: [
       { title: "Source grounding", body: "Financial AI needs clear assumptions and source links so outputs do not look more authoritative than they are." },
-      { title: "Full-stack reliability", body: "CORS, API routing, environment variables, and deployment setup became part of the practical engineering lesson." },
+      { title: "Reliability", body: "CORS, API routing, environment variables, and deployment setup became part of the practical engineering lesson." },
     ],
     recruiterTakeaway:
       "Shows financial AI product thinking, backend/API planning, LLM-assisted analysis, and deployment debugging discipline.",
@@ -91,7 +91,7 @@ export const projectDetails: Record<string, ProjectDetail> = {
       "What I learned from CORS, API routing, environment variables, and Vercel/FastAPI deployment",
     ],
     resumeBullets: [
-      "Contributed to Selvam Valuations, a ScarletHacks M&A intelligence prototype combining financial data workflows, LLM-assisted analysis, valuation context, and full-stack deployment debugging",
+      "Contributed to Selvam Valuations, a ScarletHacks M&A intelligence prototype combining financial data workflows, LLM-assisted analysis, valuation context, and deployment debugging",
     ],
     nextSteps: ["Add live-source-backed financial APIs", "Create a polished merger-lab diagram", "Add ScarletHacks screenshots and demo notes"],
     relatedProjectSlugs: ["fraud-detection", "course-recommendation", "ttp-outreach-automation"],
@@ -100,9 +100,9 @@ export const projectDetails: Record<string, ProjectDetail> = {
   "ecocar-sensor-fusion": {
     slug: "ecocar-sensor-fusion",
     problem:
-      "Real EVs do not behave like simulators. Sensors disagree, frames drop, and the sun blinds the camera. Lane centering and lead-vehicle detection have to be correct anyway.",
+      "Real EVs do not behave like simulators. Sensors disagree, frames drop, and lighting changes quickly. Lane centering and lead-vehicle detection still have to be handled with care.",
     motivation:
-      "EcoCAR is the place where 'AI on a real car' goes from theory to reality. It is also where you learn that requirements and test cases matter more than clever architectures.",
+      "EcoCAR is where AI and robotics ideas meet real vehicle constraints. It is also where I learned that requirements and test cases often matter more than clever architecture.",
     whatIBuilt:
       "Authored requirements and validation test cases for perception and driver-monitoring modules. Implemented real-time C++ modules for lead vehicle detection and driver attention. Integrated camera, radar, and LiDAR streams through RTMaps with strict time-sync requirements.",
     architecture:
@@ -123,7 +123,7 @@ export const projectDetails: Record<string, ProjectDetail> = {
       { label: "Real-time C++ modules", value: "2" },
     ],
     recruiterTakeaway:
-      "Hands-on autonomy work on a real vehicle, including the unglamorous requirements + validation + C++ discipline that production autonomy needs.",
+      "Hands-on autonomy work on a real vehicle, including the patient requirements, validation, and C++ discipline that responsible autonomy needs.",
     interviewPoints: [
       "How RTMaps time-syncs disparate sensors",
       "Why the Stanley controller is the right choice for LCC",
@@ -140,7 +140,7 @@ export const projectDetails: Record<string, ProjectDetail> = {
   "rl-autonomous-driving": {
     slug: "rl-autonomous-driving",
     problem:
-      "Reinforcement learning for autonomous driving is usually demo'd on a polished simulator. We wanted to ask cheaper questions: how does sensor choice change what the policy learns?",
+      "Reinforcement learning for autonomous driving is often shown in polished simulators. I wanted to ask a smaller, more honest question: how does sensor choice change what the policy learns?",
     whatIBuilt:
       "A lightweight Python + Pygame lane-keeping simulator with three sensor configs (camera-only, camera+LiDAR, full stack), a PPO training loop, and a metrics suite covering reward, collision rate, off-road rate, lane deviation, and task completion.",
     architecture:
@@ -157,7 +157,7 @@ export const projectDetails: Record<string, ProjectDetail> = {
       { label: "Tracked driving metrics", value: "6" },
     ],
     recruiterTakeaway:
-      "Comfort designing experiments, not just running them. Honest about negative results (more sensors did not always help).",
+      "Comfort designing experiments, not just running them, with honesty about results that do not flatter the original assumption.",
     interviewPoints: [
       "Why camera+LiDAR sometimes beat the full stack",
       "Reward shaping decisions",
@@ -215,7 +215,7 @@ export const projectDetails: Record<string, ProjectDetail> = {
       "EasyDMARC cross-validation harness",
     ],
     recruiterTakeaway:
-      "Security automation that respects the ops team's workflow, not just the engineer's preferences.",
+      "Security automation that respects the operations team's workflow, not just the engineer's preferences.",
     resumeBullets: [
       "Automated SPF/DKIM/DMARC posture screening across client domains in Python, with reporting designed for MSP operations adoption",
     ],

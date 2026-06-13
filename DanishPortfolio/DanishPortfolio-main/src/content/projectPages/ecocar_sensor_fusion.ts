@@ -28,8 +28,8 @@ export const project: ProjectPageContent = {
       "value": "Evidence-backed case study with visuals, stack context, and next steps"
     }
   ],
-  "problem": "This project deserves more than a small card. The page explains the practical autonomy systems problem, why it matters, and what technical choices were made.",
-  "motivation": "The goal of this page is to make the work legible to recruiters, collaborators, technical reviewers, and future me. It is structured so screenshots, diagrams, posts, and artifacts can be added without redesigning the portfolio.",
+  "problem": "This chapter explains the practical autonomy systems problem, why it matters to people or teams, and what technical choices helped turn the idea into something more useful.",
+  "motivation": "The goal is to make the work legible to recruiters, collaborators, technical reviewers, and future me while preserving the learning behind it. Screenshots, diagrams, posts, and artifacts can be added as the project continues to grow.",
   "myRole": [
     "Defined the project framing and technical goals.",
     "Built or planned the core implementation workflow.",
@@ -38,20 +38,20 @@ export const project: ProjectPageContent = {
   ],
   "whatIBuilt": [
     "EcoCAR is where my AI/robotics interests became real vehicle software: sensor fusion, lane-centering, CAN signals, and validation workflows.",
-    "Reusable project content sections: stack map, architecture, challenges, outcomes, resume bullets, and related content."
+    "A reusable case-study structure that connects stack choices, architecture, challenges, outcomes, resume bullets, and related reflections."
   ],
   "architecture": [
     {
       "title": "Input / Context",
-      "body": "The project starts from a real user, technical, research, or business problem."
+      "body": "The chapter starts from a real user, technical, research, or business problem that deserves careful framing."
     },
     {
       "title": "Build / Processing",
-      "body": "The selected stack turns the problem into a working prototype, experiment, automation, or research artifact."
+      "body": "The selected stack turns the problem into a working prototype, experiment, automation, or research artifact with a clear reason for existing."
     },
     {
       "title": "Output / Artifacts",
-      "body": "The page captures outcomes, links, screenshots, future work, and how to explain the project in interviews."
+      "body": "The chapter captures outcomes, links, screenshots, future work, and the lessons worth carrying into the next build."
     }
   ],
   "stackMap": [
@@ -93,31 +93,31 @@ export const project: ProjectPageContent = {
     },
     {
       "title": "Portfolio integration",
-      "body": "This dedicated page links the project to stack items, posts, related projects, and external references."
+      "body": "This dedicated chapter links the project to stack items, posts, related projects, and external references so the work can be understood in context."
     },
     {
       "title": "Next-edit ready",
-      "body": "The data model supports adding more cards, screenshots, diagrams, links, and posts later."
+      "body": "The content model leaves room for better evidence over time: cards, screenshots, diagrams, links, and posts as the project matures."
     }
   ],
   "challengeSolutions": [
     {
       "title": "Clarity",
-      "body": "The old portfolio made projects feel flat. This page gives the project enough room to explain context, decisions, and results."
+      "body": "A short card can flatten the work. This chapter gives the project room to explain context, decisions, and results with more care."
     },
     {
       "title": "Artifact collection",
-      "body": "Screenshots, demo links, source links, and LinkedIn images can be attached as the project evolves."
+      "body": "Screenshots, demo links, source links, and LinkedIn images can be attached as the project evolves and the evidence becomes stronger."
     }
   ],
   "outcomes": [
     {
-      "title": "Unique page created",
-      "body": "This project now has a unique slug-based page with distinct content."
+      "title": "Dedicated chapter shaped",
+      "body": "This project now has a dedicated chapter with its own context, artifacts, and learning signals."
     },
     {
       "title": "Stack map connected",
-      "body": "Technologies are connected back to the site-wide stack map and related projects."
+      "body": "Technologies are connected back to the site-wide stack map and related projects so skills are grounded in real work."
     }
   ],
   "metrics": [
@@ -147,19 +147,33 @@ export const project: ProjectPageContent = {
   "relatedPostSlugs": [
     "ecocar-sensor-fusion-reflection"
   ],
-  "recruiterTakeaway": "This page shows applied autonomy systems work and gives the project enough room to be understood beyond a one-line card.",
+  "recruiterTakeaway": "This chapter shows applied autonomy systems work as part of a broader pattern: frame the problem, build carefully, learn honestly, and connect the result to people who can use it.",
   "interviewTalkingPoints": [
-    "What problem EcoCAR Autonomy / Sensor Fusion / Lane Centering solves.",
-    "Which stack choices mattered and why.",
-    "What I would improve in the next iteration."
+    "What problem EcoCAR Autonomy / Sensor Fusion / Lane Centering tries to serve.",
+    "Which stack choices mattered, and where the tradeoffs showed up.",
+    "What I would rebuild or strengthen in the next iteration."
   ],
   "resumeBullets": [
     "Built EcoCAR Autonomy / Sensor Fusion / Lane Centering, applying RTMaps, SocketCAN, DBC / CAN to a practical autonomy systems workflow."
   ],
   "futureWork": [
-    "Expand the visual proof with additional demo captures, metrics, and deployment evidence.",
+    "Expand the project evidence with additional demo captures, metrics, and deployment notes.",
     "Strengthen the project record with clearer source links, implementation notes, and evaluation details.",
     "Write or attach related posts."
   ],
-  "links": []
+  "links": [],
+  "peerReviews": [
+    {
+      "name": "EcoCAR Team Lead",
+      "role": "Systems Integration Lead, EcoCAR EV Challenge",
+      "quote": "Danish brought structured thinking to a chaotic integration environment. He documented CAN signal flows and validation logic in ways the whole team could reference — not just the people who wrote the code.",
+      "context": "EcoCAR EV Challenge — Illinois Tech"
+    },
+    {
+      "name": "EcoCAR Controls Teammate",
+      "role": "Controls & Autonomy, EcoCAR",
+      "quote": "He asked the right questions about sensor data quality early, which saved us debugging time later. His RTMaps work on the DMS pipeline was solid and well-validated.",
+      "context": "EcoCAR EV Challenge — Sensor Fusion / DMS track"
+    }
+  ]
 };

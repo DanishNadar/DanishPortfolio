@@ -110,9 +110,9 @@ export const seedProfile: SeedProfile = {
   github_url: "https://github.com/DanishNadar",
   linkedin_url: "https://www.linkedin.com/in/danish-nadar",
   bio_short:
-    "AI engineer building accessibility robotics, autonomous systems, and applied ML — from idea to working prototype.",
+    "AI engineer building accessibility robotics, autonomous systems, and applied ML with curiosity, responsibility, and purpose.",
   bio_long:
-    "I'm a BS/MS AI student at Illinois Tech focused on robotics, autonomy, applied ML, and security automation. EcoCAR sensor-fusion lead. StarkHacks 2026 winner.",
+    "I'm an AI student at Illinois Tech focused on robotics, autonomy, applied ML, and security automation. My work is shaped by recovery, hands-on building, and a desire to create tools that help people rebuild confidence, reduce friction, and move more safely.",
 };
 
 export const seedSkills: SeedSkill[] = [
@@ -132,17 +132,17 @@ export const seedPosts: SeedPost[] = [
   {
     id: "post-starkhacks-observe",
     slug: "starkhacks-2026-observ-e-win",
-    title: "How we won StarkHacks 2026 with an accessibility robotics pitch",
+    title: "How we won StarkHacks 2026 — the world's largest hardware hackathon",
     post_type: "event_recap",
     status: "draft",
     isSample: true,
     featured: true,
     published_at: "2026-03-15",
     generated_summary:
-      "Reflections on winning StarkHacks 2026 with the Illinois Tech Robotics team — what we built, what almost broke, and why accessibility is the right north star.",
+      "Reflections on winning the Qualcomm Robotics Track at StarkHacks 2026 — the world's largest hardware hackathon — with an accessibility robotics pitch. What we built, what almost broke, and why it matters.",
     body_markdown: `## The 48 hours
 
-We walked into StarkHacks 2026 with a rough idea — what if a robot could act like a service dog for someone who is visually impaired? 48 hours later we walked out as winners.
+We walked into StarkHacks 2026 with a rough idea — what if a robot could act like a service dog for someone who is visually impaired? Forty-eight hours later, the concept had earned recognition and a clearer direction.
 
 ## What we actually built
 
@@ -164,7 +164,7 @@ OBSERV-E is now an umbrella for three concepts: GRVI (ground robot), DRVI (drone
     related_project_slugs: ["observ-e", "selvam-valuations"],
     related_stack: ["python", "cpp", "rtmaps"],
     suggested_caption:
-      "Won StarkHacks 2026 with the Illinois Tech Robotics team. We built the first prototype of OBSERV-E — assistive robotics for visually impaired users.",
+      "Won the Qualcomm Robotics Track at StarkHacks 2026 — the world's largest hardware hackathon. We built the first prototype of OBSERV-E: assistive robotics for visually impaired users.",
   },
   {
     id: "post-ecocar-reflection",
