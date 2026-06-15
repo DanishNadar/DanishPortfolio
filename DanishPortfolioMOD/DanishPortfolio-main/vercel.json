@@ -1,0 +1,16 @@
+{
+  "framework": "vite",
+  "installCommand": "npm install --include=dev --include=optional --registry=https://registry.npmjs.org/ --no-audit --no-fund --prefer-online",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "/api/:path*"
+    },
+    {
+      "source": "/:path*",
+      "destination": "/index.html"
+    }
+  ]
+}
