@@ -1,0 +1,6 @@
+export interface LinkedInImage { id: string; src: string; alt: string; caption: string; sourceUrl?: string; relatedProjectSlugs?: string[]; relatedPostSlugs?: string[]; relatedPage?: string; }
+export const linkedinImages: LinkedInImage[] = [
+  { id: "starkhacks-team-2026", src: "/linkedin_images/starkhacks-team-2026.jpg", alt: "Danish Nadar and teammates at StarkHacks 2026", caption: "Portfolio visual connected to StarkHacks and the OBSERV-E accessibility robotics story.", relatedProjectSlugs: ["observ-e"], relatedPostSlugs: ["starkhacks-2026-observ-e-win"], relatedPage: "/projects/observ-e" },
+  { id: "ecocar-team", src: "/linkedin_images/ecocar-team.jpg", alt: "EcoCAR team or autonomy project image", caption: "Portfolio visual connected to EcoCAR autonomy and sensor-fusion work.", relatedProjectSlugs: ["ecocar-sensor-fusion"], relatedPostSlugs: ["ecocar-sensor-fusion-reflection"], relatedPage: "/projects/ecocar-sensor-fusion" },
+  { id: "networking-event", src: "/linkedin_images/networking-event-ink-factory.jpg", alt: "Professional networking event with visual notes", caption: "Portfolio visual connected to networking and professional-development reflections.", relatedPostSlugs: ["networking-event-ink-factory", "career-bootcamp-takeaways"], relatedPage: "/posts" },
+];
