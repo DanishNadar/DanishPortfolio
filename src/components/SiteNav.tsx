@@ -16,6 +16,14 @@ const links = [
   { to: "/contact", label: "Contact" },
 ];
 
+function resetStackMapScroll() {
+  window.setTimeout(() => {
+    if (window.location.pathname === "/stack-map") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, 0);
+}
+
 const journeyGroups = [
   {
     label: "Campus Leadership",
@@ -443,6 +451,13 @@ export function SiteNav() {
             <Link
               key={l.to}
               to={l.to}
+              search={
+                l.to === "/stack-map"
+                  ? { page: 1, q: "", category: "all", stackJump: "" }
+                  : undefined
+              }
+              resetScroll={l.to === "/stack-map"}
+              onClick={l.to === "/stack-map" ? resetStackMapScroll : undefined}
               className={`nav-link whitespace-nowrap px-3.5 py-2.5 text-[0.95rem] transition-colors rounded-md ${inactiveNavClass}`}
               activeProps={{ className: activeNavClass }}
               activeOptions={{ exact: l.to === "/" }}
