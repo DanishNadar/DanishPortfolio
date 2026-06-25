@@ -139,6 +139,7 @@ function PathfindingGraph({
       return `${index === 0 ? "M" : "L"} ${node.x} ${node.y}`;
     })
     .join(" ");
+  const staticRoute = reduceMotion;
   const routeHops = Math.max(telemetryProblem.path.length - 1, 0);
   const exploredCoverage = Math.round(
     (telemetryProblem.explored.length / telemetryProblem.nodes.length) * 100,
@@ -157,13 +158,13 @@ function PathfindingGraph({
 
   return (
     <div
-      key={problem.id}
       className={`pathfinding-simulation absolute inset-0 ${
         testMode ? "pathfinding-simulation-test" : ""
       }`}
       style={{ "--solution-delay": `${solutionDelay}s` } as CSSProperties}
     >
       <svg
+        key={problem.id}
         className="pathfinding-canvas"
         viewBox="0 0 1000 600"
         preserveAspectRatio="none"
@@ -187,10 +188,10 @@ function PathfindingGraph({
               className="pathfinding-solution-reveal"
               x="0"
               y="0"
-              width={reduceMotion ? 1000 : 0}
+              width={staticRoute ? 1000 : 0}
               height="600"
             >
-              {!reduceMotion && (
+              {!staticRoute && (
                 <animate
                   attributeName="width"
                   from="0"
@@ -252,7 +253,7 @@ function PathfindingGraph({
             stroke={`url(#route-gradient-${problem.id})`}
             strokeWidth={testMode ? 13 : undefined}
             strokeDasharray={testMode ? "32 20" : undefined}
-            filter={`url(#route-glow-${problem.id})`}
+            filter={testMode ? `url(#route-glow-${problem.id})` : undefined}
             clipPath={testMode ? undefined : `url(#route-reveal-${problem.id})`}
             data-path-end-node={problem.path.at(-1)}
             data-path-end-x={problem.nodes[problem.path.at(-1) ?? 0].x}
@@ -457,7 +458,12 @@ export function AnimatedBackground({ testMode = false }: AnimatedBackgroundProps
         </div>
       </div>
 
-      <PathfindingGraph showMetrics={!testMode} testMode={testMode} />
+      {testMode && (
+        <>
+          <PathfindingGraph showMetrics={false} testMode={testMode} />
+        </>
+      )}
+      {!testMode && <PathfindingGraph showMetrics />}
       {testMode && <AstarShowcaseOverlay />}
 
       {particles.map((p) => (

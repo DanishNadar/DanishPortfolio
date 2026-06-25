@@ -944,7 +944,6 @@
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.04),
       0 20px 70px -50px rgba(34, 211, 238, 0.35);
-    animation: glassBreathe 10s ease-in-out infinite;
   }
   .glass::before {
     content: "";
@@ -956,8 +955,8 @@
       rgba(255, 255, 255, 0.055),
       transparent 65%
     );
-    transform: translateX(-40%);
-    animation: panelSweep 9s ease-in-out infinite;
+    transform: translateX(-12%);
+    opacity: 0.38;
     pointer-events: none;
   }
   .glass > * {
@@ -980,18 +979,17 @@
     );
     opacity: 0.45;
     filter: blur(18px);
-    animation: borderOrbit 14s linear infinite;
     pointer-events: none;
   }
 
   .ambient-card {
-    animation: cardFloat 8s ease-in-out infinite;
+    transform: translateZ(0);
   }
   .ambient-card:nth-child(2n) {
-    animation-delay: -2.5s;
+    animation-delay: initial;
   }
   .ambient-card:nth-child(3n) {
-    animation-delay: -4.5s;
+    animation-delay: initial;
   }
 
   .card-enter {
@@ -999,23 +997,20 @@
     transition:
       opacity 560ms cubic-bezier(0.22, 1, 0.36, 1) var(--card-enter-delay),
       translate 620ms cubic-bezier(0.22, 1, 0.36, 1) var(--card-enter-delay),
-      scale 620ms cubic-bezier(0.22, 1, 0.36, 1) var(--card-enter-delay),
-      filter 560ms ease-out var(--card-enter-delay) !important;
-    will-change: opacity, translate, scale, filter;
+      scale 620ms cubic-bezier(0.22, 1, 0.36, 1) var(--card-enter-delay) !important;
+    will-change: opacity, translate, scale;
   }
 
   .card-enter-pending {
     opacity: 0 !important;
     translate: 0 1.4rem;
     scale: 0.975;
-    filter: blur(8px) saturate(0.82);
   }
 
   .card-enter-visible {
     opacity: 1;
     translate: 0 0;
     scale: 1;
-    filter: blur(0) saturate(1);
   }
 
   .living-chip {
@@ -1028,8 +1023,8 @@
     position: absolute;
     inset: 0;
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), transparent);
-    transform: translateX(-120%);
-    animation: chipSweep 6.5s ease-in-out infinite;
+    transform: translateX(-18%);
+    opacity: 0.22;
     z-index: -1;
   }
 
@@ -3230,8 +3225,8 @@
 @layer utilities {
   .pathfinding-simulation {
     z-index: 2;
-    opacity: 0;
-    animation: pathfindingCycle 10s ease-in-out both;
+    opacity: 0.66;
+    animation: none;
     contain: paint;
     transform: translateZ(0);
   }
@@ -5109,6 +5104,9 @@
     position: relative;
     margin-block: var(--home-section-gap);
     scroll-margin-block: clamp(5rem, 14vh, 10rem);
+    backface-visibility: hidden;
+    contain: layout paint;
+    transform: translateZ(0);
   }
 
   .home-story-page .home-spaced-section::before {
@@ -5127,6 +5125,31 @@
     pointer-events: none;
   }
 
+  .home-story-page .home-road-scan,
+  .home-story-page .home-telemetry-grid,
+  .home-story-page .home-cockpit-card::after,
+  .home-story-page .home-chapter-card::after,
+  .home-story-page .home-visual-orb,
+  .home-story-page .home-visual-line,
+  .home-story-page .home-chapter-radar .home-visual-orb::before,
+  .home-story-page .home-chapter-autonomy .home-visual-orb::before,
+  .home-story-page .home-vehicle-outline,
+  .home-story-page .home-build-loop::before,
+  .home-story-page .home-build-node,
+  .home-story-page .telemetry-car {
+    animation: none !important;
+  }
+
+  .home-story-page .home-cockpit-card::after,
+  .home-story-page .home-chapter-card::after {
+    opacity: 0.28;
+  }
+
+  .home-story-page .home-visual-orb,
+  .home-story-page .home-visual-line {
+    opacity: 0.82;
+  }
+
   .home-story-page :where(.home-section-shell, .home-telemetry-panel, .home-route-story, .home-vehicle-system) {
     background:
       radial-gradient(circle at 12% 0%, rgba(0, 117, 255, 0.16), transparent 36%),
@@ -5135,13 +5158,14 @@
     box-shadow:
       0 22px 80px -56px rgba(0, 0, 0, 0.96),
       inset 0 1px 0 rgba(255, 255, 255, 0.035) !important;
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 
   .home-story-page :where(.home-signal-card, .home-chapter-card, .home-road-stop, .home-metaphor-card, .home-future-panel, .home-cockpit-card, .glass) {
     background-color: rgba(5, 10, 25, 0.56);
-    backdrop-filter: blur(18px);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 
   .home-symbolism-reveal {
@@ -6862,11 +6886,32 @@
 .background-layer .pathfinding-simulation {
   z-index: 6;
   opacity: 0.88;
-  mix-blend-mode: screen;
+  mix-blend-mode: normal;
 }
 
 .background-layer .pathfinding-canvas {
   opacity: 0.96;
+}
+
+.background-layer:not(.background-test-layer) .pathfinding-edge,
+.background-layer:not(.background-test-layer) .pathfinding-node,
+.background-layer:not(.background-test-layer) .pathfinding-node-route .pathfinding-node-core {
+  animation-duration: 1ms !important;
+  animation-delay: 0ms !important;
+}
+
+.background-layer:not(.background-test-layer) .pathfinding-node-pulse {
+  animation: none !important;
+  opacity: 0.18;
+}
+
+.background-layer:not(.background-test-layer) .pathfinding-node-core {
+  filter: none;
+}
+
+.background-layer:not(.background-test-layer) .pathfinding-solution-edge {
+  filter: drop-shadow(0 0 8px rgba(34, 211, 238, 0.34))
+    drop-shadow(0 0 14px rgba(226, 61, 103, 0.18));
 }
 
 .pathfinding-edge {
@@ -7052,8 +7097,9 @@
 
 .background-layer .pathfinding-simulation {
   z-index: 4 !important;
-  opacity: 0.76 !important;
-  animation: pathfindingCycle 10s ease-in-out both !important;
+  opacity: 0.68 !important;
+  animation: none !important;
+  mix-blend-mode: normal !important;
 }
 
 .background-layer .pathfinding-canvas {
@@ -7967,4 +8013,133 @@ html.symbolism-active .global-back-to-top {
   opacity: 0.50;
   filter: blur(24px);
   mix-blend-mode: soft-light;
+}
+
+/* Global background stability: keep the essential moving car and A* route,
+   but remove repaint-heavy glow loops that cause viewport flicker. */
+@layer utilities {
+  .background-layer:not(.background-test-layer) {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    isolation: isolate;
+  }
+
+  .background-layer:not(.background-test-layer)::before,
+  .background-layer:not(.background-test-layer)::after,
+  .background-layer:not(.background-test-layer) .grid-bg,
+  .background-layer:not(.background-test-layer) .neural-grid,
+  .background-layer:not(.background-test-layer) .sensor-fusion-radar,
+  .background-layer:not(.background-test-layer) .scanline-overlay,
+  .background-layer:not(.background-test-layer) .bg-orb,
+  .background-layer:not(.background-test-layer) .bg-particle,
+  .background-layer:not(.background-test-layer) .bg-node {
+    animation: none !important;
+  }
+
+  .background-layer:not(.background-test-layer) .bg-particle,
+  .background-layer:not(.background-test-layer) .bg-node {
+    display: none !important;
+  }
+
+  .background-layer:not(.background-test-layer) .grid-bg,
+  .background-layer:not(.background-test-layer) .neural-grid,
+  .background-layer:not(.background-test-layer) .sensor-fusion-radar,
+  .background-layer:not(.background-test-layer) .scanline-overlay {
+    opacity: 0.18 !important;
+  }
+
+  .background-layer:not(.background-test-layer) .bg-orb {
+    filter: none !important;
+    opacity: 0.14 !important;
+    mix-blend-mode: normal !important;
+  }
+
+  .background-layer:not(.background-test-layer) .holographic-lyriq {
+    animation: lyriqCruise 18s ease-in-out infinite !important;
+    filter: none !important;
+    mix-blend-mode: normal !important;
+    opacity: 0.52 !important;
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+
+  .background-layer:not(.background-test-layer) .holographic-lyriq *,
+  .background-layer:not(.background-test-layer) .holographic-lyriq *::before,
+  .background-layer:not(.background-test-layer) .holographic-lyriq *::after {
+    animation: none !important;
+  }
+
+  .background-layer:not(.background-test-layer) .lyriq-outline-img,
+  .background-layer:not(.background-test-layer) .lyriq-wheel-overlay-spokes,
+  .background-layer:not(.background-test-layer) .lyriq-front-light,
+  .background-layer:not(.background-test-layer) .lyriq-rear-light,
+  .background-layer:not(.background-test-layer) .lyriq-front-light-accent,
+  .background-layer:not(.background-test-layer) .lyriq-front-light-accent-secondary,
+  .background-layer:not(.background-test-layer) .lyriq-rear-light-accent,
+  .background-layer:not(.background-test-layer) .lyriq-rear-light-accent-secondary,
+  .background-layer:not(.background-test-layer) .lyriq-perception-scan {
+    filter: none !important;
+    mix-blend-mode: normal !important;
+  }
+
+  .background-layer:not(.background-test-layer) .lyriq-road-layer,
+  .background-layer:not(.background-test-layer) .lyriq-underglow,
+  .background-layer:not(.background-test-layer) .lyriq-airflow,
+  .background-layer:not(.background-test-layer) .lyriq-sensor-halo,
+  .background-layer:not(.background-test-layer) .lyriq-perception-scan,
+  .background-layer:not(.background-test-layer) .lyriq-roof-sensor,
+  .background-layer:not(.background-test-layer) .lyriq-ecocar-badge {
+    display: none !important;
+  }
+
+  .background-layer:not(.background-test-layer) .pathfinding-simulation {
+    animation: none !important;
+    filter: none !important;
+    mix-blend-mode: normal !important;
+    opacity: 0.5 !important;
+    contain: paint;
+  }
+
+  .background-layer:not(.background-test-layer) .pathfinding-canvas,
+  .background-layer:not(.background-test-layer) .pathfinding-canvas * {
+    animation: none !important;
+    filter: none !important;
+  }
+
+  .background-layer:not(.background-test-layer) .pathfinding-node-pulse {
+    display: none !important;
+  }
+
+  .background-layer:not(.background-test-layer) .pathfinding-solution-edge {
+    opacity: 0.78 !important;
+  }
+}
+
+/* Restore the essential motion after the broad stability pass. These animations
+   use transform/stroke timing only, avoiding the expensive glow/filter loops. */
+@layer utilities {
+  .background-layer:not(.background-test-layer) .lyriq-wheel-overlay {
+    animation: lyriqWheelRollForward 0.95s linear infinite !important;
+    will-change: transform;
+  }
+
+  .background-layer:not(.background-test-layer) .pathfinding-edge {
+    animation:
+      pathfindingEdgeMaterialize 520ms ease-out var(--edge-delay) forwards,
+      pathfindingEdgeProbe 620ms ease-in-out var(--probe-delay) both !important;
+  }
+
+  .background-layer:not(.background-test-layer) .pathfinding-node {
+    animation: pathfindingNodeSettle 440ms ease-out var(--node-delay) forwards !important;
+  }
+
+  .background-layer:not(.background-test-layer) .pathfinding-node-route .pathfinding-node-core {
+    animation: pathfindingRouteNode 520ms ease-out var(--route-node-delay) both !important;
+  }
+
+  .background-layer:not(.background-test-layer) .pathfinding-solution-edge {
+    opacity: 0.86 !important;
+    filter: none !important;
+  }
 }

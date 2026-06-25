@@ -346,11 +346,11 @@ function SymbolismInfoModal({
 
         <div className="symbolism-info-header">
           <span className="symbolism-info-kicker">Background decoder</span>
-          <h2>Sentiment of the Symbolism</h2>
+          <h2>The Symbol's Sentiment</h2>
           <p>
-            This moment turns the homepage into a live autonomy metaphor: a vehicle outline, A*
+            The following turn the homepage into a live autonomy metaphor: a vehicle outline, A*
             path planning, scanning telemetry, and route animation all work together to show how my
-            story moves from uncertainty to a validated direction.
+            story moves from uncertainty to a validated direction as an autonomous vehicle and AI Engineer.
           </p>
         </div>
 
@@ -402,9 +402,8 @@ function SymbolismInfoModal({
         <section className="symbolism-info-purpose">
           <h3>Purpose of the visual system</h3>
           <p>
-            The goal is to make the portfolio legible before reading
-            every paragraph. The visuals say: this person thinks in systems, cares about safety,
-            understands autonomous planning concepts, and can translate a difficult personal
+            The visuals indicate how I think in systems, care about safety, strategy, 
+            understand autonomous planning concepts, and can translate a difficult personal
             journey into disciplined technical direction.
           </p>
         </section>
@@ -455,8 +454,8 @@ function Home() {
       <section className="home-hero py-5 md:py-6 grid lg:grid-cols-[1.08fr_0.92fr] gap-6 items-center relative overflow-hidden">
         <div className="absolute inset-x-[-8%] bottom-8 h-24 home-road-scan" aria-hidden="true" />
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           transition={{ duration: 0.7 }}
         >
           <div className="inline-flex items-center gap-2 glass px-3 py-1 rounded-full text-xs text-accent">
@@ -499,8 +498,8 @@ function Home() {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, scale: 0.94, x: 18 }}
-          animate={{ opacity: 1, scale: 1, x: 0 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.15 }}
           className="relative"
         >
@@ -556,8 +555,8 @@ function Home() {
                 return (
                   <motion.article
                     key={item.label}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
                     viewport={{ once: true, margin: "-80px" }}
                     transition={{ delay: index * 0.08 }}
                     className="home-signal-card rounded-3xl border border-border/70 bg-background/40 p-5 premium-border"
@@ -605,8 +604,8 @@ function Home() {
             {homeNarrativeChapters.map((chapter, index) => (
               <motion.article
                 key={chapter.phase}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -24 : 24 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
                 viewport={{ once: true, margin: "-90px" }}
                 transition={{ duration: 0.5 }}
                 className={`home-chapter-card grid gap-5 lg:grid-cols-[0.72fr_1.28fr] rounded-[2rem] border border-border/70 bg-background/40 p-5 md:p-6 premium-border ${index % 2 ? "lg:ml-16" : "lg:mr-16"}`}
@@ -660,8 +659,8 @@ function Home() {
               return (
                 <motion.article
                   key={step.title}
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
                   viewport={{ once: true, margin: "-80px" }}
                   transition={{ delay: index * 0.06 }}
                   className="home-road-stop glass premium-border rounded-[1.75rem] p-5"
@@ -713,8 +712,8 @@ function Home() {
             {metaphorLanes.map((lane, index) => (
               <motion.article
                 key={lane.title}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.06 }}
                 className="home-metaphor-card glass premium-border rounded-2xl p-5"
@@ -750,13 +749,12 @@ function Home() {
             <div>
               <div className="case-badge bg-gradient-rb text-background">Future direction</div>
               <h2 className="mt-5 text-3xl md:text-5xl font-display font-bold leading-tight">
-                Why this story matters to an autonomous vehicle employer.
+                What this story means for my <span className="text-gradient-rb">work and mission</span>.
               </h2>
               <p className="mt-4 text-muted-foreground leading-8">
-                I am not interested in autonomy only because the technology is impressive. I care
-                because I have seen how much safer and smarter systems could matter in the real world.
+                I am interested in autonomy because I have seen how much safer and smarter systems could matter in the real world.
                 My goal is to contribute to autonomous vehicles and adjacent AI systems in a way
-                that is technically serious, mission-driven, and grounded in helping real people.
+                that is technically sound, mission-driven, and grounded in helping people.
               </p>
               <p className="mt-4 text-muted-foreground leading-8">
                 Across my work, that mission becomes concrete through perception pipelines,
@@ -852,8 +850,8 @@ function Home() {
           {featured.map((p, i) => (
             <motion.div
               key={p.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.05 }}
             >

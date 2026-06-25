@@ -639,8 +639,8 @@ function StackMapPage() {
 
           <motion.div
             key={currentPage}
-            initial={{ opacity: 0, y: 8, filter: "drop-shadow(0 0 32px rgba(196,18,48,0.55)) brightness(1.2)" }}
-            animate={{ opacity: 1, y: 0, filter: "drop-shadow(0 0 0px rgba(196,18,48,0)) brightness(1)" }}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, ease: "easeOut" }}
             className="mt-8 grid md:grid-cols-2 xl:grid-cols-3 gap-7 lg:gap-9"
           >
@@ -826,4 +826,3 @@ function getPageNumbers(currentPage: number, totalPages: number) {
   const end = Math.min(totalPages, currentPage + 2);
   return Array.from({ length: end - start + 1 }, (_, i) => start + i);
 }
-

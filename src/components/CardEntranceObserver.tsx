@@ -10,9 +10,6 @@ const CARD_SELECTOR = [
   ".skill-context-card",
   ".stack-summary-card",
   ".ambient-card",
-  ".home-signal-card",
-  ".home-road-stop",
-  ".home-metaphor-card",
   ".about-scroll-item",
   ".about-timeline-item",
   ".readable-panel > *",
@@ -20,7 +17,7 @@ const CARD_SELECTOR = [
   "a.premium-border",
 ].join(",");
 
-const PAGE_ENTRANCE_DELAY_MS = 420;
+const PAGE_ENTRANCE_DELAY_MS = 0;
 
 function collectCards(node: Node) {
   if (!(node instanceof Element)) return [];
@@ -72,7 +69,13 @@ export function CardEntranceObserver() {
       let staggerIndex = 0;
 
       cards.forEach((element) => {
-        if (registered.has(element) || element.closest("[data-card-entrance='off']")) return;
+        if (
+          registered.has(element) ||
+          element.closest("[data-card-entrance='off']") ||
+          element.closest(".home-story-page")
+        ) {
+          return;
+        }
         registered.add(element);
 
         if (reduceMotion) return;

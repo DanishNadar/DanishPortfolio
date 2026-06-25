@@ -95,7 +95,7 @@ const hobbies = [
 
 const achievements = [
   {
-    title: "Illinois Tech feature: Intelligent Systems for Safer Roads",
+    title: "Student Story Featured on Illinois Tech Website",
     body: "Illinois Tech featured my autonomous-vehicle mission, connecting a serious road-safety experience to my focus on AI, autonomy, EcoCAR, sensor fusion, and safer decision-making systems.",
     links: [
       { label: "Read article", href: "https://www.iit.edu/student-experience/student-and-alumni-stories/intelligent-systems-safer-roads" },
@@ -115,7 +115,7 @@ const achievements = [
     image: {
       title: "StarkHacks winner certificate  -  world's largest hardware hackathon",
       guidance: "Use the StarkHacks winner certificate, award photo, demo table, team photo, or OBSERV-E showcase image.",
-      src: "DanishPortfolio\\DanishPortfolio\\DanishPortfolio-main\\portfolio_images\\achievements\\starkhacks-observ-e-win.jpg",
+      src: "/portfolio_images/achievements/starkhacks-observ-e-win.jpg",
       aspect: "aspect-[4/3]",
     },
   },
