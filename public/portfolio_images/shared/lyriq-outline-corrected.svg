@@ -1,143 +1,314 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 589" fill="none" role="img" aria-label="Futuristic electric SUV outline">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 589" fill="none">
   <defs>
-    <linearGradient id="lineGradient" x1="90" y1="295" x2="2015" y2="295" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#9fd8ff"/>
-      <stop offset="0.50" stop-color="#d9eaff"/>
-      <stop offset="0.78" stop-color="#9dbaff"/>
-      <stop offset="1" stop-color="#ff75ad"/>
-    </linearGradient>
-    <linearGradient id="coolLine" x1="120" y1="240" x2="1820" y2="240" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#7bcfff"/>
-      <stop offset="0.55" stop-color="#c9e6ff"/>
-      <stop offset="1" stop-color="#a2b8ff"/>
-    </linearGradient>
-    <linearGradient id="rearLight" x1="1740" y1="250" x2="2025" y2="250" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#6ba8ff"/>
-      <stop offset="0.6" stop-color="#bd6cff"/>
-      <stop offset="1" stop-color="#ff6d9d"/>
-    </linearGradient>
-    <radialGradient id="bodyShade" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1180 340) rotate(12) scale(1250 430)">
-      <stop offset="0" stop-color="#10203f" stop-opacity="0.32"/>
-      <stop offset="0.62" stop-color="#0b142b" stop-opacity="0.12"/>
-      <stop offset="1" stop-color="#070b19" stop-opacity="0"/>
-    </radialGradient>
-    <filter id="softGlow" x="-8%" y="-18%" width="116%" height="136%">
-      <feGaussianBlur stdDeviation="3.2" result="blur"/>
+    <filter id="glow" x="-8%" y="-32%" width="116%" height="164%">
+      <feGaussianBlur stdDeviation="2.6" result="blur"/>
       <feMerge>
         <feMergeNode in="blur"/>
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
-    <filter id="lightGlow" x="-30%" y="-70%" width="160%" height="240%">
-      <feGaussianBlur stdDeviation="5" result="blur"/>
+    <filter id="glow-soft" x="-5%" y="-20%" width="110%" height="140%">
+      <feGaussianBlur stdDeviation="1.6" result="blur"/>
       <feMerge>
         <feMergeNode in="blur"/>
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
+    <linearGradient id="g-main" x1="190" y1="140" x2="1840" y2="450" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#b8dcff" stop-opacity="0.96"/>
+      <stop offset="0.48" stop-color="#d8eeff" stop-opacity="0.88"/>
+      <stop offset="1" stop-color="#c6e4ff" stop-opacity="0.92"/>
+    </linearGradient>
+    <linearGradient id="g-accent" x1="190" y1="265" x2="1762" y2="255" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7eceff" stop-opacity="0.84"/>
+      <stop offset="0.5" stop-color="#a4d8ff" stop-opacity="0.62"/>
+      <stop offset="1" stop-color="#7ecaff" stop-opacity="0.74"/>
+    </linearGradient>
+    <linearGradient id="g-rear" x1="1660" y1="255" x2="1840" y2="278" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8cceff" stop-opacity="0.68"/>
+      <stop offset="0.35" stop-color="#f4a0d0" stop-opacity="0.92"/>
+      <stop offset="1" stop-color="#ff8ec6" stop-opacity="0.80"/>
+    </linearGradient>
   </defs>
 
-  <style>
-    .main { stroke: url(#lineGradient); stroke-width: 5.2; stroke-linecap: round; stroke-linejoin: round; opacity: .82; filter: url(#softGlow); }
-    .secondary { stroke: url(#coolLine); stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; opacity: .56; filter: url(#softGlow); }
-    .faint { stroke: #9fc9ff; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; opacity: .28; filter: url(#softGlow); }
-    .body-fill { fill: url(#bodyShade); opacity: .85; }
-    .light-blue { stroke: #93d8ff; stroke-width: 4.2; stroke-linecap: round; stroke-linejoin: round; opacity: .76; filter: url(#lightGlow); }
-    .light-rear { stroke: url(#rearLight); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; opacity: .84; filter: url(#lightGlow); }
-    .wheel-outer { stroke: rgba(198,219,242,.80); stroke-width: 7; filter:url(#softGlow); fill: rgba(2,7,18,.28); }
-    .wheel-inner { stroke: rgba(150,179,213,.36); stroke-width: 3; fill: rgba(8,18,37,.42); }
-    .wheel-ring { stroke: rgba(161,189,222,.32); stroke-width: 2.5; }
-    .wheel-spoke { stroke: rgba(190,207,230,.54); stroke-width: 7; stroke-linecap: round; filter:url(#softGlow); }
-    .wheel-hub-glow { fill: rgba(76,116,180,.35); filter:url(#lightGlow); }
-    .wheel-hub { fill: rgba(102,145,213,.64); stroke: rgba(206,228,255,.36); stroke-width: 1.6; }
-  </style>
+  <g stroke-linecap="round" stroke-linejoin="round">
 
-  <g id="lyriq-clean-reference-match">
-    <!-- subtle dark body mass so the concept sketch does not feel empty -->
-    <path class="body-fill" d="M126 410 C114 330 198 272 360 235 C455 213 540 209 616 202 C700 126 790 85 940 68 C1172 42 1528 56 1705 96 C1806 119 1875 151 1922 188 C1985 196 2019 230 2024 284 L2020 365 C2016 401 1982 426 1930 438 L1775 446 L1679 438 C1685 409 1683 362 1658 325 C1622 274 1566 251 1492 251 C1410 251 1342 288 1308 351 C1289 386 1286 420 1290 442 L644 442 C650 410 647 365 626 330 C591 273 522 246 433 246 C337 246 264 288 230 358 C214 393 213 424 220 448 L154 439 C132 435 126 424 126 410 Z"/>
-
-    <!-- outer silhouette: front is left, rear is right -->
-    <path class="main" d="M132 413 C121 384 121 331 142 296 C195 248 301 222 474 209 C522 205 568 205 618 200 C704 125 790 85 940 68 C1175 43 1536 56 1705 96 C1796 117 1856 146 1918 187 C1984 193 2018 229 2023 284 L2020 365 C2015 399 1984 424 1930 438 L1776 446"/>
-    <path class="main" d="M132 413 L148 440 C187 451 224 455 262 456"/>
-    <path class="main" d="M643 444 C850 447 1088 447 1294 441"/>
-    <path class="main" d="M1702 443 C1730 445 1752 445 1776 446"/>
-
-    <!-- front EV hood, fascia, and headlight: restored so front no longer looks missing/blocky -->
-    <path class="secondary" d="M138 326 C265 281 423 248 616 200"/>
-    <path class="secondary" d="M132 414 L132 338 C139 322 163 306 205 290"/>
-    <path class="light-blue" d="M154 326 C202 310 257 301 316 299"/>
-    <path class="secondary" d="M154 347 C208 339 260 330 317 318"/>
-    <path class="secondary" d="M132 429 C162 435 198 438 232 438"/>
-    <path class="faint" d="M150 405 C188 415 226 420 263 421"/>
-
-    <!-- clean wheel arches integrated into the body -->
-    <path class="main" d="M230 444 C221 351 257 287 328 263 C369 249 419 244 467 250 C574 264 638 341 644 444"/>
-    <path class="secondary" d="M260 438 C264 345 324 285 420 281 C520 278 594 339 604 438"/>
-    <path class="main" d="M1294 442 C1302 350 1352 286 1430 263 C1465 253 1510 251 1552 259 C1645 277 1696 347 1702 443"/>
-    <path class="secondary" d="M1326 438 C1335 348 1398 285 1491 281 C1588 278 1662 342 1667 438"/>
-
-    <!-- windshield / greenhouse / premium SUV cabin -->
-    <path class="main" d="M618 200 C706 125 790 84 940 68 C1175 44 1535 56 1705 96 C1794 117 1856 146 1918 187"/>
-    <path class="secondary" d="M660 216 C750 143 843 105 985 94 C1192 78 1515 88 1681 116 C1761 130 1815 154 1850 184"/>
-    <path class="secondary" d="M620 252 C804 231 966 224 1168 224 L1516 224 C1600 224 1688 216 1764 184"/>
-    <path class="faint" d="M984 78 L972 250"/>
-    <path class="faint" d="M1024 76 L1008 249"/>
-    <path class="faint" d="M1415 90 L1465 249"/>
-    <path class="faint" d="M1470 96 L1519 248"/>
-    <path class="faint" d="M1692 114 C1712 152 1734 179 1764 184"/>
-
-    <!-- side surface lines: complete but not cluttered -->
-    <path class="secondary" d="M470 232 C770 208 1116 204 1504 204 C1590 204 1683 196 1761 170"/>
-    <path class="secondary" d="M655 304 C900 297 1246 298 1582 290 C1650 288 1708 280 1775 265"/>
-    <path class="faint" d="M748 333 L1572 326"/>
-    <path class="secondary" d="M555 430 C790 431 1056 431 1290 425"/>
-    <path class="faint" d="M590 448 C805 450 1070 449 1282 443"/>
-
-    <!-- rear quarter, hatch, tail lamp, bumper: clear SUV rear, not another front -->
-    <path class="main" d="M1742 118 L1878 187 L1922 188"/>
-    <path class="secondary" d="M1810 150 C1858 174 1888 193 1918 220"/>
-    <path class="secondary" d="M1918 187 C1978 193 2015 226 2023 284"/>
-    <path class="main" d="M2023 284 L2020 365 C2015 399 1984 424 1930 438"/>
-    <path class="light-rear" d="M1795 252 C1868 248 1946 250 2010 252"/>
-    <path class="light-rear" d="M1852 305 C1867 283 1887 272 1918 270"/>
-    <path class="secondary" d="M1832 407 C1902 399 1960 382 2006 364"/>
-    <path class="faint" d="M1815 438 L1898 432 L1955 410"/>
-    <path class="faint" d="M1874 330 L1972 319"/>
-
-    <!-- wheels included in the SVG so the car is complete even without CSS wheel overlays -->
-    <g class="wheel" transform="translate(432 412)">
-      <circle class="wheel-outer" r="132" />
-      <circle class="wheel-inner" r="101" />
-      <circle class="wheel-ring" r="78" />
-      <g transform="translate(-432 -412)">
-        <line class="wheel-spoke" x1="466.7" y1="407.1" x2="524.1" y2="399.1" />
-      <line class="wheel-spoke" x1="460.0" y1="433.1" x2="506.3" y2="468.0" />
-      <line class="wheel-spoke" x1="436.9" y1="446.7" x2="444.9" y2="504.1" />
-      <line class="wheel-spoke" x1="410.9" y1="440.0" x2="376.0" y2="486.3" />
-      <line class="wheel-spoke" x1="397.3" y1="416.9" x2="339.9" y2="424.9" />
-      <line class="wheel-spoke" x1="404.0" y1="390.9" x2="357.7" y2="356.0" />
-      <line class="wheel-spoke" x1="427.1" y1="377.3" x2="419.1" y2="319.9" />
-      <line class="wheel-spoke" x1="453.1" y1="384.0" x2="488.0" y2="337.7" />
-      </g>
-      <circle class="wheel-hub-glow" r="36" />
-      <circle class="wheel-hub" r="25" />
+    <!-- ════════════════════════════════════════════════ -->
+    <!-- ROOFLINE                                        -->
+    <!-- ════════════════════════════════════════════════ -->
+    <g id="roofline" filter="url(#glow)">
+      <path
+        d="M 636 192
+           C 722 156 882 106 1024 98
+           C 1206  90 1480 106 1656 136
+           C 1718 148 1756 164 1766 172"
+        stroke="url(#g-main)"
+        stroke-width="4.4"
+        opacity="0.93"
+      />
     </g>
-    <g class="wheel" transform="translate(1491 412)">
-      <circle class="wheel-outer" r="132" />
-      <circle class="wheel-inner" r="101" />
-      <circle class="wheel-ring" r="78" />
-      <g transform="translate(-1491 -412)">
-        <line class="wheel-spoke" x1="1525.7" y1="407.1" x2="1583.1" y2="399.1" />
-      <line class="wheel-spoke" x1="1519.0" y1="433.1" x2="1565.3" y2="468.0" />
-      <line class="wheel-spoke" x1="1495.9" y1="446.7" x2="1503.9" y2="504.1" />
-      <line class="wheel-spoke" x1="1469.9" y1="440.0" x2="1435.0" y2="486.3" />
-      <line class="wheel-spoke" x1="1456.3" y1="416.9" x2="1398.9" y2="424.9" />
-      <line class="wheel-spoke" x1="1463.0" y1="390.9" x2="1416.7" y2="356.0" />
-      <line class="wheel-spoke" x1="1486.1" y1="377.3" x2="1478.1" y2="319.9" />
-      <line class="wheel-spoke" x1="1512.1" y1="384.0" x2="1547.0" y2="337.7" />
-      </g>
-      <circle class="wheel-hub-glow" r="36" />
-      <circle class="wheel-hub" r="25" />
+
+    <!-- ════════════════════════════════════════════════ -->
+    <!-- WINDOW GREENHOUSE: beltline + upper glass       -->
+    <!-- ════════════════════════════════════════════════ -->
+    <g id="window_greenhouse" filter="url(#glow-soft)">
+      <!-- lower beltline / window sill -->
+      <path
+        d="M 568 262
+           C 678 252 902 238 1124 234
+           C 1364 230 1566 226 1666 212
+           C 1716 205 1754 194 1766 184"
+        stroke="url(#g-accent)"
+        stroke-width="3.3"
+        opacity="0.82"
+      />
+      <!-- upper glass inner contour (gives cabin depth) -->
+      <path
+        d="M 636 207
+           C 722 172 880 124 1022 116
+           C 1204 108 1478 122 1654 151
+           C 1716 161 1752 176 1762 184"
+        stroke="url(#g-accent)"
+        stroke-width="2.2"
+        opacity="0.56"
+      />
     </g>
+
+    <!-- ════════════════════════════════════════════════ -->
+    <!-- PILLARS: A-inner, B, C, D                       -->
+    <!-- ════════════════════════════════════════════════ -->
+    <g id="pillars" filter="url(#glow-soft)">
+      <!-- A-pillar inner windshield edge -->
+      <path
+        d="M 572 266 C 596 242 620 214 636 198"
+        stroke="#8cceff"
+        stroke-width="2.2"
+        opacity="0.46"
+      />
+      <!-- B-pillar -->
+      <path d="M 972 105 L 964 240" stroke="#8cceff" stroke-width="2.0" opacity="0.38"/>
+      <!-- C-pillar -->
+      <path d="M 1414 122 L 1447 232" stroke="#8cceff" stroke-width="2.0" opacity="0.38"/>
+      <!-- D-pillar / rear quarter glass border -->
+      <path d="M 1660 138 L 1700 212" stroke="#8cceff" stroke-width="2.0" opacity="0.44"/>
+    </g>
+
+    <!-- ════════════════════════════════════════════════ -->
+    <!-- HOOD + FRONT FASCIA                             -->
+    <!-- Front fascia raised to y=290 (was 322).        -->
+    <!-- Hood now nearly flat — EV/SUV silhouette.      -->
+    <!-- ════════════════════════════════════════════════ -->
+    <g id="hood_front_fascia" filter="url(#glow)">
+      <!-- hood line (flat EV slope into A-pillar) -->
+      <path
+        d="M 192 290
+           C 296 278 456 266 568 262
+           L 636 192"
+        stroke="url(#g-main)"
+        stroke-width="4.2"
+        opacity="0.90"
+      />
+      <!-- front fascia — tall, nearly vertical premium EV front -->
+      <path
+        d="M 192 290
+           L 188 446
+           L 203 468
+           L 268 477
+           L 322 478"
+        stroke="url(#g-main)"
+        stroke-width="4.0"
+        opacity="0.85"
+      />
+      <!-- hood surface crease line -->
+      <path
+        d="M 268 286 C 366 278 462 271 560 268"
+        stroke="url(#g-accent)"
+        stroke-width="2.2"
+        opacity="0.40"
+      />
+    </g>
+
+    <!-- ════════════════════════════════════════════════ -->
+    <!-- HEADLIGHT: DRL + lower fascia accent            -->
+    <!-- ════════════════════════════════════════════════ -->
+    <g id="headlight" filter="url(#glow)">
+      <!-- main headlight / DRL — runs near top of fascia -->
+      <path
+        d="M 196 280 C 222 268 256 262 284 259"
+        stroke="#9ad4ff"
+        stroke-width="3.6"
+        opacity="0.94"
+      />
+      <!-- lower front bumper accent -->
+      <path
+        d="M 196 436 C 226 444 264 450 296 452"
+        stroke="#7ec8ff"
+        stroke-width="2.2"
+        opacity="0.52"
+      />
+    </g>
+
+    <!-- ════════════════════════════════════════════════ -->
+    <!-- SIDE BODY LINES: shoulder + mid-body            -->
+    <!-- ════════════════════════════════════════════════ -->
+    <g id="side_body_lines" filter="url(#glow-soft)">
+      <!-- shoulder / belt line -->
+      <path
+        d="M 278 304
+           C 386 292 544 278 716 272
+           C 964 264 1270 262 1554 258
+           C 1612 256 1654 254 1678 250"
+        stroke="url(#g-accent)"
+        stroke-width="2.6"
+        opacity="0.56"
+      />
+      <!-- mid-body character line -->
+      <path
+        d="M 322 376
+           C 444 366 646 352 904 346
+           C 1164 341 1386 338 1584 334
+           C 1622 333 1654 332 1672 331"
+        stroke="url(#g-accent)"
+        stroke-width="2.2"
+        opacity="0.44"
+      />
+    </g>
+
+    <!-- ════════════════════════════════════════════════ -->
+    <!-- ROCKER LINE                                     -->
+    <!-- ════════════════════════════════════════════════ -->
+    <g id="rocker_line" filter="url(#glow-soft)">
+      <path d="M 590 475 L 1336 475" stroke="url(#g-main)" stroke-width="2.8" opacity="0.58"/>
+    </g>
+
+    <!-- ════════════════════════════════════════════════ -->
+    <!-- FRONT WHEEL ARCH                                -->
+    <!-- Centered on CSS wheel at x=432, y=411.         -->
+    <!-- ════════════════════════════════════════════════ -->
+    <g id="front_wheel_arch" filter="url(#glow)">
+      <path
+        d="M 284 478
+           C 292 386 346 300 432 288
+           C 518 276 576 358 590 478"
+        stroke="#9ad3ff"
+        stroke-width="4.5"
+        opacity="0.89"
+      />
+    </g>
+
+    <!-- ════════════════════════════════════════════════ -->
+    <!-- REAR WHEEL ARCH                                 -->
+    <!-- Centered on CSS wheel at x=1491, y=411.        -->
+    <!-- ════════════════════════════════════════════════ -->
+    <g id="rear_wheel_arch" filter="url(#glow)">
+      <path
+        d="M 1336 478
+           C 1348 386 1408 300 1491 288
+           C 1574 276 1648 360 1660 478"
+        stroke="#9ad3ff"
+        stroke-width="4.5"
+        opacity="0.89"
+      />
+      <!-- rear quarter panel sweep above arch -->
+      <path
+        d="M 1491 290 C 1558 274 1628 260 1664 250"
+        stroke="url(#g-accent)"
+        stroke-width="2.0"
+        opacity="0.40"
+      />
+    </g>
+
+    <!-- ════════════════════════════════════════════════ -->
+    <!-- REAR QUARTER: spoiler + inner hatch glass       -->
+    <!-- ════════════════════════════════════════════════ -->
+    <g id="rear_quarter" filter="url(#glow-soft)">
+      <!-- spoiler / deck lip at very top of rear -->
+      <path
+        d="M 1766 172 C 1796 170 1822 172 1842 178"
+        stroke="url(#g-main)"
+        stroke-width="2.4"
+        opacity="0.54"
+      />
+      <!-- inner rear glass edge (gives hatch depth) -->
+      <path
+        d="M 1754 186 C 1788 200 1816 230 1828 272"
+        stroke="url(#g-main)"
+        stroke-width="2.2"
+        opacity="0.42"
+      />
+    </g>
+
+    <!-- ════════════════════════════════════════════════ -->
+    <!-- REAR HATCH: slope + fascia + lower rear         -->
+    <!-- ════════════════════════════════════════════════ -->
+    <g id="rear_hatch" filter="url(#glow)">
+      <!-- roofline taper into hatch slope -->
+      <path
+        d="M 1766 172
+           C 1802 182 1830 210 1842 258
+           L 1842 284"
+        stroke="url(#g-main)"
+        stroke-width="4.2"
+        opacity="0.87"
+      />
+      <!-- rear fascia (vertical) + lower corner -->
+      <path
+        d="M 1842 284
+           L 1840 398
+           L 1828 445
+           L 1774 456"
+        stroke="url(#g-main)"
+        stroke-width="4.0"
+        opacity="0.82"
+      />
+      <!-- lower rear body: arch corner to fascia corner -->
+      <path
+        d="M 1660 478 L 1774 456"
+        stroke="url(#g-main)"
+        stroke-width="3.6"
+        opacity="0.74"
+      />
+    </g>
+
+    <!-- ════════════════════════════════════════════════ -->
+    <!-- TAILLIGHT: horizontal blade + vertical accent   -->
+    <!-- ════════════════════════════════════════════════ -->
+    <g id="taillight" filter="url(#glow)">
+      <!-- main horizontal taillight blade -->
+      <path
+        d="M 1728 280 L 1842 280"
+        stroke="url(#g-rear)"
+        stroke-width="5.0"
+        opacity="0.88"
+      />
+      <!-- vertical lower accent -->
+      <path
+        d="M 1774 310 C 1758 324 1750 346 1748 368"
+        stroke="#ff92cc"
+        stroke-width="3.6"
+        opacity="0.64"
+      />
+    </g>
+
+    <!-- ════════════════════════════════════════════════ -->
+    <!-- REAR BUMPER: upper trim + lower line            -->
+    <!-- ════════════════════════════════════════════════ -->
+    <g id="rear_bumper" filter="url(#glow-soft)">
+      <!-- upper bumper trim -->
+      <path
+        d="M 1672 457 L 1792 451 L 1824 440"
+        stroke="url(#g-main)"
+        stroke-width="2.6"
+        opacity="0.50"
+      />
+      <!-- lower bumper line -->
+      <path
+        d="M 1674 469 L 1800 464 L 1828 454"
+        stroke="url(#g-main)"
+        stroke-width="2.2"
+        opacity="0.38"
+      />
+    </g>
+
   </g>
 </svg>
