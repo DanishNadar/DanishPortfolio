@@ -536,6 +536,42 @@ function Home() {
       </section>
 
       <SectionReveal className="home-spaced-section py-8">
+        <section className="glass premium-border rounded-[2rem] p-6 md:p-8 overflow-hidden relative">
+          <div
+            className="absolute -right-12 -top-20 h-64 w-64 rounded-full bg-blue-500/15 blur-3xl"
+            aria-hidden="true"
+          />
+          <div
+            className="absolute -left-16 -bottom-24 h-64 w-64 rounded-full bg-rose-500/10 blur-3xl"
+            aria-hidden="true"
+          />
+          <div className="relative grid gap-6 lg:grid-cols-[1.25fr_0.75fr] lg:items-center">
+            <div>
+              <div className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-accent font-tech">
+                <Bot className="h-4 w-4" /> Interactive systems map
+              </div>
+              <h2 className="mt-3 text-3xl md:text-4xl font-display font-bold">
+                Explore the <span className="text-gradient-rb">Intelligence Stack</span>.
+              </h2>
+              <p className="mt-3 max-w-2xl text-sm leading-7 text-muted-foreground">
+                A focused 3D systems map of the foundations, perception, planning, and
+                infrastructure behind intelligent machines. Activate the six major disciplines and
+                complete the stack.
+              </p>
+            </div>
+            <div className="flex lg:justify-end">
+              <Link
+                to="/intelligence-stack"
+                className="brand-button-lg inline-flex items-center gap-2 bg-gradient-rb text-background glow-blue hover:scale-[1.02] transition"
+              >
+                Explore the Intelligence Stack <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </div>
+        </section>
+      </SectionReveal>
+
+      <SectionReveal className="home-spaced-section py-8">
         <section className="home-telemetry-panel rounded-[2rem] border border-border/70 bg-background/25 p-6 md:p-8 overflow-hidden relative">
           <div className="absolute inset-0 home-telemetry-grid" aria-hidden="true" />
           <div className="relative z-10 grid gap-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
@@ -890,4 +926,3 @@ function Home() {
     </MotionPage>
   );
 }
-

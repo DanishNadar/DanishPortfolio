@@ -11,7 +11,7 @@ export const Route = createFileRoute("/resume")({
   head: () => ({
     meta: [
       { title: "Resume Timeline  -  Danish Nadar" },
-      { name: "description", content: "A detailed resume timeline for Danish Nadar across AI engineering, robotics, autonomy, ML projects, security automation, leadership, education, and product work." },
+      { name: "description", content: "A detailed resume timeline for Danish Nadar across AI engineering, ML, cloud infrastructure, robotics, autonomy, AI agents, leadership, education, and product work." },
     ],
   }),
   component: ResumePage,
@@ -33,10 +33,10 @@ function jumpTo(id: string) {
 
 const resumeSections = [
   { id: "resume-experience", label: "Experience" },
-  { id: "resume-ai-ml", label: "AI / ML" },
-  { id: "resume-linux", label: "Linux" },
-  { id: "resume-robotics", label: "Robotics" },
-  { id: "resume-cloud", label: "Cloud" },
+  { id: "resume-ai-ml", label: "AI / Machine Learning" },
+  { id: "resume-cloud", label: "Cloud / AI Infrastructure" },
+  { id: "resume-linux", label: "Linux / Developer Workflow" },
+  { id: "resume-robotics", label: "Robotics / Autonomy" },
   { id: "resume-leadership", label: "Leadership" },
   { id: "resume-education", label: "Education" },
   { id: "resume-courses", label: "Relevant Courses" },
@@ -422,12 +422,11 @@ const relevantCourses = [
 ];
 
 const skillGroups = [
-  ["Linux / Developer Workflow", ["Linux", "Bash", "Git", "Docker", "CLI Tools", "Shell Scripting", "Python Environments", "Deployment Debugging"]],
   ["AI / Machine Learning", ["Applied ML", "Machine Learning", "PyTorch", "TensorFlow", "scikit-learn", "CNNs", "Deep Learning", "VLMs", "LLMs", "Reinforcement Learning", "Model Evaluation"]],
-  ["Robotics / Autonomy", ["RTMaps", "ROS2", "Simulink", "CAN bus", "ADAS", "DMS", "Sensor Fusion", "Computer Vision", "OpenCV", "Vehicle Dynamics"]],
-  ["Cloud / AI Infrastructure", ["AWS", "Azure", "Azure AI Foundry", "Azure Functions", "Supabase", "PostgreSQL", "Vercel", "Microsoft Graph API", "FastAPI", "Streamlit"]],
+  ["Cloud / AI Infrastructure", ["AWS", "Azure", "Azure AI Foundry", "Azure Functions", "Supabase", "PostgreSQL", "Vercel", "FastAPI", "Streamlit", "Microsoft Graph API", "DNS", "SPF/DKIM/DMARC", "Security Automation", "Process Automation", "Email Security"]],
+  ["Linux / Developer Workflow", ["Linux", "Bash", "Git", "Docker", "CLI Tools", "Shell Scripting", "Scripting", "Python Environments", "Deployment Debugging", "Testing"]],
   ["AI Tools / Agents", ["Claude", "ChatGPT", "GitHub Copilot", "Microsoft Copilot", "Copilot Studio", "Hugging Face", "Chatterbox", "XTTS-v2", "Prompt Engineering", "Agentic Systems"]],
-  ["Security / Automation", ["DNS", "SPF/DKIM/DMARC", "Security Automation", "Process Automation", "Scripting", "Email Security", "Testing"]],
+  ["Robotics / Autonomy", ["RTMaps", "ROS2", "Simulink", "CAN bus", "ADAS", "DMS", "Sensor Fusion", "Computer Vision", "OpenCV", "Vehicle Dynamics"]],
   ["Leadership", ["Agile", "Budget Management", "Professional Communication", "Stakeholder Engagement", "Documentation", "Team Leadership"]],
 ];
 
@@ -438,7 +437,7 @@ function ResumePage() {
         <div className="max-w-6xl">
           <div className="case-badge bg-gradient-rb text-background">Detailed professional timeline</div>
           <h1 className="mt-5 text-4xl md:text-7xl font-display font-bold leading-tight animated-title-glow">Danish Nadar Resume Timeline</h1>
-          <p className="mt-5 text-xl leading-relaxed text-foreground/85 max-w-5xl"><TechnicalHighlight text="A long-form technical resume connecting AI engineering, robotics, autonomous systems, ML research, cloud/backend tooling, security automation, leadership, education, and technical communication." /></p>
+          <p className="mt-5 text-xl leading-relaxed text-foreground/85 max-w-5xl"><TechnicalHighlight text="A long-form technical resume connecting AI engineering, ML research, cloud and AI infrastructure, Linux development workflow, AI agents, robotics and autonomy, leadership, and education." /></p>
           <div className="mt-8 flex flex-wrap gap-3">
             {quickLinks.map(([label, href]) => <Link key={href} to={href} className="brand-button glass hover:glow-blue transition hover:-translate-y-0.5">{label}</Link>)}
             <SocialLinks variant="buttons" />
@@ -503,7 +502,7 @@ function ResumePage() {
                 {items.map((item) => {
                   const Icon = item.icon;
                   return (
-                    <motion.article key={item.id} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.45 }} className="glass premium-border ambient-card rounded-3xl border border-border/60 p-6 md:p-8 hover-lift">
+                    <article key={item.id} className="glass premium-border ambient-card rounded-3xl border border-border/60 p-6 md:p-8 hover-lift">
                       <div className="flex flex-col md:flex-row md:items-start gap-5">
                         <div className="shrink-0 h-14 w-14 rounded-2xl bg-gradient-rb text-background grid place-items-center shadow-lg shadow-red-950/20"><Icon className="h-6 w-6" /></div>
                         <div className="min-w-0 flex-1">
@@ -518,7 +517,7 @@ function ResumePage() {
                           {item.links && <div className="mt-5 flex flex-wrap gap-3">{item.links.map(([label, href]) => <Link key={href} to={href} className="brand-button glass text-sm inline-flex items-center gap-2 hover:glow-blue transition">{label}<ArrowRight className="h-3.5 w-3.5" /></Link>)}</div>}
                         </div>
                       </div>
-                    </motion.article>
+                    </article>
                   );
                 })}
               </div>

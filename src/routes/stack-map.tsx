@@ -643,6 +643,7 @@ function StackMapPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, ease: "easeOut" }}
             className="mt-8 grid md:grid-cols-2 xl:grid-cols-3 gap-7 lg:gap-9"
+            data-card-entrance="off"
           >
             {filtered.length === 0 && (
               <div className="col-span-full glass rounded-2xl p-10 text-center text-muted-foreground">

@@ -20,6 +20,16 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (id.includes("node_modules")) {
+            if (
+              id.includes("@react-three") ||
+              id.includes("three-stdlib") ||
+              id.includes("\\three\\") ||
+              id.includes("/three/") ||
+              id.includes("\\maath\\") ||
+              id.includes("/maath/")
+            ) {
+              return "intelligence-3d";
+            }
             if (id.includes("framer-motion")) return "motion";
             if (id.includes("@radix-ui")) return "radix-ui";
             if (id.includes("@tanstack")) return "tanstack";

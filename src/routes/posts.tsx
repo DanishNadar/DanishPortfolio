@@ -124,36 +124,35 @@ function PostsIndex() {
             animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.45, ease: "easeOut" }}
         className="mt-8 grid md:grid-cols-2 xl:grid-cols-3 gap-10 lg:gap-12"
+        data-card-entrance="off"
       >
         {filtered.length === 0 && (
           <div className="col-span-full glass rounded-2xl p-10 text-center text-muted-foreground">
             No posts yet. Create one from the admin dashboard at <Link to="/admin" className="text-accent underline">/admin</Link>.
           </div>
         )}
-        {visiblePosts.map((p, i) => {
+        {visiblePosts.map((p) => {
           const detail = getPostPage(p.slug);
           const tags = detail?.tags ?? p.tags ?? [];
           return (
-            <motion.div key={p.id} initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.02 }}>
-              <Link to="/posts/$slug" params={{ slug: p.slug }} className="post-card-link block glass premium-border ambient-card rounded-[1.85rem] p-8 md:p-9 hover:glow-blue transition hover:-translate-y-1 h-full min-h-[23rem] cursor-pointer">
-                <div className="flex items-center justify-between mb-3 gap-2">
-                  <span className="text-[10px] uppercase tracking-wide px-2 py-0.5 rounded-full bg-gradient-rb text-background font-semibold">
-                    {(detail?.postType ?? p.post_type).replace(/_/g, " ")}
-                  </span>
-                  <span className="text-[10px] uppercase tracking-wide text-accent">{formatPostDate(detail?.writtenDate ?? p.published_at)}</span>
+            <Link key={p.id} to="/posts/$slug" params={{ slug: p.slug }} className="post-card-link block glass premium-border ambient-card rounded-[1.85rem] p-8 md:p-9 hover:glow-blue transition hover:-translate-y-1 h-full min-h-[23rem] cursor-pointer">
+              <div className="flex items-center justify-between mb-3 gap-2">
+                <span className="text-[10px] uppercase tracking-wide px-2 py-0.5 rounded-full bg-gradient-rb text-background font-semibold">
+                  {(detail?.postType ?? p.post_type).replace(/_/g, " ")}
+                </span>
+                <span className="text-[10px] uppercase tracking-wide text-accent">{formatPostDate(detail?.writtenDate ?? p.published_at)}</span>
+              </div>
+              <h3 className="portfolio-title-font post-title-font text-lg font-semibold leading-snug">{detail?.title ?? p.title}</h3>
+              <p className="mt-2 text-sm text-muted-foreground line-clamp-3">{detail?.summary ?? p.generated_summary}</p>
+              {tags.length > 0 && (
+                <div className="mt-4 flex flex-wrap gap-1.5">
+                  {tags.slice(0, 4).map((t) => (
+                    <span key={t} className="text-[10px] uppercase tracking-wide px-2 py-0.5 rounded border border-border text-muted-foreground">#{t}</span>
+                  ))}
                 </div>
-                <h3 className="portfolio-title-font post-title-font text-lg font-semibold leading-snug">{detail?.title ?? p.title}</h3>
-                <p className="mt-2 text-sm text-muted-foreground line-clamp-3">{detail?.summary ?? p.generated_summary}</p>
-                {tags.length > 0 && (
-                  <div className="mt-4 flex flex-wrap gap-1.5">
-                    {tags.slice(0, 4).map((t) => (
-                      <span key={t} className="text-[10px] uppercase tracking-wide px-2 py-0.5 rounded border border-border text-muted-foreground">#{t}</span>
-                    ))}
-                  </div>
-                )}
-                <div className="mt-5 text-xs text-accent">Open full post page →</div>
-              </Link>
-            </motion.div>
+              )}
+              <div className="mt-5 text-xs text-accent">Open full post page →</div>
+            </Link>
           );
         })}
       </motion.div>

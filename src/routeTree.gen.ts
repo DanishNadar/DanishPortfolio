@@ -18,6 +18,7 @@ import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as PostsRouteImport } from './routes/posts'
 import { Route as LeadershipAcademyRouteImport } from './routes/leadership-academy'
 import { Route as JourneyRouteImport } from './routes/journey'
+import { Route as IntelligenceStackRouteImport } from './routes/intelligence-stack'
 import { Route as InspirationsRouteImport } from './routes/inspirations'
 import { Route as IllinoisTechRouteImport } from './routes/illinois-tech'
 import { Route as GalleryRouteImport } from './routes/gallery'
@@ -82,6 +83,11 @@ const LeadershipAcademyRoute = LeadershipAcademyRouteImport.update({
 const JourneyRoute = JourneyRouteImport.update({
   id: '/journey',
   path: '/journey',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntelligenceStackRoute = IntelligenceStackRouteImport.update({
+  id: '/intelligence-stack',
+  path: '/intelligence-stack',
   getParentRoute: () => rootRouteImport,
 } as any)
 const InspirationsRoute = InspirationsRouteImport.update({
@@ -196,6 +202,7 @@ export interface FileRoutesByFullPath {
   '/gallery': typeof GalleryRoute
   '/illinois-tech': typeof IllinoisTechRoute
   '/inspirations': typeof InspirationsRoute
+  '/intelligence-stack': typeof IntelligenceStackRoute
   '/journey': typeof JourneyRoute
   '/leadership-academy': typeof LeadershipAcademyRoute
   '/posts': typeof PostsRouteWithChildren
@@ -226,6 +233,7 @@ export interface FileRoutesByTo {
   '/gallery': typeof GalleryRoute
   '/illinois-tech': typeof IllinoisTechRoute
   '/inspirations': typeof InspirationsRoute
+  '/intelligence-stack': typeof IntelligenceStackRoute
   '/journey': typeof JourneyRoute
   '/leadership-academy': typeof LeadershipAcademyRoute
   '/posts': typeof PostsRouteWithChildren
@@ -258,6 +266,7 @@ export interface FileRoutesById {
   '/gallery': typeof GalleryRoute
   '/illinois-tech': typeof IllinoisTechRoute
   '/inspirations': typeof InspirationsRoute
+  '/intelligence-stack': typeof IntelligenceStackRoute
   '/journey': typeof JourneyRoute
   '/leadership-academy': typeof LeadershipAcademyRoute
   '/posts': typeof PostsRouteWithChildren
@@ -291,6 +300,7 @@ export interface FileRouteTypes {
     | '/gallery'
     | '/illinois-tech'
     | '/inspirations'
+    | '/intelligence-stack'
     | '/journey'
     | '/leadership-academy'
     | '/posts'
@@ -321,6 +331,7 @@ export interface FileRouteTypes {
     | '/gallery'
     | '/illinois-tech'
     | '/inspirations'
+    | '/intelligence-stack'
     | '/journey'
     | '/leadership-academy'
     | '/posts'
@@ -352,6 +363,7 @@ export interface FileRouteTypes {
     | '/gallery'
     | '/illinois-tech'
     | '/inspirations'
+    | '/intelligence-stack'
     | '/journey'
     | '/leadership-academy'
     | '/posts'
@@ -384,6 +396,7 @@ export interface RootRouteChildren {
   GalleryRoute: typeof GalleryRoute
   IllinoisTechRoute: typeof IllinoisTechRoute
   InspirationsRoute: typeof InspirationsRoute
+  IntelligenceStackRoute: typeof IntelligenceStackRoute
   JourneyRoute: typeof JourneyRoute
   LeadershipAcademyRoute: typeof LeadershipAcademyRoute
   PostsRoute: typeof PostsRouteWithChildren
@@ -458,6 +471,13 @@ declare module '@tanstack/react-router' {
       path: '/journey'
       fullPath: '/journey'
       preLoaderRoute: typeof JourneyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/intelligence-stack': {
+      id: '/intelligence-stack'
+      path: '/intelligence-stack'
+      fullPath: '/intelligence-stack'
+      preLoaderRoute: typeof IntelligenceStackRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/inspirations': {
@@ -671,6 +691,7 @@ const rootRouteChildren: RootRouteChildren = {
   GalleryRoute: GalleryRoute,
   IllinoisTechRoute: IllinoisTechRoute,
   InspirationsRoute: InspirationsRoute,
+  IntelligenceStackRoute: IntelligenceStackRoute,
   JourneyRoute: JourneyRoute,
   LeadershipAcademyRoute: LeadershipAcademyRoute,
   PostsRoute: PostsRouteWithChildren,

@@ -11,6 +11,7 @@ const inactiveNavClass = "text-muted-foreground hover:text-foreground hover:bg-m
 const links = [
   { to: "/gallery", label: "Gallery" },
   { to: "/stack-map", label: "Stack Map" },
+  { to: "/intelligence-stack", label: "Play Stack" },
   { to: "/about", label: "About" },
   { to: "/resume", label: "Resume" },
   { to: "/contact", label: "Contact" },
