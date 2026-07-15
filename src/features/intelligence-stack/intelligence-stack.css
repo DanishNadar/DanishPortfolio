@@ -19,6 +19,7 @@
   height: 100% !important;
   width: 100% !important;
   touch-action: none;
+  transform: translateZ(0);
 }
 
 .intelligence-stack-radial-glow,
@@ -30,9 +31,8 @@
 }
 
 .intelligence-stack-radial-glow {
-  opacity: 0.72;
-  filter: blur(14px);
-  animation: intelligence-stack-glow-breathe 7s ease-in-out infinite alternate;
+  opacity: 0.62;
+  filter: none;
 }
 
 .intelligence-stack-radial-glow.glow-blue {
@@ -44,11 +44,10 @@
 }
 
 .intelligence-stack-scanlines {
-  opacity: 0.22;
+  opacity: 0.13;
   background-image: linear-gradient(rgba(124, 194, 255, 0.035) 1px, transparent 1px);
   background-size: 100% 5px;
-  mix-blend-mode: screen;
-  animation: intelligence-stack-scan-drift 8s linear infinite;
+  mix-blend-mode: normal;
 }
 
 .intelligence-stack-header {
@@ -879,10 +878,6 @@
   box-shadow: 0 0 11px #49beff;
 }
 
-.has-music .intelligence-stack-feedback-dot {
-  animation: intelligence-stack-music-pulse 0.72s ease-in-out infinite alternate;
-}
-
 .intelligence-stack-controls {
   position: absolute;
   z-index: 2;
@@ -1109,7 +1104,10 @@
   background: rgba(17, 47, 78, 0.33);
   cursor: pointer;
   text-align: left;
-  transition: border-color 0.18s, background 0.18s, transform 0.18s;
+  transition:
+    border-color 0.18s,
+    background 0.18s,
+    transform 0.18s;
 }
 
 .intelligence-stack-mission-option:hover,

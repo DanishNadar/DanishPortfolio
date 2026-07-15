@@ -3,7 +3,7 @@ import { useFrame } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
 import type { Group, MeshStandardMaterial } from "three";
 import { categoryColor, getNodePosition } from "./scene-utils";
-import type { QualityMode, SkillCubeNode, StackMapLayout } from "./types";
+import type { SkillCubeNode, StackMapLayout } from "./types";
 
 interface SkillCubeProps {
   activated: boolean;
@@ -12,7 +12,6 @@ interface SkillCubeProps {
   index: number;
   layout: StackMapLayout;
   onNavigate?: () => void;
-  quality: QualityMode;
   reducedMotion: boolean;
   selected: boolean;
   node: SkillCubeNode;
@@ -26,7 +25,6 @@ export function SkillCube({
   layout,
   node,
   onNavigate,
-  quality,
   reducedMotion,
   selected,
 }: SkillCubeProps) {
@@ -96,11 +94,6 @@ export function SkillCube({
           roughness={0.27}
           clearcoat={0.9}
           clearcoatRoughness={0.12}
-          transparent
-          opacity={activated ? 0.8 : 0.86}
-          transmission={quality === "high" ? 0.14 : 0}
-          thickness={0.35}
-          ior={1.35}
         />
         <Edges
           threshold={15}
@@ -120,23 +113,24 @@ export function SkillCube({
       </RoundedBox>
       {activated && (
         <>
-          <mesh position={[-0.675, 0, 0]} rotation={[0, Math.PI / 2, 0]}>
+          <mesh renderOrder={1} position={[-0.675, 0, 0]} rotation={[0, Math.PI / 2, 0]}>
             <planeGeometry args={[0.54, 0.5]} />
-            <meshBasicMaterial color="#2ebcff" transparent opacity={0.48} />
+            <meshBasicMaterial color="#2ebcff" transparent opacity={0.48} depthWrite={false} />
           </mesh>
-          <mesh position={[0, 0, 0.675]}>
+          <mesh renderOrder={1} position={[0, 0, 0.675]}>
             <planeGeometry args={[0.54, 0.5]} />
-            <meshBasicMaterial color="#ff3658" transparent opacity={0.43} />
+            <meshBasicMaterial color="#ff3658" transparent opacity={0.43} depthWrite={false} />
           </mesh>
         </>
       )}
       {highlighted && (
-        <mesh position={[0, 0.42, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <mesh renderOrder={2} position={[0, 0.42, 0]} rotation={[-Math.PI / 2, 0, 0]}>
           <ringGeometry args={[0.4, 0.53, 32]} />
           <meshBasicMaterial
             color={current ? "#f5fbff" : connected ? "#9eeeff" : accent}
             transparent
             opacity={connected ? 0.95 : 0.85}
+            depthWrite={false}
           />
         </mesh>
       )}

@@ -476,38 +476,76 @@ export const friendProfiles: FriendProfile[] = [
         "I wish you the absolute best in everything ahead, and I hope you're able to be successful in an exciting career engineering autonomous vehicles and autonomous systems! Your technical strength, work ethic, and kindness will take you far, and I am excited to see where you go next!",
       linkedin: "https://www.linkedin.com/in/nkabra56/",
       website: "https://nkabra56.up.railway.app/",
+      testimonial: (
+        <>
+          Danish is not just a brilliant peer; he is{" "}
+          <span className="text-gradient-rb">
+            <strong>one of the most reliable and supportive people</strong> I know
+          </span>
+          . We first crossed paths when I was a new transfer student at Illinois Tech. I reached out
+          for help on an assignment, and his{" "}
+          <span className="text-gradient-rb">immediate, selfless response</span> was the start of a
+          great friendship.
+          <br />
+          <br />
+          We eventually teamed up on the EcoCar project, diving deep into autonomous systems like{" "}
+          <span className="text-gradient-rb">sensor fusion and lateral controls</span>. Even though I
+          was the one who introduced him to the project, his{" "}
+          <span className="text-gradient-rb">
+            <strong>drive and eagerness to learn</strong>
+          </span>{" "}
+          quickly became an inspiration to me. Danish genuinely wants everyone around him to succeed.
+          He constantly pushes me to try my hardest and is{" "}
+          <span className="text-gradient-rb">always my first call when I need advice</span>, whether
+          it’s about a complex engineering problem, navigating the job hunt, or just life in general.
+          He brings incredible technical skills to the table, but it’s his{" "}
+          <span className="text-gradient-rb">
+            <strong>empathy, dedication, and genuine friendship</strong>
+          </span>{" "}
+          that truly set him apart.
+        </>
+      ),
     },
   ),
   friend(
     "lucas-ferguson",
     "Lucas Ferguson",
-    "Computer science student and student-organization leader whose warmth, initiative, and example reshaped how I want to lead others.",
+    "A Computer Science student, Illinois Tech Robotics leader, and one of the people who most directly shaped how I lead, take initiative, and serve others.",
     {
+      portraitCrop: { position: "50% 22%", scale: 1.05, origin: "50% 22%" },
       sharedProjectSlugs: [],
       sharedWorkSummary:
-        "IGDA leadership, student-organization operations, CyberHawks sessions, and lessons in building technical communities where people feel welcome to contribute.",
+        "Illinois Tech Robotics, IGDA leadership, CyberHawks sessions, and student-organization operations. Lucas personally guided me through becoming treasurer of Illinois Tech Robotics, walking me through the financial responsibilities, the budget cycles, and the mindset it takes to actually own a leadership role. His mentorship gave me the foundation I needed to serve effectively and grow into the position across multiple organizations.",
       stories: [
         {
           title: "Leadership that felt welcoming",
-          body: "Lucas's friendliness and personality immediately stood out to me. He showed me that a strong leader could be ambitious while still being approachable, positive, and genuinely encouraging.",
+          body: "Lucas's warmth and initiative immediately stood out to me. He showed me that a strong leader could be ambitious and driven while still being genuinely approachable, encouraging, and attentive to the people around them.",
         },
         {
-          title: "Learning from CyberHawks and IGDA",
-          body: "I attended CyberHawks sessions and witnessed his leadership firsthand. While he served as president of IGDA, I served as treasurer and continued in that role throughout college.",
+          title: "Teaching me how to become treasurer",
+          body: "Lucas sat with me and walked me through what it meant to serve as treasurer of Illinois Tech Robotics. He explained the financial systems, the budget cycles, the responsibilities, and the ownership that came with the role. His guidance gave me the practical foundation and the confidence to step in, manage the organization's resources effectively, and eventually carry that responsibility into IGDA and ITRC.",
+        },
+        {
+          title: "Inspiring me to take more initiative",
+          body: "Watching Lucas lead with such consistency, purpose, and care made me realize I was holding myself back. He pushed me to stop waiting for permission and start taking more initiative. That shift changed how I showed up in every student organization I was part of, and it set me on the path toward becoming the kind of leader I had only admired from a distance before.",
+        },
+        {
+          title: "From ITR to CyberHawks and IGDA",
+          body: "I first encountered Lucas through Illinois Tech Robotics, where he demonstrated confident, welcoming leadership in a way that made the club feel alive. I later attended CyberHawks sessions and saw that same energy carry into every room he entered. When he became IGDA president, I served alongside him as treasurer and continued in that role throughout college.",
         },
         {
           title: "Carrying the example forward",
-          body: "His example influenced how I now lead initiatives as president of the Machine Learning Club. I want others to feel the same possibility, momentum, and welcome that his leadership made visible to me.",
+          body: "His example shaped how I now lead as president of the Machine Learning Club. I want the people I work with to feel the same sense of possibility, momentum, and genuine welcome that Lucas's leadership made visible to me when I needed it most.",
         },
         {
           title: "Positivity that changes the room",
-          body: "Lucas is consistently kind, positive, and attentive to the people around him. His presence can make me, and seemingly anyone nearby, feel immediately better. That ability to elevate a room is one of the leadership qualities I admire most.",
+          body: "Lucas is consistently kind, positive, and attentive to the people around him. His presence can make me, and seemingly anyone nearby, feel immediately better. That ability to elevate a room is one of the leadership qualities I admire most and aspire to replicate.",
         },
       ],
       gratitude:
-        "Thank you, Lucas, for always being so kind and positive. You have a way of making me, and everyone around you, feel better just by being yourself. Watching you lead showed me that people work harder when they feel welcomed and appreciated, and I carry that lesson into the way I lead now.",
+        "Thank you, Lucas, for taking the time to teach me how to be a treasurer and for consistently pushing me to take more initiative. You did not have to do any of that, but you did, and it changed how I lead. You have a way of making everyone around you feel more capable and more welcome, and I carry that lesson into every leadership role I take on. I am genuinely grateful for your mentorship, your example, and your friendship.",
       legacy:
-        "I hope I can make people feel as welcome and capable as you made me feel. Your example is already part of how I approach leadership, and I am excited to see all the games, communities, and opportunities you help create next.",
+        "I hope I can make others feel as capable and welcome as you made me feel when I was still figuring out how to show up. Your example is already part of how I lead, and I am excited to see all the communities, projects, and opportunities you continue to build and inspire.",
       linkedin: "#",
       website: "#",
       portfolio: "#",

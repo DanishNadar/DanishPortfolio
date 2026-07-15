@@ -14,7 +14,6 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { BackToTop } from "@/components/BackToTop";
 import { PointerGlow } from "@/components/PointerGlow";
-import { CardEntranceObserver } from "@/components/CardEntranceObserver";
 import { ImageLightboxProvider } from "@/components/ImageLightbox";
 
 const FloatingAvatar = lazy(() =>
@@ -106,7 +105,6 @@ function RootComponent() {
         ) : (
           <>
             <PointerGlow />
-            <CardEntranceObserver />
             <SiteNav />
             <main className="min-h-[calc(100vh-4rem)]">
               <Outlet />

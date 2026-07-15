@@ -15,15 +15,12 @@ import {
   RotateCcw,
   Settings2,
   Sparkles,
-  Volume2,
-  VolumeX,
   X,
 } from "lucide-react";
 import { CATEGORY_ORDER, MAJOR_NODE_IDS, MISSION_BY_ID, NODE_BY_ID } from "./level";
 import { ExperienceErrorBoundary } from "./ExperienceErrorBoundary";
 import { MissionPicker } from "./MissionPicker";
 import { SkillStoryWindow } from "./SkillStoryWindow";
-import { useDemoSound } from "./useDemoSound";
 import { useIntelligenceStackGame } from "./useIntelligenceStackGame";
 import { WebGLFallback } from "./WebGLFallback";
 import type { QualityMode, StackMission } from "./types";
@@ -81,9 +78,8 @@ export function IntelligenceStackPage() {
   const [cameraResetToken, setCameraResetToken] = useState(0);
   const reducedMotion = useReducedMotion();
   const lastStoryNodeId = useRef<string | null>(null);
-  const { playCue, soundEnabled, toggleSound } = useDemoSound();
   const mission = MISSION_BY_ID.get(missionId)!;
-  const game = useIntelligenceStackGame({ mission, onEvent: playCue, reducedMotion });
+  const game = useIntelligenceStackGame({ mission, reducedMotion });
   const effectiveQuality = quality === "auto" ? autoQuality : quality;
   const connectedNodeIds = useMemo(() => new Set(game.linkedNodeIds), [game.linkedNodeIds]);
 
@@ -143,14 +139,7 @@ export function IntelligenceStackPage() {
   if (webglStatus === "unavailable") return <WebGLFallback />;
 
   return (
-    <div
-      ref={rootRef}
-      className={
-        "intelligence-stack-page" +
-        (game.hasBegun ? " is-playing" : "") +
-        (soundEnabled ? " has-music" : "")
-      }
-    >
+    <div ref={rootRef} className={"intelligence-stack-page" + (game.hasBegun ? " is-playing" : "")}>
       <div className="intelligence-stack-radial-glow glow-blue" aria-hidden="true" />
       <div className="intelligence-stack-radial-glow glow-red" aria-hidden="true" />
       <div className="intelligence-stack-scanlines" aria-hidden="true" />
@@ -347,15 +336,6 @@ export function IntelligenceStackPage() {
               <option value="low">Low</option>
             </select>
           </label>
-          <button
-            type="button"
-            className="intelligence-stack-utility-button"
-            onClick={toggleSound}
-            aria-pressed={soundEnabled}
-          >
-            {soundEnabled ? <Volume2 size={15} /> : <VolumeX size={15} />} Theme{" "}
-            {soundEnabled ? "On" : "Off"}
-          </button>
           <button
             type="button"
             className="intelligence-stack-utility-button"

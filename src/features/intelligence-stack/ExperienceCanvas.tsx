@@ -1,5 +1,5 @@
 import { Canvas } from "@react-three/fiber";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { CameraController } from "./CameraController";
 import { CompletionBurst } from "./CompletionBurst";
 import { CubeNetwork } from "./CubeNetwork";
@@ -33,6 +33,13 @@ function getQualitySettings(quality: QualityMode) {
   return { dpr: [1, 1.35] as [number, number], shadows: true };
 }
 
+const CANVAS_CAMERA = {
+  position: [15, 11.8, 18.5] as [number, number, number],
+  fov: 36,
+  near: 0.1,
+  far: 80,
+};
+
 export function ExperienceCanvas({
   activatedIds,
   cameraResetToken,
@@ -52,7 +59,15 @@ export function ExperienceCanvas({
   selectedNodeId,
 }: ExperienceCanvasProps) {
   const [isPageVisible, setIsPageVisible] = useState(true);
-  const { dpr, shadows } = getQualitySettings(quality);
+  const { dpr, shadows } = useMemo(() => getQualitySettings(quality), [quality]);
+  const glSettings = useMemo(
+    () => ({
+      antialias: quality !== "low",
+      alpha: false,
+      powerPreference: "high-performance" as const,
+    }),
+    [quality],
+  );
 
   useEffect(() => {
     const updateVisibility = () => setIsPageVisible(!document.hidden);
@@ -64,11 +79,11 @@ export function ExperienceCanvas({
     <Canvas
       className="intelligence-stack-canvas"
       aria-label="Interactive three-dimensional intelligence stack with activated skill cubes"
-      camera={{ position: [15, 11.8, 18.5], fov: 36, near: 0.1, far: 80 }}
+      camera={CANVAS_CAMERA}
       dpr={dpr}
       frameloop={isPageVisible ? "always" : "never"}
       shadows={shadows}
-      gl={{ antialias: quality !== "low", alpha: false, powerPreference: "high-performance" }}
+      gl={glSettings}
       onCreated={({ gl }) => {
         gl.setClearColor("#050914");
         requestAnimationFrame(onSceneReady);
@@ -86,7 +101,6 @@ export function ExperienceCanvas({
           currentNodeId={currentNodeId}
           layout={layout}
           onNavigate={onNavigate}
-          quality={quality}
           reducedMotion={reducedMotion}
           selectedNodeId={selectedNodeId}
         />

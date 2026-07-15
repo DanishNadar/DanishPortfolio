@@ -1,6 +1,6 @@
 import { LEVEL_NODES } from "./level";
 import { SkillCube } from "./SkillCube";
-import type { QualityMode, StackMapLayout } from "./types";
+import type { StackMapLayout } from "./types";
 
 interface CubeNetworkProps {
   activatedIds: ReadonlySet<string>;
@@ -8,7 +8,6 @@ interface CubeNetworkProps {
   currentNodeId: string;
   layout: StackMapLayout;
   onNavigate: (nodeId: string) => void;
-  quality: QualityMode;
   reducedMotion: boolean;
   selectedNodeId: string;
 }
@@ -19,7 +18,6 @@ export function CubeNetwork({
   currentNodeId,
   layout,
   onNavigate,
-  quality,
   reducedMotion,
   selectedNodeId,
 }: CubeNetworkProps) {
@@ -35,7 +33,6 @@ export function CubeNetwork({
           layout={layout}
           node={node}
           onNavigate={() => onNavigate(node.id)}
-          quality={quality}
           reducedMotion={reducedMotion}
           selected={selectedNodeId === node.id}
         />

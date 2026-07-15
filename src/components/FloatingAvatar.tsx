@@ -37,7 +37,6 @@ const FloatingDNLogo = memo(function FloatingDNLogo({ speaking = false }: { spea
 const QUICK_PROMPTS: string[] = [];
 const MAX_INPUT_CHARS = 240;
 const MAX_VISIBLE_MESSAGES = 6;
-const GENERATED_TTS_GRACE_MS = 4500;
 const INITIAL_MESSAGES: Msg[] = [
   {
     role: "avatar",
@@ -119,9 +118,6 @@ export function FloatingAvatar() {
   const msgsRef = useRef<Msg[]>(INITIAL_MESSAGES);
   const scrollRef = useRef<HTMLDivElement>(null);
   const speakingTimeoutRef = useRef<number | null>(null);
-  const ttsFallbackTimeoutRef = useRef<number | null>(null);
-  const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
   const requestIdRef = useRef(0);
 
   // Add/remove dn-engine-open on <html> when the panel opens or closes.
@@ -156,12 +152,6 @@ export function FloatingAvatar() {
   useEffect(() => {
     return () => {
       if (speakingTimeoutRef.current) window.clearTimeout(speakingTimeoutRef.current);
-      if (ttsFallbackTimeoutRef.current) window.clearTimeout(ttsFallbackTimeoutRef.current);
-      if ("speechSynthesis" in window) window.speechSynthesis.cancel();
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current = null;
-      }
     };
   }, []);
 
@@ -188,71 +178,10 @@ export function FloatingAvatar() {
     speakingTimeoutRef.current = window.setTimeout(() => setSpeaking(false), delay);
   }, []);
 
-  const speakReply = useCallback(
-    (text: string, requestId: number) => {
-      if (!("speechSynthesis" in window)) {
-        stopSpeakingSoon(Math.min(2600, Math.max(1000, text.length * 14)));
-        return;
-      }
-
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      const voices = window.speechSynthesis.getVoices();
-      utterance.voice =
-        voices.find(
-          (voice) =>
-            /natural|neural|online|google|microsoft/i.test(voice.name) && /^en/i.test(voice.lang),
-        ) ??
-        voices.find((voice) => /^en/i.test(voice.lang)) ??
-        null;
-      utterance.rate = 0.94;
-      utterance.pitch = 0.92;
-      utterance.volume = 1;
-      utterance.onstart = () => {
-        if (requestIdRef.current === requestId) setSpeaking(true);
-      };
-      utterance.onboundary = () => {
-        if (requestIdRef.current !== requestId) return;
-        setSpeaking(false);
-        window.setTimeout(() => {
-          if (requestIdRef.current === requestId) setSpeaking(true);
-        }, 45);
-      };
-      utterance.onend = () => {
-        if (requestIdRef.current === requestId) stopSpeakingSoon(250);
-      };
-      utterance.onerror = () => {
-        if (requestIdRef.current === requestId) stopSpeakingSoon(700);
-      };
-      utteranceRef.current = utterance;
+  const showReplyActivity = useCallback(
+    (text: string) => {
       setSpeaking(true);
-      window.speechSynthesis.speak(utterance);
-    },
-    [stopSpeakingSoon],
-  );
-
-  const playGeneratedSpeech = useCallback(
-    async (audioUrl: string, requestId: number) => {
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current = null;
-      }
-      if ("speechSynthesis" in window) window.speechSynthesis.cancel();
-
-      const audio = new Audio(audioUrl);
-      audioRef.current = audio;
-      audio.onplay = () => {
-        if (requestIdRef.current === requestId) setSpeaking(true);
-      };
-      audio.onended = () => {
-        if (requestIdRef.current === requestId) stopSpeakingSoon(250);
-      };
-      audio.onerror = () => {
-        if (requestIdRef.current === requestId) stopSpeakingSoon(700);
-      };
-
-      setSpeaking(true);
-      await audio.play();
+      stopSpeakingSoon(Math.min(2600, Math.max(1200, text.length * 14)));
     },
     [stopSpeakingSoon],
   );
@@ -264,7 +193,6 @@ export function FloatingAvatar() {
 
       const requestId = requestIdRef.current + 1;
       requestIdRef.current = requestId;
-      if (ttsFallbackTimeoutRef.current) window.clearTimeout(ttsFallbackTimeoutRef.current);
       const historyForApi: DNConversationTurn[] = msgsRef.current
         .slice(-10)
         .map((message) => ({ role: message.role, text: message.text }));
@@ -298,26 +226,11 @@ export function FloatingAvatar() {
         if (!document.documentElement.classList.contains("dn-engine-open")) {
           setHasUnreadResponse(true);
         }
-        let speechHandled = false;
-        ttsFallbackTimeoutRef.current = window.setTimeout(() => {
-          if (requestIdRef.current !== requestId || speechHandled) return;
-          speechHandled = true;
-          speakReply(reply, requestId);
-        }, GENERATED_TTS_GRACE_MS);
+        showReplyActivity(reply);
 
         requestAvatarSpeech(reply).then((result) => {
           if (requestIdRef.current !== requestId) return;
-          if (ttsFallbackTimeoutRef.current) {
-            window.clearTimeout(ttsFallbackTimeoutRef.current);
-            ttsFallbackTimeoutRef.current = null;
-          }
-          if (!result?.ok) {
-            if (!speechHandled) {
-              speechHandled = true;
-              speakReply(reply, requestId);
-            }
-            return;
-          }
+          if (!result?.ok) return;
           if (result.videoUrl) {
             setAvatarMedia({
               kind: "video",
@@ -328,16 +241,6 @@ export function FloatingAvatar() {
           if (result.imageUrl) {
             setAvatarMedia({ kind: "image", src: result.imageUrl, status: "preview" });
           }
-          if (speechHandled) return;
-          if (result.audioUrl) {
-            speechHandled = true;
-            playGeneratedSpeech(`${result.audioUrl}?t=${Date.now()}`, requestId).catch(() =>
-              speakReply(reply, requestId),
-            );
-            return;
-          }
-          speechHandled = true;
-          speakReply(reply, requestId);
         });
       } catch {
         if (requestIdRef.current !== requestId) return;
@@ -359,22 +262,12 @@ export function FloatingAvatar() {
         stopSpeakingSoon(1200);
       }
     },
-    [playGeneratedSpeech, speakReply, stopSpeakingSoon],
+    [showReplyActivity, stopSpeakingSoon],
   );
 
   const closePanel = useCallback(() => {
     setOpen(false);
     setSpeaking(false);
-    if ("speechSynthesis" in window) window.speechSynthesis.cancel();
-    if (ttsFallbackTimeoutRef.current) {
-      window.clearTimeout(ttsFallbackTimeoutRef.current);
-      ttsFallbackTimeoutRef.current = null;
-    }
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current = null;
-    }
-    utteranceRef.current = null;
     if (speakingTimeoutRef.current) window.clearTimeout(speakingTimeoutRef.current);
   }, []);
 

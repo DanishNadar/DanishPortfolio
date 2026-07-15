@@ -45,7 +45,13 @@ export function EnergyPaths({ activatedIds, completed, layout }: EnergyPathsProp
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
         <bufferAttribute attach="attributes-color" args={[colors, 3]} />
       </bufferGeometry>
-      <lineBasicMaterial ref={material} vertexColors transparent opacity={0.38} />
+      <lineBasicMaterial
+        ref={material}
+        vertexColors
+        transparent
+        opacity={0.38}
+        depthWrite={false}
+      />
     </lineSegments>
   );
 }

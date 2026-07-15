@@ -2,7 +2,7 @@
 // works reliably when dn-engine-open is on <html>. Framer Motion uses the Web
 // Animations API and ignores CSS animation-play-state entirely.
 
-import { useEffect, useState, type CSSProperties } from "react";
+import { useState, type CSSProperties } from "react";
 import { createPathfindingProblem } from "@/lib/pathfinding";
 
 const particles = Array.from({ length: 24 }, (_, index) => ({
@@ -20,9 +20,6 @@ const nodes = Array.from({ length: 9 }, (_, index) => ({
   top: `${12 + ((index * 17) % 72)}%`,
   delay: index * 0.6,
 }));
-
-const GRAPH_CYCLE_MS = 10000;
-const TEST_GRAPH_CYCLE_MS = 5200;
 
 const astarShowcaseNodes = [
   { id: 0, left: "7%", top: "70%", delay: "0s" },
@@ -63,7 +60,11 @@ function AstarShowcaseOverlay() {
         <span
           key={node.id}
           className={`astar-showcase-node ${
-            node.id === 0 ? "astar-showcase-node-start" : node.id === 5 ? "astar-showcase-node-goal" : ""
+            node.id === 0
+              ? "astar-showcase-node-start"
+              : node.id === 5
+                ? "astar-showcase-node-goal"
+                : ""
           }`}
           style={
             {
@@ -86,45 +87,9 @@ function PathfindingGraph({
   showMetrics?: boolean;
   testMode?: boolean;
 }) {
-  const [reduceMotion, setReduceMotion] = useState(false);
-  const [problem, setProblem] = useState(createPathfindingProblem);
-  const [telemetryProblem, setTelemetryProblem] = useState(problem);
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const updateMotionPreference = () => setReduceMotion(mediaQuery.matches);
-    updateMotionPreference();
-    mediaQuery.addEventListener("change", updateMotionPreference);
-    return () => mediaQuery.removeEventListener("change", updateMotionPreference);
-  }, []);
-
-  useEffect(() => {
-    if (reduceMotion) return;
-
-    const interval = window.setInterval(() => {
-      if (!document.hidden && !document.documentElement.classList.contains("dn-engine-open")) {
-        setProblem(createPathfindingProblem());
-      }
-    }, testMode ? TEST_GRAPH_CYCLE_MS : GRAPH_CYCLE_MS);
-
-    return () => window.clearInterval(interval);
-  }, [reduceMotion, testMode]);
-
+  const [problem] = useState(createPathfindingProblem);
+  const telemetryProblem = problem;
   const solutionDelay = 1.2 + problem.explored.length * 0.1;
-
-  useEffect(() => {
-    if (reduceMotion) {
-      setTelemetryProblem(problem);
-      return;
-    }
-
-    const telemetryDelayMs = Math.round((solutionDelay + 0.9) * 1000);
-    const timeout = window.setTimeout(() => {
-      setTelemetryProblem(problem);
-    }, telemetryDelayMs);
-
-    return () => window.clearTimeout(timeout);
-  }, [problem, reduceMotion, solutionDelay]);
 
   const exploredStep = new Map(problem.explored.map((nodeId, index) => [nodeId, index]));
   const solutionPoints = problem.path
@@ -139,7 +104,6 @@ function PathfindingGraph({
       return `${index === 0 ? "M" : "L"} ${node.x} ${node.y}`;
     })
     .join(" ");
-  const staticRoute = reduceMotion;
   const routeHops = Math.max(telemetryProblem.path.length - 1, 0);
   const exploredCoverage = Math.round(
     (telemetryProblem.explored.length / telemetryProblem.nodes.length) * 100,
@@ -184,24 +148,7 @@ function PathfindingGraph({
             </feMerge>
           </filter>
           <clipPath id={`route-reveal-${problem.id}`}>
-            <rect
-              className="pathfinding-solution-reveal"
-              x="0"
-              y="0"
-              width={staticRoute ? 1000 : 0}
-              height="600"
-            >
-              {!staticRoute && (
-                <animate
-                  attributeName="width"
-                  from="0"
-                  to="1000"
-                  dur="0.9s"
-                  begin={`${solutionDelay}s`}
-                  fill="freeze"
-                />
-              )}
-            </rect>
+            <rect className="pathfinding-solution-reveal" x="0" y="0" width="1000" height="600" />
           </clipPath>
         </defs>
 
@@ -262,12 +209,7 @@ function PathfindingGraph({
             <g className="pathfinding-route-runner">
               <circle className="pathfinding-route-runner-glow" r="18" />
               <circle className="pathfinding-route-runner-core" r="5.5" />
-              <animateMotion
-                dur="2.4s"
-                begin="0s"
-                repeatCount="indefinite"
-                rotate="auto"
-              >
+              <animateMotion dur="2.4s" begin="0s" repeatCount="indefinite" rotate="auto">
                 <mpath href={`#route-motion-${problem.id}`} />
               </animateMotion>
             </g>
@@ -334,61 +276,15 @@ function PathfindingGraph({
             <span>h0 direct {telemetryProblem.heuristicEstimate}</span>
             <span>f goal {telemetryProblem.estimatedTotal}</span>
             <span>detour +{detourPercent}%</span>
-            <span>{telemetryProblem.explored.length}/{telemetryProblem.nodes.length} scanned</span>
+            <span>
+              {telemetryProblem.explored.length}/{telemetryProblem.nodes.length} scanned
+            </span>
             <span>{exploredCoverage}% coverage</span>
             <span>{routeHops} hops</span>
             <span>{telemetryProblem.edges.length} links</span>
           </div>
           <div className="pathfinding-status-foot">
             avg edge {meanRouteEdge} · branch factor {meanBranching}
-          </div>
-        </div>
-      )}
-
-      {false && testMode && (
-        <div className="astar-test-badge">
-          <div className="astar-test-badge-header">
-            <span>A* simulation</span>
-            <span>telemetry</span>
-          </div>
-          <div className="astar-test-badge-grid">
-            <span>
-              <b>{problem.distance}</b>
-              g cost
-            </span>
-            <span>
-              <b>{problem.heuristicEstimate}</b>
-              h0 direct
-            </span>
-            <span>
-              <b>{problem.estimatedTotal}</b>
-              f goal
-            </span>
-            <span>
-              <b>+{detourPercent}%</b>
-              detour
-            </span>
-            <span>
-              <b>
-                {problem.explored.length}/{problem.nodes.length}
-              </b>
-              scanned
-            </span>
-            <span>
-              <b>{exploredCoverage}%</b>
-              coverage
-            </span>
-            <span>
-              <b>{routeHops}</b>
-              hops
-            </span>
-            <span>
-              <b>{problem.edges.length}</b>
-              links
-            </span>
-          </div>
-          <div className="astar-test-badge-foot">
-            avg edge {meanRouteEdge} - branch factor {meanBranching}
           </div>
         </div>
       )}
@@ -403,7 +299,7 @@ type AnimatedBackgroundProps = {
 export function AnimatedBackground({ testMode = false }: AnimatedBackgroundProps) {
   return (
     <div
-      className={`background-layer fixed inset-0 ${
+      className={`background-layer visual-stability-layer fixed inset-0 ${
         testMode ? "background-test-layer" : "-z-10"
       } overflow-hidden pointer-events-none`}
       aria-hidden="true"
