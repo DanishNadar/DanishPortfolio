@@ -314,6 +314,11 @@ export const STACK_MISSIONS: readonly StackMission[] = [
       "Trace the data and mathematical evidence required to make the first model reliable.",
     objectiveNodeId: "machine-learning",
     objectiveLabel: "Activate Machine Learning",
+    objectiveChapter: "Chapter 01 · The learning signal",
+    objectiveStory:
+      "The droid has turned raw inputs into a learning system. This is the shift from writing useful code to creating a model that can learn from evidence.",
+    transitionStory:
+      "The next question is whether that model can understand the world in front of it. Keep tracing the map toward mastery, or open the Perception Run when you are ready to follow that next chapter.",
     startNodeId: "python",
     layout: "stack",
   },
@@ -328,6 +333,11 @@ export const STACK_MISSIONS: readonly StackMission[] = [
       "Recover the visual and evaluation evidence needed to identify what is in front of the system.",
     objectiveNodeId: "object-detection",
     objectiveLabel: "Activate Object Detection",
+    objectiveChapter: "Chapter 02 · The unseen obstacle",
+    objectiveStory:
+      "The droid can now turn visual signals into reliable objects and obstacles. The work has moved from learning patterns to making the environment legible enough to act within it.",
+    transitionStory:
+      "Seeing is only one half of autonomy. Continue toward full-map mastery, or enter the Autonomy Circuit to connect perception to planning, control, and deployment.",
     startNodeId: "python",
     layout: "constellation",
   },
@@ -342,6 +352,11 @@ export const STACK_MISSIONS: readonly StackMission[] = [
       "Follow every dependency to reveal how a machine can perceive, decide, and act safely.",
     objectiveNodeId: "integrated-intelligence",
     objectiveLabel: "Activate Integrated Intelligence",
+    objectiveChapter: "Chapter 03 · The closed loop",
+    objectiveStory:
+      "The droid has connected perception, decisions, control, and delivery into one accountable system. This is where separate skills become an engineering practice that can operate in the real world.",
+    transitionStory:
+      "Integrated Intelligence is the objective, not the end of the path. Trace every remaining system to earn map mastery and see the complete journey behind Danish’s work.",
     startNodeId: "python",
     layout: "circuit",
   },

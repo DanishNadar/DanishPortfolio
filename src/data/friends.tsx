@@ -546,9 +546,8 @@ export const friendProfiles: FriendProfile[] = [
         "Thank you, Lucas, for taking the time to teach me how to be a treasurer and for consistently pushing me to take more initiative. You did not have to do any of that, but you did, and it changed how I lead. You have a way of making everyone around you feel more capable and more welcome, and I carry that lesson into every leadership role I take on. I am genuinely grateful for your mentorship, your example, and your friendship.",
       legacy:
         "I hope I can make others feel as capable and welcome as you made me feel when I was still figuring out how to show up. Your example is already part of how I lead, and I am excited to see all the communities, projects, and opportunities you continue to build and inspire.",
-      linkedin: "#",
-      website: "#",
-      portfolio: "#",
+      linkedin: "https://www.linkedin.com/in/lucasferguson5275/",
+      website: "https://www.lucasferguson.net/",
     },
   ),
   friend(

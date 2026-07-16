@@ -57,7 +57,7 @@ function FriendsPage() {
 
 function FriendsIndex() {
   return (
-    <MotionPage className="la-page mx-auto max-w-[92rem] px-6 lg:px-10 py-14 readable-page">
+    <MotionPage className="la-page visual-stability-layer mx-auto max-w-[92rem] px-6 lg:px-10 py-14 readable-page">
       <section className="la-hero relative grid lg:grid-cols-[1.1fr_0.9fr] gap-10 items-center rounded-[2rem] border overflow-hidden p-6 md:p-10">
         <div className="la-hero-glow la-hero-glow-a" aria-hidden="true" />
         <div className="la-hero-glow la-hero-glow-b" aria-hidden="true" />

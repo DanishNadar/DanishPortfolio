@@ -1,6 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
-import { motion } from "framer-motion";
 import {
   ArrowDownRight,
   ArrowUp,
@@ -374,7 +373,7 @@ function StackMapPage() {
   );
 
   return (
-    <MotionPage className="mx-auto w-full max-w-[1580px] px-4 sm:px-6 lg:px-10 py-12 md:py-16 stack-map-page">
+    <MotionPage className="visual-stability-layer mx-auto w-full max-w-[1580px] px-4 sm:px-6 lg:px-10 py-12 md:py-16 stack-map-page">
       <section
         id="top"
         className="stack-map-hero glass premium-border rounded-[2rem] p-6 md:p-8 lg:p-10 overflow-hidden scroll-mt-28"
@@ -637,11 +636,7 @@ function StackMapPage() {
             </p>
           )}
 
-          <motion.div
-            key={currentPage}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, ease: "easeOut" }}
+          <div
             className="mt-8 grid md:grid-cols-2 xl:grid-cols-3 gap-7 lg:gap-9"
             data-card-entrance="off"
           >
@@ -653,7 +648,7 @@ function StackMapPage() {
             {visibleSkills.map((skill) => (
               <StackCard key={skill.slug} skill={skill} />
             ))}
-          </motion.div>
+          </div>
 
           {filtered.length > STACK_ITEMS_PER_PAGE && (
             <nav

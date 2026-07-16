@@ -1,4 +1,4 @@
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
 import type { Group } from "three";
 import { getNodePositionById } from "./scene-utils";
@@ -13,6 +13,7 @@ interface CompletionBurstProps {
 export function CompletionBurst({ objectiveNodeId, quality, layout }: CompletionBurstProps) {
   const group = useRef<Group>(null);
   const startedAt = useRef<number | null>(null);
+  const invalidate = useThree((state) => state.invalidate);
   const positions = useMemo(() => {
     const amount = quality === "low" ? 52 : 118;
     const values = new Float32Array(amount * 3);
@@ -40,6 +41,7 @@ export function CompletionBurst({ objectiveNodeId, quality, layout }: Completion
     const [, targetY] = getNodePositionById(objectiveNodeId, layout);
     group.current.position.y = targetY + 1.04 + Math.min(0.42, age * 0.16);
     group.current.rotation.y = age * 0.32;
+    if (age < 1.8) invalidate();
   });
 
   const [targetX, targetY, targetZ] = getNodePositionById(objectiveNodeId, layout);

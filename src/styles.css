@@ -3420,11 +3420,11 @@
 
   .pathfinding-edge {
     stroke: color-mix(in oklab, var(--neon-blue) 42%, transparent);
-    stroke-width: 0.95;
+    stroke-width: 1.1;
     opacity: 0;
     animation:
-      pathfindingEdgeMaterialize 520ms ease-out var(--edge-delay) forwards,
-      pathfindingEdgeProbe 620ms ease-in-out var(--probe-delay) both;
+      pathfindingEdgeMaterialize 300ms ease-out var(--edge-delay) forwards,
+      pathfindingEdgeProbe 720ms ease-in-out var(--probe-delay) both;
   }
 
   .pathfinding-solution-edge {
@@ -3436,6 +3436,10 @@
 
   .pathfinding-solution-reveal {
     shape-rendering: geometricPrecision;
+    transform-box: fill-box;
+    transform-origin: left center;
+    animation: pathfindingSolutionReveal 560ms cubic-bezier(0.22, 1, 0.36, 1) var(--solution-delay)
+      both;
   }
 
   .pathfinding-node {
@@ -3558,18 +3562,30 @@
     }
   }
 
+  @keyframes pathfindingSolutionReveal {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+
   @keyframes pathfindingEdgeProbe {
     0% {
-      opacity: 0.14;
+      opacity: 0.16;
       stroke: color-mix(in oklab, var(--neon-blue) 34%, transparent);
+      stroke-width: 1.1;
     }
     48% {
-      opacity: 0.82;
-      stroke: color-mix(in oklab, var(--neon-cyan) 70%, transparent);
+      opacity: 0.96;
+      stroke: color-mix(in oklab, var(--neon-cyan) 88%, white 12%);
+      stroke-width: 2.5;
     }
     100% {
-      opacity: 0.18;
+      opacity: 0.22;
       stroke: color-mix(in oklab, var(--neon-blue) 38%, transparent);
+      stroke-width: 1.1;
     }
   }
 
@@ -7232,22 +7248,6 @@
   opacity: 0.96;
 }
 
-.background-layer:not(.background-test-layer) .pathfinding-edge,
-.background-layer:not(.background-test-layer) .pathfinding-node,
-.background-layer:not(.background-test-layer) .pathfinding-node-route .pathfinding-node-core {
-  animation-duration: 1ms !important;
-  animation-delay: 0ms !important;
-}
-
-.background-layer:not(.background-test-layer) .pathfinding-node-pulse {
-  animation: none !important;
-  opacity: 0.18;
-}
-
-.background-layer:not(.background-test-layer) .pathfinding-node-core {
-  filter: none;
-}
-
 .background-layer:not(.background-test-layer) .pathfinding-solution-edge {
   filter: drop-shadow(0 0 8px rgba(34, 211, 238, 0.34))
     drop-shadow(0 0 14px rgba(226, 61, 103, 0.18));
@@ -8454,8 +8454,8 @@ html.symbolism-active .global-back-to-top {
   mix-blend-mode: soft-light;
 }
 
-/* Global background stability: keep the essential moving car and A* route,
-   but remove repaint-heavy glow loops that cause viewport flicker. */
+/* Global background stability: preserve the background artwork without any
+   continuous paint/compositing work behind dense page content. */
 @layer utilities {
   .background-layer:not(.background-test-layer) {
     transform: translateZ(0);
@@ -8494,12 +8494,12 @@ html.symbolism-active .global-back-to-top {
   }
 
   .background-layer:not(.background-test-layer) .holographic-lyriq {
-    animation: lyriqCruise 18s ease-in-out infinite !important;
+    animation: none !important;
     filter: none !important;
     mix-blend-mode: normal !important;
     opacity: 0.52 !important;
-    will-change: transform;
-    transform: translateZ(0);
+    will-change: auto;
+    transform: translate(-50%, -50%) !important;
     backface-visibility: hidden;
   }
 
@@ -8533,21 +8533,28 @@ html.symbolism-active .global-back-to-top {
   }
 
   .background-layer:not(.background-test-layer) .pathfinding-simulation {
-    animation: none !important;
     filter: none !important;
     mix-blend-mode: normal !important;
-    opacity: 0.5 !important;
+    visibility: hidden;
+    opacity: 0 !important;
     contain: paint;
   }
 
-  .background-layer:not(.background-test-layer) .pathfinding-canvas,
-  .background-layer:not(.background-test-layer) .pathfinding-canvas * {
-    animation: none !important;
+  .background-layer:not(.background-test-layer) .pathfinding-simulation.is-active {
+    visibility: visible;
+    opacity: 0.58 !important;
+  }
+
+  .background-layer:not(.background-test-layer) .pathfinding-canvas {
     filter: none !important;
   }
 
-  .background-layer:not(.background-test-layer) .pathfinding-node-pulse {
-    display: none !important;
+  .background-layer:not(.background-test-layer) .pathfinding-node-core {
+    filter: none !important;
+  }
+
+  .background-layer:not(.background-test-layer) .pathfinding-simulation:not(.is-active) * {
+    animation-play-state: paused !important;
   }
 
   .background-layer:not(.background-test-layer) .pathfinding-solution-edge {
@@ -8555,31 +8562,35 @@ html.symbolism-active .global-back-to-top {
   }
 }
 
-/* Restore the essential motion after the broad stability pass. These animations
-   use transform/stroke timing only, avoiding the expensive glow/filter loops. */
-@layer utilities {
-  .background-layer:not(.background-test-layer) .lyriq-wheel-overlay {
-    animation: lyriqWheelRollForward 0.95s linear infinite !important;
+/* Keep ambient movement exclusive to the home page's "See the Symbolism"
+   sequence. The inner car moves as one unit; each wheel keeps its own rotation
+   without disturbing its absolute positioning. */
+@media (prefers-reduced-motion: no-preference) {
+  html.symbolism-active
+    .background-layer:not(.background-test-layer)
+    .holographic-lyriq
+    .lyriq-car {
+    animation: lyriqSymbolismDrive 2.8s ease-in-out infinite !important;
     will-change: transform;
   }
 
-  .background-layer:not(.background-test-layer) .pathfinding-edge {
-    animation:
-      pathfindingEdgeMaterialize 520ms ease-out var(--edge-delay) forwards,
-      pathfindingEdgeProbe 620ms ease-in-out var(--probe-delay) both !important;
+  html.symbolism-active
+    .background-layer:not(.background-test-layer)
+    .holographic-lyriq
+    .lyriq-wheel-overlay {
+    animation: lyriqWheelRollForward 0.76s linear infinite !important;
+    will-change: transform;
+  }
+}
+
+@keyframes lyriqSymbolismDrive {
+  0%,
+  100% {
+    transform: translate3d(-0.85%, 0, 0);
   }
 
-  .background-layer:not(.background-test-layer) .pathfinding-node {
-    animation: pathfindingNodeSettle 440ms ease-out var(--node-delay) forwards !important;
-  }
-
-  .background-layer:not(.background-test-layer) .pathfinding-node-route .pathfinding-node-core {
-    animation: pathfindingRouteNode 520ms ease-out var(--route-node-delay) both !important;
-  }
-
-  .background-layer:not(.background-test-layer) .pathfinding-solution-edge {
-    opacity: 0.86 !important;
-    filter: none !important;
+  50% {
+    transform: translate3d(0.85%, -0.14%, 0);
   }
 }
 
@@ -8587,11 +8598,18 @@ html.symbolism-active .global-back-to-top {
    compositing layer per card or repeatedly fading cards in as the DOM changes. */
 @layer utilities {
   .visual-stability-layer,
+  .visual-stability-layer::before,
+  .visual-stability-layer::after,
   .visual-stability-layer *,
   .visual-stability-layer *::before,
   .visual-stability-layer *::after {
     animation: none !important;
     transition: none !important;
+  }
+
+  .motion-page.visual-stability-layer::before,
+  .motion-page.visual-stability-layer::after {
+    display: none;
   }
 
   .glass,
@@ -8625,4 +8643,104 @@ html.symbolism-active .global-back-to-top {
     scale: 1 !important;
     will-change: auto !important;
   }
+}
+
+/* Card-dense routes: keep the information architecture, but remove the large
+   compositing surfaces behind it. These three pages can render dozens of cards
+   at once, so their decorative blur/sweep layers are a frequent source of
+   Chromium flicker while scrolling or switching tabs. */
+.projects-page.visual-stability-layer,
+.la-page.visual-stability-layer,
+.stack-map-page.visual-stability-layer {
+  isolation: isolate;
+  contain: paint;
+}
+
+.la-page.visual-stability-layer .la-hero {
+  contain: paint;
+}
+
+.la-page.visual-stability-layer .la-hero::before,
+.la-page.visual-stability-layer .la-hero::after,
+.la-page.visual-stability-layer .la-hero-glow,
+.la-page.visual-stability-layer .la-haze,
+.stack-map-page.visual-stability-layer .stack-map-hero::before,
+.stack-map-page.visual-stability-layer .skill-context-card::before {
+  display: none !important;
+}
+
+.projects-page.visual-stability-layer .project-card-shell > a,
+.la-page.visual-stability-layer .friend-profile-card,
+.la-page.visual-stability-layer .friend-hero-card,
+.la-page.visual-stability-layer .friend-group-card,
+.la-page.visual-stability-layer .friend-community-card,
+.stack-map-page.visual-stability-layer .stack-summary-card,
+.stack-map-page.visual-stability-layer .stack-horizontal-nav,
+.stack-map-page.visual-stability-layer .stack-section,
+.stack-map-page.visual-stability-layer .skill-context-card,
+.stack-map-page.visual-stability-layer .stack-card-image-wrap {
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: auto !important;
+}
+
+.projects-page.visual-stability-layer .project-card-shell > a:hover,
+.la-page.visual-stability-layer .friend-profile-card:hover,
+.stack-map-page.visual-stability-layer .skill-context-card:hover .stack-card-image {
+  box-shadow: none !important;
+  filter: none !important;
+  transform: translateZ(0) !important;
+}
+
+/* Restore visual depth with static layers only. The artwork remains visible,
+   but none of these layers uses blur, blending, or a repeating animation. */
+.background-layer:not(.background-test-layer) .bg-particle,
+.background-layer:not(.background-test-layer) .bg-node {
+  display: block !important;
+  animation: none !important;
+  box-shadow: none !important;
+  opacity: 0.3 !important;
+}
+
+.la-page.visual-stability-layer .la-hero::before {
+  display: block !important;
+  opacity: 0.3;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+}
+
+.la-page.visual-stability-layer .la-hero::after {
+  display: block !important;
+  opacity: 0.22;
+  animation: none !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+  mask-image: none;
+  -webkit-mask-image: none;
+}
+
+.la-page.visual-stability-layer .la-hero-glow {
+  display: block !important;
+  opacity: 0.24;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+}
+
+.la-page.visual-stability-layer .la-haze {
+  display: block !important;
+  opacity: 0.18;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+}
+
+.stack-map-page.visual-stability-layer .stack-map-hero::before {
+  display: block !important;
+  opacity: 0.42;
+  animation: none !important;
+  filter: none !important;
+  transform: none !important;
 }

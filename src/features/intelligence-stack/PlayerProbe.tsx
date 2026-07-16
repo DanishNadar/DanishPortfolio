@@ -1,10 +1,10 @@
 import { RoundedBox } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
 import { MathUtils } from "three";
 import type { Group } from "three";
 import { getNodePositionById } from "./scene-utils";
-import type { JumpState, StackMapLayout } from "./types";
+import type { CompletionStage, JumpState, StackMapLayout } from "./types";
 
 interface PlayerProbeProps {
   currentNodeId: string;
@@ -13,6 +13,7 @@ interface PlayerProbeProps {
   onJumpEnd: (nodeId: string) => void;
   reducedMotion: boolean;
   resetToken: number;
+  storyBeat: CompletionStage;
 }
 
 export function PlayerProbe({
@@ -22,28 +23,60 @@ export function PlayerProbe({
   onJumpEnd,
   reducedMotion,
   resetToken,
+  storyBeat,
 }: PlayerProbeProps) {
   const group = useRef<Group>(null);
   const completedJumpToken = useRef<number | null>(null);
   const rotationTarget = useRef(0);
+  const storyBeatStartedAt = useRef<number | null>(null);
+  const invalidate = useThree((state) => state.invalidate);
 
   useEffect(() => {
     completedJumpToken.current = null;
+    storyBeatStartedAt.current = null;
     const [x, y, z] = getNodePositionById(currentNodeId, layout);
     group.current?.position.set(x, y + 0.72, z);
-  }, [currentNodeId, layout, resetToken]);
+    if (!storyBeat) {
+      group.current?.rotation.set(0, rotationTarget.current, 0);
+      group.current?.scale.setScalar(1);
+    }
+  }, [currentNodeId, layout, resetToken, storyBeat]);
 
   useFrame(({ clock }) => {
     if (!group.current) return;
-    const idleBob = Math.sin(clock.getElapsedTime() * 3.2) * 0.035;
+    const elapsed = clock.getElapsedTime();
+    const idleBob = Math.sin(elapsed * 3.2) * 0.035;
     if (!jump) {
+      if (!storyBeat) return;
+      invalidate();
       const [x, y, z] = getNodePositionById(currentNodeId, layout);
-      group.current.position.lerp({ x, y: y + 0.72 + idleBob, z }, 0.15);
+      if (storyBeat && storyBeatStartedAt.current === null) storyBeatStartedAt.current = elapsed;
+      const beatAge =
+        storyBeatStartedAt.current === null ? 0 : elapsed - storyBeatStartedAt.current;
+      const celebrationHeight = reducedMotion
+        ? 0
+        : storyBeat === "mastery"
+          ? Math.abs(Math.sin(beatAge * 3.2)) * 0.42
+          : Math.abs(Math.sin(beatAge * 4.8)) * 0.24;
+      const celebrationTilt = reducedMotion
+        ? 0
+        : storyBeat === "mastery"
+          ? Math.sin(beatAge * 4.2) * 0.14
+          : Math.sin(beatAge * 6.2) * 0.075;
+      const celebrationTurn = reducedMotion
+        ? 0
+        : storyBeat === "mastery"
+          ? beatAge * 1.9
+          : Math.sin(beatAge * 3.4) * 0.28;
+
+      group.current.position.lerp({ x, y: y + 0.72 + idleBob + celebrationHeight, z }, 0.15);
       group.current.rotation.y = MathUtils.lerp(
         group.current.rotation.y,
-        rotationTarget.current,
+        rotationTarget.current + celebrationTurn,
         0.12,
       );
+      group.current.rotation.z = celebrationTilt;
+      group.current.scale.setScalar(storyBeat && !reducedMotion ? 1.06 : 1);
       return;
     }
 
@@ -64,6 +97,7 @@ export function PlayerProbe({
     group.current.rotation.y = rotationTarget.current;
     const squash = 1 - Math.sin(progress * Math.PI) * 0.13;
     group.current.scale.set(1 / Math.sqrt(squash), squash, 1 / Math.sqrt(squash));
+    invalidate();
 
     if (progress >= 1 && completedJumpToken.current !== jump.startedAt) {
       completedJumpToken.current = jump.startedAt;
@@ -92,7 +126,11 @@ export function PlayerProbe({
         <boxGeometry args={[0.13, 0.16, 0.16]} />
         <meshStandardMaterial color="#4eb8ff" metalness={0.8} roughness={0.25} />
       </mesh>
-      <pointLight color="#57d6ff" intensity={2.8} distance={2.7} />
+      <pointLight
+        color={storyBeat === "mastery" ? "#ffd58f" : "#57d6ff"}
+        intensity={storyBeat ? 5.2 : 2.8}
+        distance={storyBeat ? 4.2 : 2.7}
+      />
     </group>
   );
 }

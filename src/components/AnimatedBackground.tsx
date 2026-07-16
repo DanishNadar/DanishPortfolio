@@ -2,7 +2,7 @@
 // works reliably when dn-engine-open is on <html>. Framer Motion uses the Web
 // Animations API and ignores CSS animation-play-state entirely.
 
-import { useState, type CSSProperties } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { createPathfindingProblem } from "@/lib/pathfinding";
 
 const particles = Array.from({ length: 24 }, (_, index) => ({
@@ -82,84 +82,95 @@ function AstarShowcaseOverlay() {
 
 function PathfindingGraph({
   showMetrics = true,
+  isActive = true,
   testMode = false,
 }: {
   showMetrics?: boolean;
+  isActive?: boolean;
   testMode?: boolean;
 }) {
-  const [problem] = useState(createPathfindingProblem);
-  const telemetryProblem = problem;
-  const solutionDelay = 1.2 + problem.explored.length * 0.1;
+  const [activeProblem, setActiveProblem] = useState(createPathfindingProblem);
+  const telemetryProblem = activeProblem;
+  const solutionDelay = 1.55;
 
-  const exploredStep = new Map(problem.explored.map((nodeId, index) => [nodeId, index]));
-  const solutionPoints = problem.path
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (!isActive || mediaQuery.matches) return;
+
+    const cycleTimer = window.setTimeout(
+      () => setActiveProblem(createPathfindingProblem()),
+      (solutionDelay + 1.7) * 1_000,
+    );
+
+    return () => window.clearTimeout(cycleTimer);
+  }, [activeProblem.id, isActive, solutionDelay]);
+
+  const exploredStep = new Map(activeProblem.explored.map((nodeId, index) => [nodeId, index]));
+  const solutionPoints = activeProblem.path
     .map((nodeId) => {
-      const node = problem.nodes[nodeId];
+      const node = activeProblem.nodes[nodeId];
       return `${node.x},${node.y}`;
     })
     .join(" ");
-  const solutionPath = problem.path
+  const solutionPath = activeProblem.path
     .map((nodeId, index) => {
-      const node = problem.nodes[nodeId];
+      const node = activeProblem.nodes[nodeId];
       return `${index === 0 ? "M" : "L"} ${node.x} ${node.y}`;
     })
     .join(" ");
-  const routeHops = Math.max(telemetryProblem.path.length - 1, 0);
+  const routeHops = Math.max(activeProblem.path.length - 1, 0);
   const exploredCoverage = Math.round(
-    (telemetryProblem.explored.length / telemetryProblem.nodes.length) * 100,
+    (activeProblem.explored.length / activeProblem.nodes.length) * 100,
   );
   const detourPercent = Math.max(
     0,
-    Math.round(
-      (telemetryProblem.distance / Math.max(telemetryProblem.heuristicEstimate, 1) - 1) * 100,
-    ),
+    Math.round((activeProblem.distance / Math.max(activeProblem.heuristicEstimate, 1) - 1) * 100),
   );
   const meanRouteEdge = routeHops > 0 ? Math.round(telemetryProblem.distance / routeHops) : 0;
-  const meanBranching = (
-    (telemetryProblem.edges.length * 2) /
-    telemetryProblem.nodes.length
-  ).toFixed(1);
+  const meanBranching = ((activeProblem.edges.length * 2) / activeProblem.nodes.length).toFixed(1);
 
   return (
     <div
-      className={`pathfinding-simulation absolute inset-0 ${
+      className={`pathfinding-simulation absolute inset-0 ${isActive ? "is-active" : ""} ${
         testMode ? "pathfinding-simulation-test" : ""
       }`}
       style={{ "--solution-delay": `${solutionDelay}s` } as CSSProperties}
     >
       <svg
-        key={problem.id}
+        key={activeProblem.id}
         className="pathfinding-canvas"
         viewBox="0 0 1000 600"
         preserveAspectRatio="none"
         role="presentation"
       >
         <defs>
-          <linearGradient id={`route-gradient-${problem.id}`} x1="0" y1="0" x2="1" y2="0">
+          <linearGradient id={`route-gradient-${activeProblem.id}`} x1="0" y1="0" x2="1" y2="0">
             <stop offset="0%" stopColor="#22d3ee" />
             <stop offset="58%" stopColor="#60a5fa" />
             <stop offset="100%" stopColor="#e23d67" />
           </linearGradient>
-          <filter id={`route-glow-${problem.id}`} x="-80%" y="-80%" width="260%" height="260%">
+          <filter
+            id={`route-glow-${activeProblem.id}`}
+            x="-80%"
+            y="-80%"
+            width="260%"
+            height="260%"
+          >
             <feGaussianBlur stdDeviation="4" result="blur" />
             <feMerge>
               <feMergeNode in="blur" />
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
-          <clipPath id={`route-reveal-${problem.id}`}>
+          <clipPath id={`route-reveal-${activeProblem.id}`}>
             <rect className="pathfinding-solution-reveal" x="0" y="0" width="1000" height="600" />
           </clipPath>
         </defs>
 
         <g className="pathfinding-edges">
-          {problem.edges.map((edge, index) => {
-            const from = problem.nodes[edge.from];
-            const to = problem.nodes[edge.to];
-            const probeStep = Math.max(
-              exploredStep.get(edge.from) ?? 0,
-              exploredStep.get(edge.to) ?? 0,
-            );
+          {activeProblem.edges.map((edge, index) => {
+            const from = activeProblem.nodes[edge.from];
+            const to = activeProblem.nodes[edge.to];
 
             return (
               <line
@@ -171,8 +182,8 @@ function PathfindingGraph({
                 y2={to.y}
                 style={
                   {
-                    "--edge-delay": `${index * 0.018}s`,
-                    "--probe-delay": `${0.8 + probeStep * 0.1}s`,
+                    "--edge-delay": `${index * 0.012}s`,
+                    "--probe-delay": `${0.08 + (index % 4) * 0.045}s`,
                   } as CSSProperties
                 }
               />
@@ -182,7 +193,7 @@ function PathfindingGraph({
 
         <g className="pathfinding-solution">
           <path
-            id={`route-motion-${problem.id}`}
+            id={`route-motion-${activeProblem.id}`}
             className="pathfinding-solution-track"
             d={solutionPath}
             pathLength="1"
@@ -197,29 +208,29 @@ function PathfindingGraph({
             points={solutionPoints}
             pathLength="1"
             fill="none"
-            stroke={`url(#route-gradient-${problem.id})`}
+            stroke={`url(#route-gradient-${activeProblem.id})`}
             strokeWidth={testMode ? 13 : undefined}
             strokeDasharray={testMode ? "32 20" : undefined}
-            filter={testMode ? `url(#route-glow-${problem.id})` : undefined}
-            clipPath={testMode ? undefined : `url(#route-reveal-${problem.id})`}
-            data-path-end-node={problem.path.at(-1)}
-            data-path-end-x={problem.nodes[problem.path.at(-1) ?? 0].x}
+            filter={testMode ? `url(#route-glow-${activeProblem.id})` : undefined}
+            clipPath={testMode ? undefined : `url(#route-reveal-${activeProblem.id})`}
+            data-path-end-node={activeProblem.path.at(-1)}
+            data-path-end-x={activeProblem.nodes[activeProblem.path.at(-1) ?? 0].x}
           />
           {testMode && (
             <g className="pathfinding-route-runner">
               <circle className="pathfinding-route-runner-glow" r="18" />
               <circle className="pathfinding-route-runner-core" r="5.5" />
               <animateMotion dur="2.4s" begin="0s" repeatCount="indefinite" rotate="auto">
-                <mpath href={`#route-motion-${problem.id}`} />
+                <mpath href={`#route-motion-${activeProblem.id}`} />
               </animateMotion>
             </g>
           )}
         </g>
 
         <g className="pathfinding-nodes">
-          {problem.nodes.map((node) => {
-            const nodeStep = exploredStep.get(node.id) ?? problem.explored.length;
-            const pathStep = problem.path.indexOf(node.id);
+          {activeProblem.nodes.map((node) => {
+            const nodeStep = exploredStep.get(node.id) ?? activeProblem.explored.length;
+            const pathStep = activeProblem.path.indexOf(node.id);
             const endpoint = node.id === 0 || node.id === 17;
 
             return (
@@ -229,9 +240,9 @@ function PathfindingGraph({
                 transform={`translate(${node.x} ${node.y})`}
                 style={
                   {
-                    "--node-delay": `${0.75 + nodeStep * 0.1}s`,
-                    "--pulse-delay": `${nodeStep * 0.09}s`,
-                    "--route-node-delay": `${solutionDelay + Math.max(pathStep, 0) * 0.15}s`,
+                    "--node-delay": `${0.12 + nodeStep * 0.045}s`,
+                    "--pulse-delay": `${0.08 + nodeStep * 0.055}s`,
+                    "--route-node-delay": `${solutionDelay + Math.max(pathStep, 0) * 0.09}s`,
                   } as CSSProperties
                 }
               >
@@ -244,9 +255,9 @@ function PathfindingGraph({
 
         {testMode && (
           <g className="pathfinding-test-route-overlay">
-            {problem.path.slice(1).map((nodeId, index) => {
-              const from = problem.nodes[problem.path[index]];
-              const to = problem.nodes[nodeId];
+            {activeProblem.path.slice(1).map((nodeId, index) => {
+              const from = activeProblem.nodes[activeProblem.path[index]];
+              const to = activeProblem.nodes[nodeId];
 
               return (
                 <line
@@ -256,7 +267,7 @@ function PathfindingGraph({
                   y1={from.y}
                   x2={to.x}
                   y2={to.y}
-                  stroke={index === problem.path.length - 2 ? "#e23d67" : "#22d3ee"}
+                  stroke={index === activeProblem.path.length - 2 ? "#e23d67" : "#22d3ee"}
                   strokeWidth={16}
                   strokeLinecap="round"
                   opacity={0.92}
@@ -297,9 +308,25 @@ type AnimatedBackgroundProps = {
 };
 
 export function AnimatedBackground({ testMode = false }: AnimatedBackgroundProps) {
+  const [symbolismActive, setSymbolismActive] = useState(
+    () =>
+      typeof document !== "undefined" &&
+      document.documentElement.classList.contains("symbolism-active"),
+  );
+
+  useEffect(() => {
+    const root = document.documentElement;
+    const update = () => setSymbolismActive(root.classList.contains("symbolism-active"));
+    const observer = new MutationObserver(update);
+
+    update();
+    observer.observe(root, { attributes: true, attributeFilter: ["class"] });
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div
-      className={`background-layer visual-stability-layer fixed inset-0 ${
+      className={`background-layer fixed inset-0 ${
         testMode ? "background-test-layer" : "-z-10"
       } overflow-hidden pointer-events-none`}
       aria-hidden="true"
@@ -356,10 +383,10 @@ export function AnimatedBackground({ testMode = false }: AnimatedBackgroundProps
 
       {testMode && (
         <>
-          <PathfindingGraph showMetrics={false} testMode={testMode} />
+          <PathfindingGraph isActive showMetrics={false} testMode={testMode} />
         </>
       )}
-      {!testMode && <PathfindingGraph showMetrics />}
+      {!testMode && <PathfindingGraph isActive={symbolismActive} showMetrics />}
       {testMode && <AstarShowcaseOverlay />}
 
       {particles.map((p) => (

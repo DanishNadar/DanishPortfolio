@@ -564,7 +564,7 @@ function Home() {
                 to="/intelligence-stack"
                 className="brand-button-lg inline-flex items-center gap-2 bg-gradient-rb text-background glow-blue hover:scale-[1.02] transition"
               >
-                Explore the Intelligence Stack <ArrowRight className="h-4 w-4" />
+                Explore the Story of my Stack <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
           </div>

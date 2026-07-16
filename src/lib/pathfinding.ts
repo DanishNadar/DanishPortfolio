@@ -11,12 +11,21 @@ export type PathEdge = {
   weight: number;
 };
 
+export type PathSearchStep = {
+  nodeId: number;
+  g: number;
+  h: number;
+  f: number;
+  testedEdgeIds: string[];
+};
+
 export type PathfindingProblem = {
   id: number;
   algorithm: "A*";
   nodes: PathNode[];
   edges: PathEdge[];
   explored: number[];
+  searchSteps: PathSearchStep[];
   path: number[];
   distance: number;
   heuristicEstimate: number;
@@ -100,6 +109,7 @@ export function createPathfindingProblem(): PathfindingProblem {
   const openSet = new Set([startId]);
   const closedSet = new Set<number>();
   const explored: number[] = [];
+  const searchSteps: PathSearchStep[] = [];
   gScore.set(startId, 0);
   fScore.set(startId, heuristic(startId));
 
@@ -112,8 +122,13 @@ export function createPathfindingProblem(): PathfindingProblem {
     explored.push(current);
     if (current === goalId) break;
 
+    const testedEdgeIds: string[] = [];
+
     for (const neighbor of adjacency.get(current) ?? []) {
       if (closedSet.has(neighbor.node)) continue;
+      const edgeId =
+        current < neighbor.node ? `${current}-${neighbor.node}` : `${neighbor.node}-${current}`;
+      testedEdgeIds.push(edgeId);
       const candidateDistance = (gScore.get(current) ?? Infinity) + neighbor.weight;
       if (candidateDistance < (gScore.get(neighbor.node) ?? Infinity)) {
         previous.set(neighbor.node, current);
@@ -122,6 +137,16 @@ export function createPathfindingProblem(): PathfindingProblem {
         openSet.add(neighbor.node);
       }
     }
+
+    const currentG = gScore.get(current) ?? 0;
+    const currentH = heuristic(current);
+    searchSteps.push({
+      nodeId: current,
+      g: Math.round(currentG),
+      h: Math.round(currentH),
+      f: Math.round(currentG + currentH),
+      testedEdgeIds,
+    });
   }
 
   const path = [goalId];
@@ -139,6 +164,7 @@ export function createPathfindingProblem(): PathfindingProblem {
     nodes,
     edges,
     explored,
+    searchSteps,
     path,
     distance: Math.round(gScore.get(goalId) ?? 0),
     heuristicEstimate: Math.round(heuristic(startId)),

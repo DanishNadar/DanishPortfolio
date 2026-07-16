@@ -6,7 +6,7 @@ import { CubeNetwork } from "./CubeNetwork";
 import { EnergyPaths } from "./EnergyPaths";
 import { PlayerProbe } from "./PlayerProbe";
 import { SceneEnvironment } from "./SceneEnvironment";
-import type { JumpState, QualityMode, StackMapLayout } from "./types";
+import type { CompletionStage, JumpState, QualityMode, StackMapLayout } from "./types";
 
 interface ExperienceCanvasProps {
   activatedIds: ReadonlySet<string>;
@@ -20,17 +20,18 @@ interface ExperienceCanvasProps {
   onJumpEnd: (nodeId: string) => void;
   onNavigate: (nodeId: string) => void;
   onSceneReady: () => void;
-  objectiveNodeId: string;
+  completionNodeId: string;
   quality: QualityMode;
   reducedMotion: boolean;
   resetToken: number;
   selectedNodeId: string;
+  storyBeat: CompletionStage;
 }
 
 function getQualitySettings(quality: QualityMode) {
   if (quality === "low") return { dpr: 1, shadows: false };
-  if (quality === "high") return { dpr: [1, 1.75] as [number, number], shadows: true };
-  return { dpr: [1, 1.35] as [number, number], shadows: true };
+  if (quality === "high") return { dpr: [1, 1.35] as [number, number], shadows: true };
+  return { dpr: 1, shadows: false };
 }
 
 const CANVAS_CAMERA = {
@@ -39,6 +40,11 @@ const CANVAS_CAMERA = {
   near: 0.1,
   far: 80,
 };
+
+const CANVAS_RESIZE_CONFIG = {
+  scroll: false,
+  debounce: { resize: 120 },
+} as const;
 
 export function ExperienceCanvas({
   activatedIds,
@@ -52,17 +58,18 @@ export function ExperienceCanvas({
   onJumpEnd,
   onNavigate,
   onSceneReady,
-  objectiveNodeId,
+  completionNodeId,
   quality,
   reducedMotion,
   resetToken,
   selectedNodeId,
+  storyBeat,
 }: ExperienceCanvasProps) {
   const [isPageVisible, setIsPageVisible] = useState(true);
   const { dpr, shadows } = useMemo(() => getQualitySettings(quality), [quality]);
   const glSettings = useMemo(
     () => ({
-      antialias: quality !== "low",
+      antialias: quality === "high",
       alpha: false,
       powerPreference: "high-performance" as const,
     }),
@@ -81,7 +88,8 @@ export function ExperienceCanvas({
       aria-label="Interactive three-dimensional intelligence stack with activated skill cubes"
       camera={CANVAS_CAMERA}
       dpr={dpr}
-      frameloop={isPageVisible ? "always" : "never"}
+      frameloop={isPageVisible ? "demand" : "never"}
+      resize={CANVAS_RESIZE_CONFIG}
       shadows={shadows}
       gl={glSettings}
       onCreated={({ gl }) => {
@@ -93,7 +101,7 @@ export function ExperienceCanvas({
         <SceneEnvironment quality={quality} />
         <EnergyPaths activatedIds={activatedIds} completed={isComplete} layout={layout} />
         {isComplete && (
-          <CompletionBurst objectiveNodeId={objectiveNodeId} quality={quality} layout={layout} />
+          <CompletionBurst objectiveNodeId={completionNodeId} quality={quality} layout={layout} />
         )}
         <CubeNetwork
           activatedIds={activatedIds}
@@ -101,7 +109,6 @@ export function ExperienceCanvas({
           currentNodeId={currentNodeId}
           layout={layout}
           onNavigate={onNavigate}
-          reducedMotion={reducedMotion}
           selectedNodeId={selectedNodeId}
         />
         <PlayerProbe
@@ -111,14 +118,14 @@ export function ExperienceCanvas({
           onJumpEnd={onJumpEnd}
           reducedMotion={reducedMotion}
           resetToken={resetToken}
+          storyBeat={storyBeat}
         />
         <CameraController
           cameraResetToken={cameraResetToken}
-          completed={isComplete}
           currentNodeId={currentNodeId}
           hasBegun={hasBegun}
           layout={layout}
-          reducedMotion={reducedMotion}
+          storyBeat={storyBeat}
         />
       </Suspense>
     </Canvas>

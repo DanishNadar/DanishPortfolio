@@ -11,6 +11,9 @@ export interface StackMission {
   casePrompt: string;
   objectiveNodeId: string;
   objectiveLabel: string;
+  objectiveChapter: string;
+  objectiveStory: string;
+  transitionStory: string;
   startNodeId: string;
   layout: StackMapLayout;
 }
@@ -57,6 +60,8 @@ export interface JumpState {
   startedAt: number;
   duration: number;
 }
+
+export type CompletionStage = "objective" | "mastery" | null;
 
 export type QualityMode = "auto" | "high" | "low";
 

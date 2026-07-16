@@ -1,6 +1,11 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { getMissingPrerequisites, getObjectiveEvidenceNodes, NODE_BY_ID } from "./level";
-import type { GameEvent, JumpState, MoveDirection, StackMission } from "./types";
+import {
+  getMissingPrerequisites,
+  getObjectiveEvidenceNodes,
+  LEVEL_NODES,
+  NODE_BY_ID,
+} from "./level";
+import type { CompletionStage, GameEvent, JumpState, MoveDirection, StackMission } from "./types";
 
 interface UseIntelligenceStackGameOptions {
   mission: StackMission;
@@ -85,7 +90,11 @@ export function useIntelligenceStackGame({
   const [selectedNodeId, setSelectedNodeId] = useState(mission.startNodeId);
   const [jump, setJump] = useState<JumpState | null>(null);
   const [hasBegun, setHasBegun] = useState(false);
-  const [isComplete, setIsComplete] = useState(false);
+  const [objectiveComplete, setObjectiveComplete] = useState(false);
+  const [masteryComplete, setMasteryComplete] = useState(false);
+  const [masteryNodeId, setMasteryNodeId] = useState(mission.startNodeId);
+  const [completionDialog, setCompletionDialog] = useState<CompletionStage>(null);
+  const [queuedMasteryDialog, setQueuedMasteryDialog] = useState(false);
   const [feedback, setFeedback] = useState("Activate the foundations. Connect the disciplines.");
   const [resetToken, setResetToken] = useState(0);
 
@@ -120,8 +129,17 @@ export function useIntelligenceStackGame({
     () => missionEvidenceNodes.filter((node) => activatedIds.has(node.id)).length,
     [activatedIds, missionEvidenceNodes],
   );
+  const mapExplorationFound = activatedIds.size;
+  const mapExplorationTotal = LEVEL_NODES.length;
+  const mapExplorationPercent = Math.round((mapExplorationFound / mapExplorationTotal) * 100);
   const investigationLead = useMemo(() => {
-    if (isComplete) return "Case closed. The objective system is now online.";
+    if (masteryComplete) {
+      return "Map mastery achieved. Every system is active and the full engineering path is visible.";
+    }
+    if (objectiveComplete) {
+      const remaining = mapExplorationTotal - mapExplorationFound;
+      return `${mission.objectiveLabel} is secured. Trace the remaining ${remaining} system${remaining === 1 ? "" : "s"} to complete the map.`;
+    }
 
     const connectedEvidence = linkedNodeIds
       .map((nodeId) => NODE_BY_ID.get(nodeId)!)
@@ -140,17 +158,23 @@ export function useIntelligenceStackGame({
       : `Return to ${mission.objectiveLabel} to close the case.`;
   }, [
     activatedIds,
-    isComplete,
+    mapExplorationFound,
+    mapExplorationTotal,
     linkedNodeIds,
+    masteryComplete,
     mission.objectiveLabel,
     missionEvidenceIds,
     missionEvidenceNodes,
+    objectiveComplete,
   ]);
 
   const begin = useCallback(() => {
     setHasBegun(true);
-    setFeedback(mission.title + " is online. " + mission.objectiveLabel + ".");
-  }, [mission.objectiveLabel, mission.title]);
+    setFeedback(
+      mission.title +
+        " is online. Secure the objective, then explore every system for map mastery.",
+    );
+  }, [mission.title]);
 
   const reset = useCallback(() => {
     setActivatedIds(new Set([mission.startNodeId]));
@@ -158,7 +182,11 @@ export function useIntelligenceStackGame({
     setSelectedNodeId(mission.startNodeId);
     setJump(null);
     setHasBegun(false);
-    setIsComplete(false);
+    setObjectiveComplete(false);
+    setMasteryComplete(false);
+    setMasteryNodeId(mission.startNodeId);
+    setCompletionDialog(null);
+    setQueuedMasteryDialog(false);
     setFeedback(mission.title + " selected. " + mission.objectiveLabel + ".");
     setResetToken((value) => value + 1);
   }, [mission.objectiveLabel, mission.startNodeId, mission.title]);
@@ -186,13 +214,6 @@ export function useIntelligenceStackGame({
       }
       if (jump) {
         setFeedback("Route transfer in progress. Wait until the current jump is complete.");
-        onEvent?.("invalid");
-        return;
-      }
-      if (isComplete) {
-        setFeedback(
-          "This case is already closed. Choose another mission to continue investigating.",
-        );
         onEvent?.("invalid");
         return;
       }
@@ -234,7 +255,6 @@ export function useIntelligenceStackGame({
       currentNode.label,
       currentNodeId,
       hasBegun,
-      isComplete,
       jump,
       linkedNodeIds,
       onEvent,
@@ -250,32 +270,65 @@ export function useIntelligenceStackGame({
       setCurrentNodeId(targetNodeId);
       setSelectedNodeId(targetNodeId);
 
+      const nextActivatedIds = new Set(activatedIds);
+      nextActivatedIds.add(targetNodeId);
+      const objectiveJustCompleted = targetNodeId === mission.objectiveNodeId && !objectiveComplete;
+      const masteryJustCompleted = nextActivatedIds.size === LEVEL_NODES.length && !masteryComplete;
+
       if (alreadyActivated) {
         setFeedback(targetNode.label + " is already active.");
       } else {
-        setActivatedIds((previous) => {
-          const next = new Set(previous);
-          next.add(targetNodeId);
-          return next;
-        });
+        setActivatedIds(nextActivatedIds);
+      }
+
+      if (objectiveJustCompleted) {
+        setObjectiveComplete(true);
+        setCompletionDialog("objective");
+      }
+      if (masteryJustCompleted) {
+        setMasteryComplete(true);
+        setMasteryNodeId(targetNodeId);
+        setQueuedMasteryDialog(objectiveJustCompleted);
+        setCompletionDialog(objectiveJustCompleted ? "objective" : "mastery");
+      }
+
+      if (masteryJustCompleted) {
+        setFeedback(
+          `${mission.title} mastered. Every system has been explored and the full path is now visible.`,
+        );
+        onEvent?.("complete");
+      } else if (objectiveJustCompleted) {
+        setFeedback(
+          `${mission.objectiveLabel} secured. Continue exploring the remaining systems for map mastery.`,
+        );
+      } else if (!alreadyActivated) {
         setFeedback(
           targetNode.finalNode
             ? "Integrated Intelligence activated."
             : targetNode.label + " activated.",
         );
-      }
-
-      const missionComplete = targetNodeId === mission.objectiveNodeId;
-      if (missionComplete) {
-        setIsComplete(true);
-        setFeedback(mission.title + " complete. " + mission.objectiveLabel + " achieved.");
-        onEvent?.("complete");
-      } else if (!alreadyActivated) {
         onEvent?.("activate");
       }
     },
-    [activatedIds, mission.objectiveLabel, mission.objectiveNodeId, mission.title, onEvent],
+    [
+      activatedIds,
+      masteryComplete,
+      mission.objectiveLabel,
+      mission.objectiveNodeId,
+      mission.title,
+      objectiveComplete,
+      onEvent,
+    ],
   );
+
+  const dismissCompletion = useCallback(() => {
+    if (completionDialog === "objective" && queuedMasteryDialog) {
+      setQueuedMasteryDialog(false);
+      setCompletionDialog("mastery");
+      return;
+    }
+    setCompletionDialog(null);
+  }, [completionDialog, queuedMasteryDialog]);
 
   useEffect(() => {
     if (!hasBegun) return;
@@ -347,18 +400,26 @@ export function useIntelligenceStackGame({
     begin,
     currentNode,
     currentNodeId,
+    completionDialog,
+    dismissCompletion,
     feedback,
     finishJump,
     hasBegun,
     inspectCurrentNode,
-    isComplete,
+    isComplete: masteryComplete,
     jump,
     keyBindings,
     linkedNodeIds,
     investigationLead,
     missionEvidenceFound,
     missionEvidenceTotal: missionEvidenceNodes.length,
+    mapExplorationFound,
+    mapExplorationPercent,
+    mapExplorationTotal,
+    masteryComplete,
+    masteryNodeId,
     mission,
+    objectiveComplete,
     reset,
     resetToken,
     selectedMissingPrerequisites,

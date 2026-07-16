@@ -117,6 +117,15 @@ export function IntelligenceStackPage() {
 
   const resetCamera = useCallback(() => setCameraResetToken((value) => value + 1), []);
 
+  const openMissionArchive = () => {
+    if (game.completionDialog === "objective" && game.masteryComplete) {
+      game.dismissCompletion();
+      return;
+    }
+    game.dismissCompletion();
+    setShowMissions(true);
+  };
+
   const selectMission = (nextMissionId: StackMission["id"]) => {
     game.reset();
     setMissionId(nextMissionId);
@@ -126,6 +135,9 @@ export function IntelligenceStackPage() {
   };
 
   const selectRoute = game.attemptMoveTo;
+  const remainingMapSystems = game.mapExplorationTotal - game.mapExplorationFound;
+  const completionIsMastery = game.completionDialog === "mastery";
+  const objectiveHasQueuedMastery = game.completionDialog === "objective" && game.masteryComplete;
 
   const toggleFullscreen = useCallback(async () => {
     if (!rootRef.current) return;
@@ -166,11 +178,12 @@ export function IntelligenceStackPage() {
               onJumpEnd={game.finishJump}
               onNavigate={selectRoute}
               onSceneReady={() => setSceneReady(true)}
-              objectiveNodeId={mission.objectiveNodeId}
+              completionNodeId={game.masteryNodeId}
               quality={effectiveQuality}
               reducedMotion={reducedMotion}
               resetToken={game.resetToken}
               selectedNodeId={game.selectedNodeId}
+              storyBeat={game.completionDialog}
             />
           </Suspense>
         ) : (
@@ -229,6 +242,13 @@ export function IntelligenceStackPage() {
               {game.missionEvidenceFound} / {game.missionEvidenceTotal}
             </strong>
           </div>
+          <div className="intelligence-stack-evidence-progress">
+            <span>Map coverage</span>
+            <strong>
+              {game.mapExplorationFound} / {game.mapExplorationTotal} · {game.mapExplorationPercent}
+              %
+            </strong>
+          </div>
         </div>
         <div className="intelligence-stack-progress-track">
           {CATEGORY_ORDER.map((category) => {
@@ -259,7 +279,7 @@ export function IntelligenceStackPage() {
       </div>
 
       <div className="intelligence-stack-controls">
-        {game.hasBegun && !game.isComplete ? (
+        {game.hasBegun ? (
           <section className="intelligence-stack-command-deck" aria-label="Available moves">
             <div className="intelligence-stack-command-heading">
               <span>Case routes</span>
@@ -339,9 +359,9 @@ export function IntelligenceStackPage() {
           <button
             type="button"
             className="intelligence-stack-utility-button"
-            onClick={() => setShowMissions(true)}
+            onClick={openMissionArchive}
           >
-            <Map size={15} /> Missions
+            <Map size={15} /> Mission archive
           </button>
           <button type="button" className="intelligence-stack-utility-button" onClick={resetCamera}>
             <Grid3X3 size={15} /> Camera
@@ -403,29 +423,105 @@ export function IntelligenceStackPage() {
         </section>
       )}
 
-      {game.isComplete && (
+      {game.completionDialog && (
         <section
           className="intelligence-stack-completion"
           role="dialog"
           aria-modal="true"
           aria-labelledby="intelligence-stack-complete-title"
         >
-          <div className="intelligence-stack-completion-card">
-            <Sparkles size={30} />
-            <div className="intelligence-stack-eyebrow">{mission.label} complete</div>
-            <h2 id="intelligence-stack-complete-title">{mission.title.toUpperCase()} COMPLETE</h2>
-            <p>{mission.objectiveLabel} achieved. Pick another route through the stack.</p>
+          <div
+            className={
+              "intelligence-stack-completion-card" +
+              (completionIsMastery ? " is-mastery" : " is-objective")
+            }
+          >
+            <div className="intelligence-stack-cutscene-telemetry" aria-hidden="true">
+              <span>
+                {completionIsMastery ? "MAP MASTERY TRANSMISSION" : "OBJECTIVE TRANSMISSION"}
+              </span>
+              <span className="intelligence-stack-cutscene-signal">
+                <i />
+                <i />
+                <i />
+                <i />
+              </span>
+            </div>
+            <div
+              className="intelligence-stack-completion-droid"
+              role="img"
+              aria-label={
+                completionIsMastery
+                  ? "Droid celebrating map mastery"
+                  : "Droid marking a new objective"
+              }
+            >
+              <span className="intelligence-stack-completion-droid-orbit" />
+              <Bot size={34} aria-hidden="true" />
+            </div>
+            <Sparkles size={30} aria-hidden="true" />
+            <div className="intelligence-stack-cutscene-beat" aria-hidden="true">
+              {completionIsMastery ? "Path synchronized" : "System link established"}
+            </div>
+            <div className="intelligence-stack-eyebrow">
+              {completionIsMastery ? `${mission.label} · map mastery` : mission.objectiveChapter}
+            </div>
+            <h2 id="intelligence-stack-complete-title">
+              {completionIsMastery ? "THE FULL PATH IS ONLINE" : "OBJECTIVE SECURED"}
+            </h2>
+            {completionIsMastery ? (
+              <>
+                <p>
+                  Every system in {mission.title} is active. The path now reads as one connected
+                  engineering story: foundations, learning, perception, autonomy, and dependable
+                  delivery.
+                </p>
+                <p className="intelligence-stack-mastery-progress">
+                  <span>MAP MASTERY</span>
+                  <strong>
+                    {game.mapExplorationFound} / {game.mapExplorationTotal} · 100%
+                  </strong>
+                </p>
+              </>
+            ) : (
+              <>
+                <p>{mission.objectiveStory}</p>
+                <p>{mission.transitionStory}</p>
+                <p className="intelligence-stack-mastery-progress">
+                  <span>MAP MASTERY REMAINS</span>
+                  <strong>
+                    {game.mapExplorationFound} / {game.mapExplorationTotal} · {remainingMapSystems}{" "}
+                    system
+                    {remainingMapSystems === 1 ? "" : "s"} left
+                  </strong>
+                </p>
+              </>
+            )}
             <div className="intelligence-stack-intro-actions">
-              <Link to="/projects" className="intelligence-stack-primary-action">
-                Explore Danish’s Projects <ChevronRight size={17} />
-              </Link>
               <button
                 type="button"
-                className="intelligence-stack-secondary-action"
-                onClick={() => setShowMissions(true)}
+                className="intelligence-stack-primary-action"
+                onClick={game.dismissCompletion}
               >
-                Choose a mission
+                {completionIsMastery
+                  ? "Keep exploring this map"
+                  : objectiveHasQueuedMastery
+                    ? "View map mastery"
+                    : "Continue toward map mastery"}
+                <ChevronRight size={17} />
               </button>
+              <Link to="/projects" className="intelligence-stack-secondary-action">
+                Explore Danish’s Projects <ChevronRight size={17} />
+              </Link>
+              {!objectiveHasQueuedMastery && (
+                <button
+                  type="button"
+                  className="intelligence-stack-secondary-action"
+                  onClick={openMissionArchive}
+                >
+                  Mission archive
+                </button>
+              )}
             </div>
           </div>
         </section>

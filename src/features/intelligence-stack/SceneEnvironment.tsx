@@ -1,7 +1,5 @@
 import { ContactShadows, Grid } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
-import { useMemo, useRef } from "react";
-import type { Group } from "three";
+import { useMemo } from "react";
 import type { QualityMode } from "./types";
 
 interface SceneEnvironmentProps {
@@ -9,10 +7,8 @@ interface SceneEnvironmentProps {
 }
 
 export function SceneEnvironment({ quality }: SceneEnvironmentProps) {
-  const dust = useRef<Group>(null);
-  const orbitals = useRef<Group>(null);
   const positions = useMemo(() => {
-    const amount = quality === "low" ? 130 : quality === "high" ? 620 : 420;
+    const amount = quality === "low" ? 72 : quality === "high" ? 280 : 150;
     const values = new Float32Array(amount * 3);
     let seed = 8291;
     const random = () => {
@@ -28,7 +24,7 @@ export function SceneEnvironment({ quality }: SceneEnvironmentProps) {
   }, [quality]);
 
   const sparkPositions = useMemo(() => {
-    const amount = quality === "low" ? 42 : quality === "high" ? 160 : 96;
+    const amount = quality === "low" ? 28 : quality === "high" ? 96 : 56;
     const values = new Float32Array(amount * 3);
     let seed = 1931;
     const random = () => {
@@ -44,17 +40,6 @@ export function SceneEnvironment({ quality }: SceneEnvironmentProps) {
     }
     return values;
   }, [quality]);
-
-  useFrame(({ clock }) => {
-    if (!dust.current) return;
-    dust.current.rotation.y = clock.getElapsedTime() * 0.019;
-    dust.current.rotation.z = Math.sin(clock.getElapsedTime() * 0.14) * 0.025;
-    dust.current.position.y = Math.sin(clock.getElapsedTime() * 0.35) * 0.12;
-    if (orbitals.current) {
-      orbitals.current.rotation.y = clock.getElapsedTime() * 0.075;
-      orbitals.current.rotation.x = Math.sin(clock.getElapsedTime() * 0.21) * 0.035;
-    }
-  });
 
   return (
     <>
@@ -100,7 +85,7 @@ export function SceneEnvironment({ quality }: SceneEnvironmentProps) {
         <meshBasicMaterial color="#ff2854" transparent opacity={0.035} depthWrite={false} />
       </mesh>
       {quality !== "low" && (
-        <group ref={orbitals} position={[0, 2.1, 0.55]}>
+        <group position={[0, 2.1, 0.55]}>
           <mesh rotation={[Math.PI / 2.75, 0, 0.38]}>
             <torusGeometry args={[6.4, 0.012, 6, 120]} />
             <meshBasicMaterial color="#287dff" transparent opacity={0.22} depthWrite={false} />
@@ -121,7 +106,7 @@ export function SceneEnvironment({ quality }: SceneEnvironmentProps) {
           frames={1}
         />
       )}
-      <group ref={dust}>
+      <group>
         <points>
           <bufferGeometry>
             <bufferAttribute attach="attributes-position" args={[positions, 3]} />

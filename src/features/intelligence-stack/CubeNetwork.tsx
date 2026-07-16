@@ -8,7 +8,6 @@ interface CubeNetworkProps {
   currentNodeId: string;
   layout: StackMapLayout;
   onNavigate: (nodeId: string) => void;
-  reducedMotion: boolean;
   selectedNodeId: string;
 }
 
@@ -18,22 +17,19 @@ export function CubeNetwork({
   currentNodeId,
   layout,
   onNavigate,
-  reducedMotion,
   selectedNodeId,
 }: CubeNetworkProps) {
   return (
     <group>
-      {LEVEL_NODES.map((node, index) => (
+      {LEVEL_NODES.map((node) => (
         <SkillCube
           key={node.id}
           activated={activatedIds.has(node.id)}
           connected={connectedNodeIds.has(node.id)}
           current={currentNodeId === node.id}
-          index={index}
           layout={layout}
           node={node}
           onNavigate={() => onNavigate(node.id)}
-          reducedMotion={reducedMotion}
           selected={selectedNodeId === node.id}
         />
       ))}

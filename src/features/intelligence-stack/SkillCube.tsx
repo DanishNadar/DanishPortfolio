@@ -1,7 +1,4 @@
 import { Edges, RoundedBox } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
-import { useEffect, useRef } from "react";
-import type { Group, MeshStandardMaterial } from "three";
 import { categoryColor, getNodePosition } from "./scene-utils";
 import type { SkillCubeNode, StackMapLayout } from "./types";
 
@@ -9,10 +6,8 @@ interface SkillCubeProps {
   activated: boolean;
   connected: boolean;
   current: boolean;
-  index: number;
   layout: StackMapLayout;
   onNavigate?: () => void;
-  reducedMotion: boolean;
   selected: boolean;
   node: SkillCubeNode;
 }
@@ -21,60 +16,18 @@ export function SkillCube({
   activated,
   connected,
   current,
-  index,
   layout,
   node,
   onNavigate,
-  reducedMotion,
   selected,
 }: SkillCubeProps) {
-  const group = useRef<Group>(null);
-  const coreMaterial = useRef<MeshStandardMaterial>(null);
-  const wasActivated = useRef(activated);
-  const activatedAt = useRef(0);
-  const [x, y, z] = getNodePosition(node, layout);
+  const position = getNodePosition(node, layout);
   const accent = categoryColor(node.category);
-
-  useEffect(() => {
-    if (activated && !wasActivated.current) activatedAt.current = performance.now() / 1000;
-    wasActivated.current = activated;
-  }, [activated]);
-
-  useFrame(({ clock }) => {
-    if (!group.current || !coreMaterial.current) return;
-    const elapsed = clock.getElapsedTime();
-    const now = performance.now() / 1000;
-    const assembly = reducedMotion ? 1 : Math.min(1, Math.max(0, (elapsed - index * 0.045) / 0.5));
-    const easedAssembly = 1 - (1 - assembly) * (1 - assembly);
-    const activationAge = activatedAt.current ? Math.max(0, now - activatedAt.current) : Infinity;
-    const activationPulse = activationAge < 1.25 ? 1 - activationAge / 1.25 : 0;
-    const activePulse = activated ? 0.1 + Math.sin(elapsed * 3.1 + index) * 0.04 : 0;
-    const emphasis = current || selected ? 0.035 + Math.sin(elapsed * 3.4) * 0.012 : 0;
-    const routePulse = connected ? 0.026 + Math.sin(elapsed * 4.6 + index) * 0.014 : 0;
-    const scale = Math.min(1.1, 0.92 + easedAssembly * 0.08 + activationPulse * 0.08 + emphasis);
-    const hover =
-      current || selected
-        ? 0.07 + Math.sin(elapsed * 2.8 + index) * 0.025
-        : connected
-          ? Math.sin(elapsed * 3.5 + index) * 0.028
-          : activated
-            ? Math.sin(elapsed * 1.7 + index) * 0.012
-            : 0;
-
-    group.current.position.set(x, y - (1 - easedAssembly) * 2.4 + hover, z);
-    group.current.scale.setScalar(scale);
-    group.current.rotation.y = Math.sin(elapsed * 0.72 + index * 0.8) * (current ? 0.045 : 0.018);
-    group.current.rotation.z = connected ? Math.sin(elapsed * 2.2 + index) * 0.012 : 0;
-    coreMaterial.current.emissiveIntensity = activated
-      ? 1.3 + activePulse + activationPulse * 3.2 + emphasis * 4 + routePulse * 2.8
-      : 0.32 + emphasis * 2 + routePulse * 3;
-  });
-
   const highlighted = current || selected || connected;
 
   return (
     <group
-      ref={group}
+      position={position}
       onClick={(event) => {
         event.stopPropagation();
         onNavigate?.();
@@ -103,10 +56,9 @@ export function SkillCube({
       </RoundedBox>
       <RoundedBox args={[0.98, 0.5, 0.98]} radius={0.075} smoothness={4} position={[0, 0, 0]}>
         <meshStandardMaterial
-          ref={coreMaterial}
           color={activated ? "#2e568f" : "#274766"}
           emissive={activated ? accent : "#2f6da8"}
-          emissiveIntensity={0.32}
+          emissiveIntensity={activated ? (highlighted ? 1.62 : 1.36) : highlighted ? 0.5 : 0.32}
           metalness={0.58}
           roughness={0.24}
         />

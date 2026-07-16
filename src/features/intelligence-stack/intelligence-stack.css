@@ -1011,6 +1011,32 @@
   backdrop-filter: blur(3px);
 }
 
+.intelligence-stack-completion {
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 52%, rgba(67, 172, 255, 0.17), transparent 42%),
+    rgba(2, 6, 15, 0.54);
+}
+
+.intelligence-stack-completion::before {
+  position: absolute;
+  inset: -35% -14%;
+  content: "";
+  pointer-events: none;
+  background: linear-gradient(
+    105deg,
+    transparent 36%,
+    rgba(178, 240, 255, 0.04) 43%,
+    rgba(128, 215, 255, 0.24) 50%,
+    rgba(255, 154, 186, 0.1) 57%,
+    transparent 64%
+  );
+  mix-blend-mode: screen;
+  opacity: 0;
+  transform: skewX(-18deg) translateX(-22%);
+  animation: intelligence-stack-cutscene-sweep 1.4s cubic-bezier(0.2, 0.75, 0.25, 1) both;
+}
+
 .intelligence-stack-intro-card,
 .intelligence-stack-completion-card,
 .intelligence-stack-help-card,
@@ -1226,13 +1252,170 @@
 }
 
 .intelligence-stack-completion-card {
+  position: relative;
+  overflow: hidden;
   border-color: rgba(229, 245, 255, 0.6);
   background: linear-gradient(145deg, rgba(19, 54, 94, 0.95), rgba(34, 10, 33, 0.93));
   animation: intelligence-stack-reveal 0.5s ease-out;
 }
+
+.intelligence-stack-completion-card::before {
+  position: absolute;
+  top: 0;
+  right: 8%;
+  left: 8%;
+  height: 1px;
+  content: "";
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, #b9efff 24%, #ffb8c7 74%, transparent);
+  box-shadow: 0 0 18px rgba(113, 214, 255, 0.82);
+  opacity: 0;
+  transform: scaleX(0);
+  animation: intelligence-stack-cutscene-beam 0.72s 0.1s ease-out both;
+}
+
+.intelligence-stack-cutscene-telemetry {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.8rem;
+  color: #9cddff;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-align: left;
+}
+
+.intelligence-stack-cutscene-signal {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 0.75rem;
+}
+
+.intelligence-stack-cutscene-signal i {
+  display: block;
+  width: 2px;
+  height: 42%;
+  background: #a5eaff;
+  box-shadow: 0 0 8px rgba(94, 210, 255, 0.95);
+  transform-origin: bottom;
+  animation: intelligence-stack-cutscene-signal 0.82s ease-in-out infinite;
+}
+
+.intelligence-stack-cutscene-signal i:nth-child(2) {
+  height: 72%;
+  animation-delay: 0.12s;
+}
+
+.intelligence-stack-cutscene-signal i:nth-child(3) {
+  height: 100%;
+  animation-delay: 0.24s;
+}
+
+.intelligence-stack-cutscene-signal i:nth-child(4) {
+  height: 58%;
+  animation-delay: 0.36s;
+}
+
+.intelligence-stack-cutscene-beat {
+  margin: 0.35rem auto 0.6rem;
+  color: #b7ebff;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.57rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  animation: intelligence-stack-cutscene-copy 0.65s 0.22s ease-out both;
+}
+
+.is-mastery .intelligence-stack-cutscene-telemetry,
+.is-mastery .intelligence-stack-cutscene-beat {
+  color: #ffe0a4;
+}
+
+.is-mastery .intelligence-stack-cutscene-signal i {
+  background: #ffd394;
+  box-shadow: 0 0 8px rgba(255, 190, 100, 0.9);
+}
 .intelligence-stack-completion-card > svg {
   color: #dcf8ff;
   filter: drop-shadow(0 0 14px #48c7ff);
+}
+.intelligence-stack-completion-card.is-mastery {
+  border-color: rgba(173, 238, 255, 0.88);
+  background: linear-gradient(145deg, rgba(14, 70, 104, 0.97), rgba(36, 16, 66, 0.95));
+}
+.intelligence-stack-completion-droid {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 4rem;
+  height: 4rem;
+  margin: 0 auto 0.7rem;
+  color: #d7f8ff;
+  border: 1px solid rgba(136, 222, 255, 0.62);
+  border-radius: 1.15rem;
+  background: radial-gradient(circle at 50% 42%, rgba(104, 218, 255, 0.3), rgba(20, 55, 98, 0.32));
+  box-shadow: 0 0 28px rgba(59, 187, 255, 0.26);
+  isolation: isolate;
+}
+.intelligence-stack-completion-droid > svg {
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 0 8px rgba(198, 247, 255, 0.88));
+  animation: intelligence-stack-droid-objective 1.35s ease-in-out infinite alternate;
+}
+.intelligence-stack-completion-droid-orbit {
+  position: absolute;
+  width: 5.15rem;
+  height: 1.7rem;
+  border: 1px solid rgba(145, 226, 255, 0.74);
+  border-radius: 50%;
+  transform: rotateX(66deg) rotateZ(-16deg);
+  animation: intelligence-stack-droid-orbit 2.4s linear infinite;
+}
+.is-mastery .intelligence-stack-completion-droid {
+  color: #fff0ce;
+  border-color: rgba(255, 210, 125, 0.78);
+  background: radial-gradient(
+    circle at 50% 42%,
+    rgba(255, 205, 119, 0.32),
+    rgba(69, 31, 105, 0.42)
+  );
+  box-shadow: 0 0 34px rgba(255, 184, 91, 0.35);
+}
+.is-mastery .intelligence-stack-completion-droid > svg {
+  animation-name: intelligence-stack-droid-mastery;
+}
+.is-mastery .intelligence-stack-completion-droid-orbit {
+  border-color: rgba(255, 222, 151, 0.82);
+  animation-duration: 1.5s;
+}
+.intelligence-stack-mastery-progress {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.8rem;
+  margin-top: 0.9rem !important;
+  padding: 0.65rem 0.75rem;
+  color: #cfeeff !important;
+  border: 1px solid rgba(113, 207, 255, 0.24);
+  border-radius: 0.7rem;
+  background: rgba(8, 30, 60, 0.54);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.65rem !important;
+  text-align: left;
+}
+.intelligence-stack-mastery-progress span {
+  color: #8bd8ff;
+  letter-spacing: 0.08em;
+}
+.intelligence-stack-mastery-progress strong {
+  color: #f0fbff;
+  font-weight: 700;
+  text-align: right;
 }
 .intelligence-stack-completion-card h2 {
   color: #f1fbff;
@@ -1388,6 +1571,81 @@
   }
 }
 
+@keyframes intelligence-stack-cutscene-sweep {
+  from {
+    opacity: 0;
+    transform: skewX(-18deg) translateX(-22%);
+  }
+  35% {
+    opacity: 0.6;
+  }
+  to {
+    opacity: 0;
+    transform: skewX(-18deg) translateX(22%);
+  }
+}
+
+@keyframes intelligence-stack-cutscene-beam {
+  from {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+@keyframes intelligence-stack-cutscene-copy {
+  from {
+    opacity: 0;
+    filter: blur(3px);
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
+@keyframes intelligence-stack-cutscene-signal {
+  0%,
+  100% {
+    transform: scaleY(0.54);
+  }
+  48% {
+    transform: scaleY(1.24);
+  }
+}
+
+@keyframes intelligence-stack-droid-objective {
+  from {
+    transform: translateY(-0.12rem) rotate(-5deg) scale(0.96);
+  }
+  to {
+    transform: translateY(0.12rem) rotate(5deg) scale(1.04);
+  }
+}
+
+@keyframes intelligence-stack-droid-mastery {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+  45% {
+    transform: translateY(-0.22rem) rotate(10deg) scale(1.09);
+  }
+  100% {
+    transform: translateY(0.05rem) rotate(-8deg) scale(1.02);
+  }
+}
+
+@keyframes intelligence-stack-droid-orbit {
+  to {
+    transform: rotateX(66deg) rotateZ(344deg);
+  }
+}
+
 @keyframes intelligence-stack-window-in {
   from {
     opacity: 0;
@@ -1459,17 +1717,6 @@
 @keyframes intelligence-stack-scan-drift {
   to {
     background-position-y: 24px;
-  }
-}
-
-@keyframes intelligence-stack-music-pulse {
-  from {
-    box-shadow: 0 0 8px #49beff;
-    transform: scale(0.88);
-  }
-  to {
-    box-shadow: 0 0 20px #75dcff;
-    transform: scale(1.24);
   }
 }
 
@@ -1584,4 +1831,18 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
   }
+}
+
+/* The canvas is deliberately dynamic, but its surrounding UI must not force
+   the browser to repeatedly composite blurred samples of it. */
+.intelligence-stack-page .intelligence-stack-canvas {
+  contain: strict;
+  background: #050914;
+}
+
+.intelligence-stack-page *,
+.intelligence-stack-page *::before,
+.intelligence-stack-page *::after {
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
 }

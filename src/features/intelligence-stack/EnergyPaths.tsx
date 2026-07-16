@@ -1,6 +1,4 @@
-import { useFrame } from "@react-three/fiber";
-import { useMemo, useRef } from "react";
-import type { LineBasicMaterial } from "three";
+import { useMemo } from "react";
 import { LEVEL_EDGES, NODE_BY_ID } from "./level";
 import { getNodePosition } from "./scene-utils";
 import type { StackMapLayout } from "./types";
@@ -12,7 +10,6 @@ interface EnergyPathsProps {
 }
 
 export function EnergyPaths({ activatedIds, completed, layout }: EnergyPathsProps) {
-  const material = useRef<LineBasicMaterial>(null);
   const { positions, colors } = useMemo(() => {
     const positionValues: number[] = [];
     const colorValues: number[] = [];
@@ -29,15 +26,7 @@ export function EnergyPaths({ activatedIds, completed, layout }: EnergyPathsProp
       colors: new Float32Array(colorValues),
     };
   }, [activatedIds, completed, layout]);
-
-  useFrame(({ clock }) => {
-    if (!material.current) return;
-    const energizedPulse =
-      Math.sin(clock.getElapsedTime() * (2.5 + activatedIds.size * 0.08)) * 0.055;
-    material.current.opacity = completed
-      ? 0.66 + Math.sin(clock.getElapsedTime() * 4) * 0.12
-      : 0.3 + Math.min(0.16, activatedIds.size * 0.012) + energizedPulse;
-  });
+  const opacity = completed ? 0.72 : 0.34 + Math.min(0.16, activatedIds.size * 0.012);
 
   return (
     <lineSegments>
@@ -45,13 +34,7 @@ export function EnergyPaths({ activatedIds, completed, layout }: EnergyPathsProp
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
         <bufferAttribute attach="attributes-color" args={[colors, 3]} />
       </bufferGeometry>
-      <lineBasicMaterial
-        ref={material}
-        vertexColors
-        transparent
-        opacity={0.38}
-        depthWrite={false}
-      />
+      <lineBasicMaterial vertexColors transparent opacity={opacity} depthWrite={false} />
     </lineSegments>
   );
 }
