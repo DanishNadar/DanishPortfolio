@@ -1043,8 +1043,6 @@
       radial-gradient(ellipse 38rem 22rem at 38% 42%, rgba(34, 211, 238, 0.1), transparent 72%);
     opacity: 0.88;
     transform: translate3d(0, 0, 0);
-    will-change: transform, opacity;
-    animation: stableAmbientGlowDrift 26s ease-in-out infinite alternate;
   }
 
   .background-layer::after {
@@ -1088,8 +1086,6 @@
     background-size:
       240px 240px,
       260px 260px;
-    will-change: transform;
-    animation: neuralDrift 28s linear infinite;
   }
 
   .scanline-overlay {
@@ -1100,7 +1096,6 @@
       transparent 1px,
       transparent 7px
     );
-    animation: scanlineTravel 11s linear infinite;
     opacity: 0.72;
   }
 
@@ -1504,20 +1499,16 @@
   }
   .bg-orb-a {
     background: radial-gradient(circle, rgba(59, 130, 246, 0.38), transparent 68%);
-    animation: bgOrbDriftA 24s ease-in-out infinite;
   }
   .bg-orb-b {
     background: radial-gradient(circle, rgba(145, 18, 52, 0.38), transparent 70%);
-    animation: bgOrbDriftB 28s ease-in-out infinite;
   }
   .bg-orb-c {
     background: radial-gradient(circle, rgba(34, 211, 238, 0.22), transparent 68%);
     opacity: 0.55;
-    animation: bgOrbPulse 16s ease-in-out infinite;
   }
   .bg-particle {
-    background: rgba(103, 232, 249, 0.7);
-    box-shadow: 0 0 18px rgba(34, 211, 238, 0.65);
+    background: rgba(103, 232, 249, 0.65);
     animation-timing-function: ease-in-out;
     animation-iteration-count: infinite;
     /* animation-duration and animation-delay come from inline styles */
@@ -1527,16 +1518,6 @@
   }
   .bg-particle-r {
     animation-name: bgParticleFloatR;
-  }
-  .bg-node {
-    height: 0.5rem;
-    width: 0.5rem;
-    border-radius: 9999px;
-    border: 1px solid rgba(147, 197, 253, 0.6);
-    background: rgba(96, 165, 250, 0.25);
-    box-shadow: 0 0 24px rgba(59, 130, 246, 0.75);
-    animation: bgNodePulse 5.5s ease-in-out infinite;
-    /* animation-delay from inline style */
   }
 }
 
@@ -3916,15 +3897,15 @@
     opacity: 0.92;
     filter: drop-shadow(0 0 14px rgba(255, 255, 255, 0.08))
       drop-shadow(0 0 44px rgba(96, 165, 250, 0.14));
-    animation: lyriqCruise 12s ease-in-out infinite;
-    mix-blend-mode: screen;
+    animation: lyriqDrive 20s linear infinite;
+    mix-blend-mode: normal;
   }
 
   .lyriq-car {
     position: absolute;
     inset: 0;
     transform-origin: 50% 82%;
-    animation: lyriqBodyMotion 3.2s ease-in-out infinite;
+    animation: lyriqSuspension 3.4s ease-in-out infinite;
   }
 
   .lyriq-visual-frame {
@@ -3975,7 +3956,7 @@
       0 0 20px rgba(147, 207, 255, 0.16),
       0 0 42px rgba(96, 165, 250, 0.12);
     transform: translate(-50%, -50%);
-    animation: lyriqWheelRoll 0.9s linear infinite;
+    animation: lyriqWheelSpin 22s linear infinite;
     opacity: 0.88;
     overflow: hidden;
   }
@@ -4267,7 +4248,7 @@
       transparent 5.8rem 10.2rem
     );
     box-shadow: 0 0 12px rgba(96, 165, 250, 0.2);
-    animation: lyriqRoadFlow 1s linear infinite;
+    animation: lyriqRoadFlow 1.8s linear infinite;
   }
 
   .lyriq-road-a {
@@ -4279,33 +4260,44 @@
     opacity: 0.58;
   }
 
-  @keyframes lyriqCruise {
+  /* Canonical car drive: the vehicle enters from the right, drives left across the
+     viewport, fades out, then loops. linear timing so speed stays constant.
+     Wheel rotation period (lyriqWheelSpin) is derived from:
+       circumference = π × (9.65% × car-width) ≈ 533 px @ 1440 px viewport
+       travel = 20% × car-width ≈ 351 px over 14.4 s → speed ≈ 24 px/s
+       revolution period = 533 / 24 ≈ 22 s                                    */
+  @keyframes lyriqDrive {
     0% {
-      transform: translate(-50%, -50%) translate3d(3.6%, 0, 0) scale(0.995);
-      opacity: 0.34;
+      transform: translate(-50%, -50%) translate3d(10%, 0, 0);
+      opacity: 0.001;
     }
-    12% {
-      opacity: 0.42;
+    6% {
+      opacity: 0.9;
     }
-    50% {
-      transform: translate(-50%, -50%) translate3d(-3.6%, -0.22%, 0) scale(1.01);
-      opacity: 0.48;
+    78% {
+      transform: translate(-50%, -50%) translate3d(-10%, 0, 0);
+      opacity: 0.9;
     }
     88% {
-      opacity: 0.42;
+      transform: translate(-50%, -50%) translate3d(-10%, 0, 0);
+      opacity: 0.001;
+    }
+    89% {
+      transform: translate(-50%, -50%) translate3d(10%, 0, 0);
+      opacity: 0.001;
     }
     100% {
-      transform: translate(-50%, -50%) translate3d(3.6%, 0, 0) scale(0.995);
-      opacity: 0.34;
+      transform: translate(-50%, -50%) translate3d(10%, 0, 0);
+      opacity: 0.001;
     }
   }
-  @keyframes lyriqBodyMotion {
+  @keyframes lyriqSuspension {
     0%,
     100% {
       transform: translateY(0);
     }
     50% {
-      transform: translateY(-3px);
+      transform: translateY(-2px);
     }
   }
   @keyframes lyriqGlowPulse {
@@ -4367,7 +4359,7 @@
     }
   }
 
-  @keyframes lyriqWheelRoll {
+  @keyframes lyriqWheelSpin {
     from {
       transform: translate(-50%, -50%) rotate(0deg);
     }
@@ -4424,6 +4416,9 @@
       height: 42vw;
       opacity: 0.13;
       top: 62%;
+      /* disable horizontal drive on mobile — too motion-heavy at small size */
+      animation: none;
+      transform: translate(-50%, -50%);
     }
     .lyriq-underglow {
       width: 66%;
@@ -6033,7 +6028,6 @@
 
   .background-layer,
   .pathfinding-canvas,
-  .holographic-lyriq,
   .pathfinding-simulation {
     backface-visibility: hidden;
     transform: translateZ(0);
@@ -7225,17 +7219,6 @@
   width: 11.9%;
 }
 
-@keyframes lyriqLightPulse {
-  0%,
-  100% {
-    opacity: 0.82;
-    filter: drop-shadow(0 0 6px rgba(147, 207, 255, 0.28));
-  }
-  50% {
-    opacity: 1;
-    filter: drop-shadow(0 0 10px rgba(147, 207, 255, 0.46));
-  }
-}
 
 /* ---- Lyriq v5 correction: restore clean car, fix wheel doubles, restore A* visibility ---- */
 .background-layer .pathfinding-simulation {
@@ -7443,142 +7426,12 @@
   }
 }
 
-/* ---- Lyriq v6 final alignment fixes ---- */
-.lyriq-front-light-glow,
-.lyriq-rear-light-glow {
-  display: none !important;
-}
-
-.holographic-lyriq {
-  animation: lyriqCruiseStable 4.8s ease-in-out infinite !important;
-}
-
-.lyriq-car {
-  animation: lyriqBodyMotion 3.4s ease-in-out infinite !important;
-}
-
-.lyriq-wheel-overlay {
-  animation: lyriqWheelRollForward 0.95s linear infinite !important;
-}
-
+/* Hood-line position correction from v6 alignment pass */
 .lyriq-hood-line {
   left: 7.4%;
   top: 39.2%;
   width: 17.9%;
   opacity: 0.8;
-}
-
-.background-layer .pathfinding-simulation {
-  z-index: 4 !important;
-  opacity: 0.68 !important;
-  animation: none !important;
-  mix-blend-mode: normal !important;
-}
-
-.background-layer .pathfinding-canvas {
-  opacity: 1 !important;
-}
-
-.pathfinding-status {
-  display: flex !important;
-  opacity: 0 !important;
-  transform: translateX(calc(-100% - 2rem)) translateY(0.5rem) !important;
-  pointer-events: none !important;
-  transition:
-    transform 760ms cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 340ms ease !important;
-}
-
-html.symbolism-active .pathfinding-status {
-  opacity: 0.96 !important;
-  transform: translateX(0) translateY(0) !important;
-}
-
-@keyframes lyriqCruiseStable {
-  0%,
-  100% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 0.9;
-  }
-  50% {
-    transform: translate(-50%, -50.35%) scale(1.003);
-    opacity: 0.94;
-  }
-}
-
-@keyframes lyriqWheelRollForward {
-  from {
-    transform: translate(-50%, -50%) rotate(0deg);
-  }
-  to {
-    transform: translate(-50%, -50%) rotate(360deg);
-  }
-}
-
-/* ---- Lyriq v7 motion sync: subtle forward/back travel with matched wheel direction ---- */
-.holographic-lyriq {
-  animation: lyriqCruiseTravel 3.8s ease-in-out infinite !important;
-}
-
-.lyriq-car {
-  animation: lyriqBodyMotionTravel 3.8s ease-in-out infinite !important;
-}
-
-.lyriq-wheel-overlay {
-  animation: lyriqWheelTravel 3.8s ease-in-out infinite !important;
-  will-change: transform;
-}
-
-@keyframes lyriqCruiseTravel {
-  0%,
-  100% {
-    transform: translate(-50%, -50%) translate3d(1.05%, 0, 0) scale(1);
-    opacity: 0.9;
-  }
-  25% {
-    transform: translate(-50%, -50%) translate3d(0%, -0.12%, 0) scale(1.002);
-    opacity: 0.92;
-  }
-  50% {
-    transform: translate(-50%, -50%) translate3d(-1.05%, 0, 0) scale(1.004);
-    opacity: 0.94;
-  }
-  75% {
-    transform: translate(-50%, -50%) translate3d(0%, -0.12%, 0) scale(1.002);
-    opacity: 0.92;
-  }
-}
-
-@keyframes lyriqBodyMotionTravel {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  25% {
-    transform: translateY(-1px);
-  }
-  50% {
-    transform: translateY(-2px);
-  }
-  75% {
-    transform: translateY(-1px);
-  }
-}
-
-@keyframes lyriqWheelTravel {
-  0%,
-  100% {
-    transform: translate(-50%, -50%) rotate(0deg);
-  }
-  25% {
-    transform: translate(-50%, -50%) rotate(-54deg);
-  }
-  50% {
-    transform: translate(-50%, -50%) rotate(-108deg);
-  }
-  75% {
-    transform: translate(-50%, -50%) rotate(-54deg);
-  }
 }
 
 /* Keep broad page sections unframed. Dark translucent surfaces belong on cards, panels, and deliberate content containers only. */
@@ -8454,8 +8307,7 @@ html.symbolism-active .global-back-to-top {
   mix-blend-mode: soft-light;
 }
 
-/* Global background stability: preserve the background artwork without any
-   continuous paint/compositing work behind dense page content. */
+/* Background layer GPU promotion — no animation suppression; let canonical rules run. */
 @layer utilities {
   .background-layer:not(.background-test-layer) {
     transform: translateZ(0);
@@ -8463,136 +8315,24 @@ html.symbolism-active .global-back-to-top {
     isolation: isolate;
   }
 
-  .background-layer:not(.background-test-layer)::before,
-  .background-layer:not(.background-test-layer)::after,
-  .background-layer:not(.background-test-layer) .grid-bg,
-  .background-layer:not(.background-test-layer) .neural-grid,
-  .background-layer:not(.background-test-layer) .sensor-fusion-radar,
-  .background-layer:not(.background-test-layer) .scanline-overlay,
-  .background-layer:not(.background-test-layer) .bg-orb,
-  .background-layer:not(.background-test-layer) .bg-particle,
-  .background-layer:not(.background-test-layer) .bg-node {
-    animation: none !important;
-  }
-
-  .background-layer:not(.background-test-layer) .bg-particle,
-  .background-layer:not(.background-test-layer) .bg-node {
-    display: none !important;
-  }
-
-  .background-layer:not(.background-test-layer) .grid-bg,
-  .background-layer:not(.background-test-layer) .neural-grid,
-  .background-layer:not(.background-test-layer) .sensor-fusion-radar,
-  .background-layer:not(.background-test-layer) .scanline-overlay {
-    opacity: 0.18 !important;
-  }
-
-  .background-layer:not(.background-test-layer) .bg-orb {
-    filter: none !important;
-    opacity: 0.14 !important;
-    mix-blend-mode: normal !important;
-  }
-
-  .background-layer:not(.background-test-layer) .holographic-lyriq {
-    animation: none !important;
-    filter: none !important;
-    mix-blend-mode: normal !important;
-    opacity: 0.52 !important;
-    will-change: auto;
-    transform: translate(-50%, -50%) !important;
-    backface-visibility: hidden;
-  }
-
-  .background-layer:not(.background-test-layer) .holographic-lyriq *,
-  .background-layer:not(.background-test-layer) .holographic-lyriq *::before,
-  .background-layer:not(.background-test-layer) .holographic-lyriq *::after {
-    animation: none !important;
-  }
-
-  .background-layer:not(.background-test-layer) .lyriq-outline-img,
-  .background-layer:not(.background-test-layer) .lyriq-wheel-overlay-spokes,
-  .background-layer:not(.background-test-layer) .lyriq-front-light,
-  .background-layer:not(.background-test-layer) .lyriq-rear-light,
-  .background-layer:not(.background-test-layer) .lyriq-front-light-accent,
-  .background-layer:not(.background-test-layer) .lyriq-front-light-accent-secondary,
-  .background-layer:not(.background-test-layer) .lyriq-rear-light-accent,
-  .background-layer:not(.background-test-layer) .lyriq-rear-light-accent-secondary,
-  .background-layer:not(.background-test-layer) .lyriq-perception-scan {
-    filter: none !important;
-    mix-blend-mode: normal !important;
-  }
-
-  .background-layer:not(.background-test-layer) .lyriq-road-layer,
-  .background-layer:not(.background-test-layer) .lyriq-underglow,
-  .background-layer:not(.background-test-layer) .lyriq-airflow,
-  .background-layer:not(.background-test-layer) .lyriq-sensor-halo,
-  .background-layer:not(.background-test-layer) .lyriq-perception-scan,
-  .background-layer:not(.background-test-layer) .lyriq-roof-sensor,
-  .background-layer:not(.background-test-layer) .lyriq-ecocar-badge {
-    display: none !important;
-  }
-
   .background-layer:not(.background-test-layer) .pathfinding-simulation {
-    filter: none !important;
-    mix-blend-mode: normal !important;
     visibility: hidden;
-    opacity: 0 !important;
+    opacity: 0;
     contain: paint;
+    transition: opacity 400ms ease, visibility 0s 400ms;
   }
 
   .background-layer:not(.background-test-layer) .pathfinding-simulation.is-active {
     visibility: visible;
-    opacity: 0.58 !important;
-  }
-
-  .background-layer:not(.background-test-layer) .pathfinding-canvas {
-    filter: none !important;
-  }
-
-  .background-layer:not(.background-test-layer) .pathfinding-node-core {
-    filter: none !important;
+    opacity: 0.58;
+    transition: opacity 400ms ease, visibility 0s;
   }
 
   .background-layer:not(.background-test-layer) .pathfinding-simulation:not(.is-active) * {
-    animation-play-state: paused !important;
-  }
-
-  .background-layer:not(.background-test-layer) .pathfinding-solution-edge {
-    opacity: 0.78 !important;
+    animation-play-state: paused;
   }
 }
 
-/* Keep ambient movement exclusive to the home page's "See the Symbolism"
-   sequence. The inner car moves as one unit; each wheel keeps its own rotation
-   without disturbing its absolute positioning. */
-@media (prefers-reduced-motion: no-preference) {
-  html.symbolism-active
-    .background-layer:not(.background-test-layer)
-    .holographic-lyriq
-    .lyriq-car {
-    animation: lyriqSymbolismDrive 2.8s ease-in-out infinite !important;
-    will-change: transform;
-  }
-
-  html.symbolism-active
-    .background-layer:not(.background-test-layer)
-    .holographic-lyriq
-    .lyriq-wheel-overlay {
-    animation: lyriqWheelRollForward 0.76s linear infinite !important;
-    will-change: transform;
-  }
-}
-
-@keyframes lyriqSymbolismDrive {
-  0%,
-  100% {
-    transform: translate3d(-0.85%, 0, 0);
-  }
-
-  50% {
-    transform: translate3d(0.85%, -0.14%, 0);
-  }
-}
 
 /* Site-wide visual stability: prevent large card grids from allocating a blurred
    compositing layer per card or repeatedly fading cards in as the DOM changes. */
@@ -8696,15 +8436,6 @@ html.symbolism-active .global-back-to-top {
   transform: translateZ(0) !important;
 }
 
-/* Restore visual depth with static layers only. The artwork remains visible,
-   but none of these layers uses blur, blending, or a repeating animation. */
-.background-layer:not(.background-test-layer) .bg-particle,
-.background-layer:not(.background-test-layer) .bg-node {
-  display: block !important;
-  animation: none !important;
-  box-shadow: none !important;
-  opacity: 0.3 !important;
-}
 
 .la-page.visual-stability-layer .la-hero::before {
   display: block !important;

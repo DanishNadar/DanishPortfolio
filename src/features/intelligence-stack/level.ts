@@ -346,19 +346,79 @@ export const STACK_MISSIONS: readonly StackMission[] = [
     title: "Autonomy Circuit",
     label: "Mission 03",
     description:
-      "Close the full loop across perception, planning, control, and deployment to reach integrated intelligence.",
+      "Close the perception-planning-control loop. Two milestones await: autonomous operation, then complete intelligence.",
     caseFile: "The closed-loop system",
     casePrompt:
-      "Follow every dependency to reveal how a machine can perceive, decide, and act safely.",
-    objectiveNodeId: "integrated-intelligence",
-    objectiveLabel: "Activate Integrated Intelligence",
-    objectiveChapter: "Chapter 03 · The closed loop",
+      "Trace every sensor, algorithm, and feedback layer needed to make a machine move with purpose — then push beyond to deploy the full stack.",
+    objectiveNodeId: "autonomous-systems",
+    objectiveLabel: "Activate Autonomous Systems",
+    objectiveChapter: "Chapter 03 · The loop closes",
     objectiveStory:
-      "The droid has connected perception, decisions, control, and delivery into one accountable system. This is where separate skills become an engineering practice that can operate in the real world.",
+      "The droid has linked perception, planning, and control into one operating system. This is where sensors, algorithms, and physical feedback combine into a machine that can navigate the real world.",
     transitionStory:
-      "Integrated Intelligence is the objective, not the end of the path. Trace every remaining system to earn map mastery and see the complete journey behind Danish’s work.",
+      "Autonomous operation is the first milestone. Three systems remain — intelligent agents, AI infrastructure, and integrated intelligence — to complete the full engineering picture.",
     startNodeId: "python",
     layout: "circuit",
+  },
+  {
+    id: "signal-chain",
+    title: "Signal Chain",
+    label: "Mission 04",
+    description:
+      "Trace the vehicle telemetry path from embedded sensors through probability and fusion — the EcoCAR technical spine.",
+    caseFile: "The lost telemetry",
+    casePrompt:
+      "Recover the embedded, probabilistic, and perceptual evidence to make the vehicle’s sensor streams trustworthy enough to act on.",
+    objectiveNodeId: "sensor-fusion",
+    objectiveLabel: "Activate Sensor Fusion",
+    objectiveChapter: "Chapter 04 · The fused world model",
+    objectiveStory:
+      "The droid has merged LiDAR, radar, and camera evidence into one coherent environmental model. This is what Danish built for EcoCAR: a fusion layer that makes a real vehicle’s sensors agree on what surrounds it before any decision is made.",
+    transitionStory:
+      "Fusion resolves the world model. Control systems, autonomous operation, and the full deployment layer remain — continue the map to close every loop in the vehicle intelligence chain.",
+    startNodeId: "embedded-systems",
+    preActivatedIds: ["python", "data-preparation", "linear-algebra", "probability", "software-engineering", "algorithms"],
+    layout: "stack",
+  },
+  {
+    id: "intelligence-layer",
+    title: "Intelligence Layer",
+    label: "Mission 05",
+    description:
+      "Build the retrieval, reasoning, and orchestration stack behind Eloria — RAG pipelines, model infrastructure, and deployed agents.",
+    caseFile: "The missing context",
+    casePrompt:
+      "Recover the ML, infrastructure, and agent evidence needed to build a system that can retrieve the right context and reason within it reliably.",
+    objectiveNodeId: "intelligent-agents",
+    objectiveLabel: "Deploy Intelligent Agents",
+    objectiveChapter: "Chapter 05 · The orchestrated system",
+    objectiveStory:
+      "The droid has assembled a pipeline that retrieves context, routes it through a language model, and returns a grounded response. This is the architecture Danish shipped as a Machine Learning Engineer: RAG pipelines, vector embeddings, FastAPI services, and agent orchestration.",
+    transitionStory:
+      "Language intelligence is one capability in a larger system. Perception, sensor fusion, and physical autonomy complete the picture — continue the map to connect every layer.",
+    startNodeId: "machine-learning",
+    preActivatedIds: ["python", "data-preparation", "linear-algebra", "probability", "software-engineering", "algorithms", "embedded-systems", "model-evaluation"],
+    layout: "circuit",
+  },
+  {
+    id: "observ-e-probe",
+    title: "OBSERV-E Probe",
+    label: "Mission 06",
+    description:
+      "Navigate the orbital map from embedded signals through robotics foundations to physical control — the OBSERV-E accessibility challenge.",
+    caseFile: "The accessibility gap",
+    casePrompt:
+      "Recover the embedded, algorithmic, and robotics evidence needed to give an intelligent machine a reliable physical presence.",
+    objectiveNodeId: "control-systems",
+    objectiveLabel: "Close the Physical Loop",
+    objectiveChapter: "Chapter 06 · The physical loop closes",
+    objectiveStory:
+      "The droid has closed the first physical control loop — software feedback reaching real actuators with stability and timing. This is the layer behind OBSERV-E: translating perception and computation into something that can physically help someone.",
+    transitionStory:
+      "Physical control is a foundation, not a finish. The map extends into perception, sensor fusion, machine learning, and intelligent deployment — every layer that makes a robot genuinely useful in the field.",
+    startNodeId: "embedded-systems",
+    preActivatedIds: ["python", "data-preparation", "linear-algebra", "probability", "software-engineering", "algorithms"],
+    layout: "constellation",
   },
 ];
 

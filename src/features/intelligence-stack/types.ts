@@ -3,7 +3,7 @@ export type MoveDirection = "forward" | "back" | "left" | "right";
 export type StackMapLayout = "stack" | "constellation" | "circuit";
 
 export interface StackMission {
-  id: "foundation-run" | "perception-run" | "autonomy-circuit";
+  id: "foundation-run" | "perception-run" | "autonomy-circuit" | "signal-chain" | "intelligence-layer" | "observ-e-probe";
   title: string;
   label: string;
   description: string;
@@ -15,6 +15,7 @@ export interface StackMission {
   objectiveStory: string;
   transitionStory: string;
   startNodeId: string;
+  preActivatedIds?: readonly string[];
   layout: StackMapLayout;
 }
 

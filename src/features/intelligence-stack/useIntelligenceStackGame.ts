@@ -84,7 +84,7 @@ export function useIntelligenceStackGame({
   reducedMotion,
 }: UseIntelligenceStackGameOptions) {
   const [activatedIds, setActivatedIds] = useState<Set<string>>(
-    () => new Set([mission.startNodeId]),
+    () => new Set([mission.startNodeId, ...(mission.preActivatedIds ?? [])]),
   );
   const [currentNodeId, setCurrentNodeId] = useState(mission.startNodeId);
   const [selectedNodeId, setSelectedNodeId] = useState(mission.startNodeId);
@@ -177,7 +177,7 @@ export function useIntelligenceStackGame({
   }, [mission.title]);
 
   const reset = useCallback(() => {
-    setActivatedIds(new Set([mission.startNodeId]));
+    setActivatedIds(new Set([mission.startNodeId, ...(mission.preActivatedIds ?? [])]));
     setCurrentNodeId(mission.startNodeId);
     setSelectedNodeId(mission.startNodeId);
     setJump(null);
@@ -189,7 +189,7 @@ export function useIntelligenceStackGame({
     setQueuedMasteryDialog(false);
     setFeedback(mission.title + " selected. " + mission.objectiveLabel + ".");
     setResetToken((value) => value + 1);
-  }, [mission.objectiveLabel, mission.startNodeId, mission.title]);
+  }, [mission.objectiveLabel, mission.preActivatedIds, mission.startNodeId, mission.title]);
 
   useEffect(() => {
     reset();

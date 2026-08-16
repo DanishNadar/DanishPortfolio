@@ -76,6 +76,8 @@ export function IntelligenceStackPage() {
   const [missionId, setMissionId] = useState<StackMission["id"]>("foundation-run");
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [cameraResetToken, setCameraResetToken] = useState(0);
+  const [cutscenePhase, setCutscenePhase] = useState<"idle" | "playing" | "done">("idle");
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const reducedMotion = useReducedMotion();
   const lastStoryNodeId = useRef<string | null>(null);
   const mission = MISSION_BY_ID.get(missionId)!;
@@ -105,6 +107,17 @@ export function IntelligenceStackPage() {
     return () => document.removeEventListener("fullscreenchange", updateFullscreen);
   }, []);
 
+  useEffect(() => {
+    if (!game.completionDialog) {
+      setCutscenePhase("idle");
+      return;
+    }
+    setCutscenePhase("playing");
+    const duration = game.completionDialog === "mastery" ? 8500 : 6500;
+    const timer = setTimeout(() => setCutscenePhase("done"), duration);
+    return () => clearTimeout(timer);
+  }, [game.completionDialog]);
+
   const activatedMajorIds = useMemo(
     () => MAJOR_NODE_IDS.filter((nodeId) => game.activatedIds.has(nodeId)),
     [game.activatedIds],
@@ -127,11 +140,14 @@ export function IntelligenceStackPage() {
   };
 
   const selectMission = (nextMissionId: StackMission["id"]) => {
-    game.reset();
-    setMissionId(nextMissionId);
-    setShowMissions(false);
-    setStoryOpen(false);
-    setCameraResetToken((value) => value + 1);
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setMissionId(nextMissionId);
+      setShowMissions(false);
+      setStoryOpen(false);
+      setCameraResetToken((value) => value + 1);
+      setTimeout(() => setIsTransitioning(false), 100);
+    }, 280);
   };
 
   const selectRoute = game.attemptMoveTo;
@@ -155,8 +171,12 @@ export function IntelligenceStackPage() {
       <div className="intelligence-stack-radial-glow glow-blue" aria-hidden="true" />
       <div className="intelligence-stack-radial-glow glow-red" aria-hidden="true" />
       <div className="intelligence-stack-scanlines" aria-hidden="true" />
+      <div
+        className={`intelligence-stack-transition-overlay${isTransitioning ? " is-active" : ""}`}
+        aria-hidden="true"
+      />
 
-      <ExperienceErrorBoundary fallback={<WebGLFallback />}>
+      <ExperienceErrorBoundary key={missionId} fallback={<WebGLFallback />}>
         {webglStatus === "available" ? (
           <Suspense
             fallback={
@@ -423,7 +443,50 @@ export function IntelligenceStackPage() {
         </section>
       )}
 
-      {game.completionDialog && (
+      {game.completionDialog && cutscenePhase === "playing" && (
+        <div
+          className={`intelligence-stack-cinematic-overlay${completionIsMastery ? " is-mastery" : ""}`}
+          aria-live="assertive"
+          aria-label={completionIsMastery ? "Map mastery cutscene" : "Objective complete cutscene"}
+        >
+          <div className="intelligence-stack-cinematic-sequence">
+            <div
+              className="intelligence-stack-cinematic-line"
+              style={{ "--cutscene-delay": "0s" } as { [key: string]: string }}
+            >
+              {completionIsMastery ? "// MAP COVERAGE: 100%" : "// SIGNAL ACQUIRED"}
+            </div>
+            <div
+              className="intelligence-stack-cinematic-line"
+              style={{ "--cutscene-delay": completionIsMastery ? "1.5s" : "1.4s" } as { [key: string]: string }}
+            >
+              {completionIsMastery ? "// ALL SYSTEMS LINKED" : "// ROUTE VERIFIED"}
+            </div>
+            <div
+              className="intelligence-stack-cinematic-line"
+              style={{ "--cutscene-delay": completionIsMastery ? "3.5s" : "2.8s" } as { [key: string]: string }}
+            >
+              {completionIsMastery ? "// FULL PATH SYNCHRONIZED" : "// OBJECTIVE CONFIRMED"}
+            </div>
+            <div
+              className="intelligence-stack-cinematic-line"
+              style={{ "--cutscene-delay": completionIsMastery ? "5.5s" : "4.4s" } as { [key: string]: string }}
+            >
+              {completionIsMastery ? "// SPIRON: FULL SYNC ACHIEVED" : "// SPIRON: OBJECTIVE SECURED"}
+            </div>
+          </div>
+          <div className="intelligence-stack-cinematic-title">
+            {completionIsMastery ? "MAP MASTERY" : "OBJECTIVE COMPLETE"}
+          </div>
+          <div className="intelligence-stack-cinematic-subtitle">
+            {completionIsMastery
+              ? "Every system is active. The full engineering path is now visible."
+              : `${mission.objectiveLabel} secured. The route is confirmed.`}
+          </div>
+        </div>
+      )}
+
+      {game.completionDialog && cutscenePhase === "done" && (
         <section
           className="intelligence-stack-completion"
           role="dialog"
@@ -510,9 +573,6 @@ export function IntelligenceStackPage() {
                     : "Continue toward map mastery"}
                 <ChevronRight size={17} />
               </button>
-              <Link to="/projects" className="intelligence-stack-secondary-action">
-                Explore Danish’s Projects <ChevronRight size={17} />
-              </Link>
               {!objectiveHasQueuedMastery && (
                 <button
                   type="button"
@@ -522,6 +582,9 @@ export function IntelligenceStackPage() {
                   Mission archive
                 </button>
               )}
+              <Link to="/projects" className="intelligence-stack-secondary-action">
+                Explore Danish’s Projects <ChevronRight size={17} />
+              </Link>
             </div>
           </div>
         </section>

@@ -2,23 +2,16 @@
 // works reliably when dn-engine-open is on <html>. Framer Motion uses the Web
 // Animations API and ignores CSS animation-play-state entirely.
 
-import { useEffect, useState, type CSSProperties } from "react";
+import { useEffect, useReducer, useState, type CSSProperties } from "react";
 import { createPathfindingProblem } from "@/lib/pathfinding";
 
-const particles = Array.from({ length: 24 }, (_, index) => ({
+const particles = Array.from({ length: 8 }, (_, index) => ({
   id: index,
   left: `${(index * 37) % 100}%`,
   top: `${(index * 53) % 100}%`,
   size: 2 + (index % 4),
   delay: (index % 8) * 0.45,
   duration: 10 + (index % 7),
-}));
-
-const nodes = Array.from({ length: 9 }, (_, index) => ({
-  id: index,
-  left: `${10 + ((index * 11) % 78)}%`,
-  top: `${12 + ((index * 17) % 72)}%`,
-  delay: index * 0.6,
 }));
 
 const astarShowcaseNodes = [
@@ -90,6 +83,8 @@ function PathfindingGraph({
   testMode?: boolean;
 }) {
   const [activeProblem, setActiveProblem] = useState(createPathfindingProblem);
+  // useReducer tick forces animation-restart on metric elements without remounting the SVG
+  const [revealKey, bumpReveal] = useReducer((n: number) => n + 1, 0);
   const telemetryProblem = activeProblem;
   const solutionDelay = 1.55;
 
@@ -97,10 +92,10 @@ function PathfindingGraph({
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (!isActive || mediaQuery.matches) return;
 
-    const cycleTimer = window.setTimeout(
-      () => setActiveProblem(createPathfindingProblem()),
-      (solutionDelay + 1.7) * 1_000,
-    );
+    const cycleTimer = window.setTimeout(() => {
+      setActiveProblem(createPathfindingProblem());
+      bumpReveal();
+    }, (solutionDelay + 1.7) * 1_000);
 
     return () => window.clearTimeout(cycleTimer);
   }, [activeProblem.id, isActive, solutionDelay]);
@@ -136,38 +131,41 @@ function PathfindingGraph({
       }`}
       style={{ "--solution-delay": `${solutionDelay}s` } as CSSProperties}
     >
+      {/* SVG stays mounted across problem cycles — only inner groups are re-keyed so
+          CSS animations restart without a full SVG teardown + rebuild. */}
       <svg
-        key={activeProblem.id}
         className="pathfinding-canvas"
         viewBox="0 0 1000 600"
         preserveAspectRatio="none"
         role="presentation"
       >
         <defs>
-          <linearGradient id={`route-gradient-${activeProblem.id}`} x1="0" y1="0" x2="1" y2="0">
+          <linearGradient id="route-gradient" x1="0" y1="0" x2="1" y2="0">
             <stop offset="0%" stopColor="#22d3ee" />
             <stop offset="58%" stopColor="#60a5fa" />
             <stop offset="100%" stopColor="#e23d67" />
           </linearGradient>
-          <filter
-            id={`route-glow-${activeProblem.id}`}
-            x="-80%"
-            y="-80%"
-            width="260%"
-            height="260%"
-          >
+          <filter id="route-glow" x="-80%" y="-80%" width="260%" height="260%">
             <feGaussianBlur stdDeviation="4" result="blur" />
             <feMerge>
               <feMergeNode in="blur" />
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
-          <clipPath id={`route-reveal-${activeProblem.id}`}>
-            <rect className="pathfinding-solution-reveal" x="0" y="0" width="1000" height="600" />
+          <clipPath id="route-reveal">
+            {/* keyed so the animation-driven reveal rect restarts on each new problem */}
+            <rect
+              key={revealKey}
+              className="pathfinding-solution-reveal"
+              x="0"
+              y="0"
+              width="1000"
+              height="600"
+            />
           </clipPath>
         </defs>
 
-        <g className="pathfinding-edges">
+        <g key={`edges-${activeProblem.id}`} className="pathfinding-edges">
           {activeProblem.edges.map((edge, index) => {
             const from = activeProblem.nodes[edge.from];
             const to = activeProblem.nodes[edge.to];
@@ -191,9 +189,9 @@ function PathfindingGraph({
           })}
         </g>
 
-        <g className="pathfinding-solution">
+        <g key={`solution-${activeProblem.id}`} className="pathfinding-solution">
           <path
-            id={`route-motion-${activeProblem.id}`}
+            id="route-motion"
             className="pathfinding-solution-track"
             d={solutionPath}
             pathLength="1"
@@ -208,11 +206,11 @@ function PathfindingGraph({
             points={solutionPoints}
             pathLength="1"
             fill="none"
-            stroke={`url(#route-gradient-${activeProblem.id})`}
+            stroke="url(#route-gradient)"
             strokeWidth={testMode ? 13 : undefined}
             strokeDasharray={testMode ? "32 20" : undefined}
-            filter={testMode ? `url(#route-glow-${activeProblem.id})` : undefined}
-            clipPath={testMode ? undefined : `url(#route-reveal-${activeProblem.id})`}
+            filter={testMode ? "url(#route-glow)" : undefined}
+            clipPath={testMode ? undefined : "url(#route-reveal)"}
             data-path-end-node={activeProblem.path.at(-1)}
             data-path-end-x={activeProblem.nodes[activeProblem.path.at(-1) ?? 0].x}
           />
@@ -221,13 +219,13 @@ function PathfindingGraph({
               <circle className="pathfinding-route-runner-glow" r="18" />
               <circle className="pathfinding-route-runner-core" r="5.5" />
               <animateMotion dur="2.4s" begin="0s" repeatCount="indefinite" rotate="auto">
-                <mpath href={`#route-motion-${activeProblem.id}`} />
+                <mpath href="#route-motion" />
               </animateMotion>
             </g>
           )}
         </g>
 
-        <g className="pathfinding-nodes">
+        <g key={`nodes-${activeProblem.id}`} className="pathfinding-nodes">
           {activeProblem.nodes.map((node) => {
             const nodeStep = exploredStep.get(node.id) ?? activeProblem.explored.length;
             const pathStep = activeProblem.path.indexOf(node.id);
@@ -254,7 +252,7 @@ function PathfindingGraph({
         </g>
 
         {testMode && (
-          <g className="pathfinding-test-route-overlay">
+          <g key={`test-${activeProblem.id}`} className="pathfinding-test-route-overlay">
             {activeProblem.path.slice(1).map((nodeId, index) => {
               const from = activeProblem.nodes[activeProblem.path[index]];
               const to = activeProblem.nodes[nodeId];
@@ -313,6 +311,9 @@ export function AnimatedBackground({ testMode = false }: AnimatedBackgroundProps
       typeof document !== "undefined" &&
       document.documentElement.classList.contains("symbolism-active"),
   );
+  const [backgroundActive, setBackgroundActive] = useState(
+    () => typeof document !== "undefined" && document.visibilityState !== "hidden",
+  );
 
   useEffect(() => {
     const root = document.documentElement;
@@ -322,6 +323,12 @@ export function AnimatedBackground({ testMode = false }: AnimatedBackgroundProps
     update();
     observer.observe(root, { attributes: true, attributeFilter: ["class"] });
     return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const update = () => setBackgroundActive(document.visibilityState !== "hidden");
+    document.addEventListener("visibilitychange", update);
+    return () => document.removeEventListener("visibilitychange", update);
   }, []);
 
   return (
@@ -386,7 +393,7 @@ export function AnimatedBackground({ testMode = false }: AnimatedBackgroundProps
           <PathfindingGraph isActive showMetrics={false} testMode={testMode} />
         </>
       )}
-      {!testMode && <PathfindingGraph isActive={symbolismActive} showMetrics />}
+      {!testMode && <PathfindingGraph isActive={backgroundActive} showMetrics={symbolismActive} />}
       {testMode && <AstarShowcaseOverlay />}
 
       {particles.map((p) => (
@@ -401,14 +408,6 @@ export function AnimatedBackground({ testMode = false }: AnimatedBackgroundProps
             animationDuration: `${p.duration}s`,
             animationDelay: `${p.delay}s`,
           }}
-        />
-      ))}
-
-      {nodes.map((n) => (
-        <span
-          key={n.id}
-          className="bg-node absolute"
-          style={{ left: n.left, top: n.top, animationDelay: `${n.delay}s` }}
         />
       ))}
     </div>
