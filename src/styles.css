@@ -5390,7 +5390,8 @@
     margin-block: var(--home-section-gap);
     scroll-margin-block: clamp(5rem, 14vh, 10rem);
     backface-visibility: hidden;
-    contain: layout paint;
+    content-visibility: auto;
+    contain-intrinsic-block-size: auto 900px;
     transform: translateZ(0);
   }
 
@@ -5417,8 +5418,10 @@
   }
 
   .home-story-page .home-road-scan,
+  .home-story-page .home-road-scan::before,
   .home-story-page .home-telemetry-grid,
   .home-story-page .home-cockpit-card::after,
+  .home-story-page .home-chapter-card::before,
   .home-story-page .home-chapter-card::after,
   .home-story-page .home-visual-orb,
   .home-story-page .home-visual-line,
@@ -5429,6 +5432,10 @@
   .home-story-page .home-build-node,
   .home-story-page .telemetry-car {
     animation: none !important;
+  }
+
+  .home-story-page .home-road-scan::before {
+    will-change: auto;
   }
 
   .home-story-page .home-cockpit-card::after,
@@ -6153,7 +6160,6 @@
 
   .home-signal-card {
     min-height: 16rem;
-    backdrop-filter: blur(20px);
     box-shadow: 0 24px 70px -54px color-mix(in oklab, var(--neon-cyan) 65%, transparent);
   }
 
@@ -6542,7 +6548,6 @@
   .home-road-stop {
     position: relative;
     background: var(--gradient-card);
-    backdrop-filter: blur(16px);
   }
 
   .home-road-marker {
@@ -6841,13 +6846,12 @@
     border: 1px solid color-mix(in oklab, var(--neon-cyan) 28%, transparent);
     border-radius: 999px;
     padding: 0.35rem 0.7rem;
-    background: rgba(5, 10, 25, 0.68);
+    background: rgba(5, 10, 25, 0.82);
     color: color-mix(in oklab, var(--neon-cyan) 78%, white 22%);
     font-family: var(--font-tech);
     font-size: 0.72rem;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    backdrop-filter: blur(10px);
   }
 
   .home-chapter-radar::after {
