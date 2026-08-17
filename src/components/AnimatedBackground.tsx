@@ -74,11 +74,9 @@ function AstarShowcaseOverlay() {
 }
 
 function PathfindingGraph({
-  showMetrics = true,
   isActive = true,
   testMode = false,
 }: {
-  showMetrics?: boolean;
   isActive?: boolean;
   testMode?: boolean;
 }) {
@@ -277,7 +275,7 @@ function PathfindingGraph({
         )}
       </svg>
 
-      {showMetrics && (
+      {!testMode && (
         <div className="pathfinding-status pathfinding-status-metrics">
           <div className="pathfinding-status-title">A* route telemetry</div>
           <div className="pathfinding-status-grid">
@@ -306,24 +304,9 @@ type AnimatedBackgroundProps = {
 };
 
 export function AnimatedBackground({ testMode = false }: AnimatedBackgroundProps) {
-  const [symbolismActive, setSymbolismActive] = useState(
-    () =>
-      typeof document !== "undefined" &&
-      document.documentElement.classList.contains("symbolism-active"),
-  );
   const [backgroundActive, setBackgroundActive] = useState(
     () => typeof document !== "undefined" && document.visibilityState !== "hidden",
   );
-
-  useEffect(() => {
-    const root = document.documentElement;
-    const update = () => setSymbolismActive(root.classList.contains("symbolism-active"));
-    const observer = new MutationObserver(update);
-
-    update();
-    observer.observe(root, { attributes: true, attributeFilter: ["class"] });
-    return () => observer.disconnect();
-  }, []);
 
   useEffect(() => {
     const update = () => setBackgroundActive(document.visibilityState !== "hidden");
@@ -390,10 +373,10 @@ export function AnimatedBackground({ testMode = false }: AnimatedBackgroundProps
 
       {testMode && (
         <>
-          <PathfindingGraph isActive showMetrics={false} testMode={testMode} />
+          <PathfindingGraph isActive testMode={testMode} />
         </>
       )}
-      {!testMode && <PathfindingGraph isActive={backgroundActive} showMetrics={symbolismActive} />}
+      {!testMode && <PathfindingGraph isActive={backgroundActive} />}
       {testMode && <AstarShowcaseOverlay />}
 
       {particles.map((p) => (

@@ -4271,20 +4271,24 @@
       transform: translate(-50%, -50%) translate3d(10%, 0, 0);
       opacity: 0.001;
     }
-    6% {
-      opacity: 0.9;
+    7% {
+      opacity: 0.88;
     }
-    78% {
+    76% {
       transform: translate(-50%, -50%) translate3d(-10%, 0, 0);
-      opacity: 0.9;
+      opacity: 0.88;
     }
-    88% {
+    85% {
       transform: translate(-50%, -50%) translate3d(-10%, 0, 0);
-      opacity: 0.001;
+      opacity: 0;
     }
-    89% {
+    86% {
       transform: translate(-50%, -50%) translate3d(10%, 0, 0);
-      opacity: 0.001;
+      opacity: 0;
+    }
+    99% {
+      transform: translate(-50%, -50%) translate3d(10%, 0, 0);
+      opacity: 0;
     }
     100% {
       transform: translate(-50%, -50%) translate3d(10%, 0, 0);
@@ -6018,20 +6022,12 @@
       opacity 300ms ease !important;
   }
 
-  html.symbolism-active .holographic-lyriq {
-    opacity: 0.82 !important;
-  }
-
   html.symbolism-active .pathfinding-simulation {
     opacity: 0.95 !important;
   }
 
-  .background-layer,
-  .pathfinding-canvas,
   .pathfinding-simulation {
-    backface-visibility: hidden;
     transform: translateZ(0);
-    will-change: opacity, transform;
   }
 
   @keyframes symbolismLockSweep {
@@ -7323,20 +7319,7 @@
 }
 
 .lyriq-front-light-glow {
-  left: 2.8%;
-  top: 38.8%;
-  width: 4%;
-  height: 2%;
-  border-radius: 999px;
-  background: linear-gradient(
-    90deg,
-    rgba(211, 244, 255, 0.72),
-    rgba(103, 190, 255, 0.98),
-    rgba(103, 190, 255, 0)
-  );
-  clip-path: polygon(0 68%, 12% 30%, 82% 10%, 100% 30%, 75% 86%, 13% 100%);
-  filter: blur(0.3px) drop-shadow(0 0 8px rgba(99, 190, 255, 0.52));
-  animation: lyriqLightPulseSubtle 3s ease-in-out infinite;
+  display: none;
 }
 
 .lyriq-rear-light-glow {
@@ -7358,15 +7341,44 @@
 }
 
 .lyriq-wheel-overlay {
-  border: none;
-  background: transparent;
-  box-shadow: none;
-  opacity: 0.98;
+  border: clamp(1px, 0.12vw, 2px) solid rgba(190, 215, 242, 0.55);
+  opacity: 0.96;
+  /* tire rubber ring + rim face */
+  background:
+    repeating-conic-gradient(
+      from 6deg,
+      rgba(150, 175, 205, 0.1) 0deg 4deg,
+      transparent 4deg 14deg
+    ),
+    radial-gradient(
+      circle at center,
+      transparent 0 62%,
+      rgba(18, 22, 34, 0.98) 63% 89%,
+      rgba(60, 80, 108, 0.45) 90% 95%,
+      rgba(175, 205, 235, 0.25) 96% 100%
+    ),
+    radial-gradient(
+      circle at center,
+      rgba(6, 10, 22, 0.97) 0 62%
+    );
+  box-shadow:
+    inset 0 0 10px rgba(147, 207, 255, 0.06),
+    0 0 14px rgba(147, 207, 255, 0.1),
+    0 0 26px rgba(96, 165, 250, 0.08);
 }
 
-.lyriq-wheel-overlay::before,
-.lyriq-wheel-overlay::after {
+.lyriq-wheel-overlay::before {
   display: none;
+}
+
+.lyriq-wheel-overlay::after {
+  display: block;
+  inset: 62%;
+  border-radius: 999px;
+  background: transparent;
+  border: 1px solid rgba(175, 210, 238, 0.22);
+  box-shadow: 0 0 4px rgba(147, 207, 255, 0.12);
+  opacity: 0.7;
 }
 
 .lyriq-wheel-overlay-spokes {
@@ -8307,25 +8319,19 @@ html.symbolism-active .global-back-to-top {
   mix-blend-mode: soft-light;
 }
 
-/* Background layer GPU promotion — no animation suppression; let canonical rules run. */
+/* Background layer: no isolation or forced compositing — let each animated child
+   get its own layer naturally via translate3d in keyframes. */
 @layer utilities {
-  .background-layer:not(.background-test-layer) {
-    transform: translateZ(0);
-    backface-visibility: hidden;
-    isolation: isolate;
-  }
-
   .background-layer:not(.background-test-layer) .pathfinding-simulation {
     visibility: hidden;
     opacity: 0;
-    contain: paint;
-    transition: opacity 400ms ease, visibility 0s 400ms;
+    transition: opacity 300ms ease, visibility 0s 300ms;
   }
 
   .background-layer:not(.background-test-layer) .pathfinding-simulation.is-active {
     visibility: visible;
     opacity: 0.58;
-    transition: opacity 400ms ease, visibility 0s;
+    transition: opacity 300ms ease, visibility 0s;
   }
 
   .background-layer:not(.background-test-layer) .pathfinding-simulation:not(.is-active) * {
