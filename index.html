@@ -16,45 +16,6 @@
   </head>
   <body>
     <div id="root"></div>
-    <script>
-      (function () {
-        var scrollRestTimer;
-        var scrollRaf = 0;
-        var scrollSyncTimer = 0;
-        var scrollbarActive = false;
-        function syncSB() {
-          scrollRaf = 0;
-          var max = document.documentElement.scrollHeight - innerHeight;
-          var p = max > 0 ? Math.min(1, window.scrollY / max) : 0;
-          document.documentElement.style.setProperty('--sb-progress', p);
-          document.documentElement.style.setProperty('--sb-progress-pct', (p * 100).toFixed(2) + '%');
-          document.documentElement.style.setProperty('--sb-y', (p * 100).toFixed(3) + '%');
-          document.documentElement.style.setProperty('--sb-depth-24', (p * 24).toFixed(2) + 'px');
-          document.documentElement.style.setProperty('--sb-depth-98', (p * 98).toFixed(2) + 'px');
-          document.documentElement.style.setProperty('--sb-depth-opacity', (p * 0.28).toFixed(3));
-          document.documentElement.style.setProperty('--sb-depth-opacity-lg', (p * 0.3).toFixed(3));
-          if (!scrollbarActive) {
-            document.documentElement.setAttribute('data-scrollbar-motion', 'active');
-            scrollbarActive = true;
-          }
-          clearTimeout(scrollRestTimer);
-          scrollRestTimer = setTimeout(function () {
-            document.documentElement.setAttribute('data-scrollbar-motion', 'rest');
-            scrollbarActive = false;
-          }, 180);
-        }
-        function requestSyncSB() {
-          if (scrollRaf || scrollSyncTimer) return;
-          scrollSyncTimer = window.setTimeout(function () {
-            scrollSyncTimer = 0;
-            scrollRaf = window.requestAnimationFrame(syncSB);
-          }, 50);
-        }
-        window.addEventListener('scroll', requestSyncSB, { passive: true });
-        window.addEventListener('resize', requestSyncSB, { passive: true });
-        syncSB();
-      })();
-    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

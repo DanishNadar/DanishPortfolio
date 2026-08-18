@@ -505,7 +505,15 @@ function Home() {
         >
           <div className="home-cockpit-card glass premium-border rounded-[2rem] p-3 md:p-4">
             <div className="relative aspect-[4/3] max-w-[34rem] mx-auto rounded-3xl overflow-hidden ring-orb">
-              <img src={heroPhoto} alt="Danish Nadar" className="h-full w-full object-cover" />
+              <img
+                src={heroPhoto}
+                alt="Danish Nadar"
+                width={4528}
+                height={3016}
+                fetchPriority="high"
+                decoding="async"
+                className="h-full w-full object-cover"
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-deep via-transparent to-transparent" />
               <ImageZoomButton src={heroPhoto} alt="Danish Nadar" className="bottom-20" />
               <div className="absolute bottom-0 inset-x-0 p-4">
@@ -650,6 +658,10 @@ function Home() {
                   <img
                     src={chapter.image}
                     alt={chapter.phase}
+                    width={1672}
+                    height={941}
+                    loading="lazy"
+                    decoding="async"
                     className="absolute inset-0 h-full w-full object-cover"
                   />
                   <ImageZoomButton src={chapter.image} alt={chapter.title} />
@@ -758,6 +770,10 @@ function Home() {
                   <img
                     src={lane.image}
                     alt={`${lane.title} metaphor visual`}
+                    width={1672}
+                    height={941}
+                    loading="lazy"
+                    decoding="async"
                     className="h-full w-full object-cover"
                   />
                   <ImageZoomButton src={lane.image} alt={`${lane.title}: ${lane.headline}`} />

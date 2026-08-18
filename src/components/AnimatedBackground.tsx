@@ -304,16 +304,6 @@ type AnimatedBackgroundProps = {
 };
 
 export function AnimatedBackground({ testMode = false }: AnimatedBackgroundProps) {
-  const [backgroundActive, setBackgroundActive] = useState(
-    () => typeof document !== "undefined" && document.visibilityState !== "hidden",
-  );
-
-  useEffect(() => {
-    const update = () => setBackgroundActive(document.visibilityState !== "hidden");
-    document.addEventListener("visibilitychange", update);
-    return () => document.removeEventListener("visibilitychange", update);
-  }, []);
-
   return (
     <div
       className={`background-layer fixed inset-0 ${
@@ -327,9 +317,9 @@ export function AnimatedBackground({ testMode = false }: AnimatedBackgroundProps
       <div className="absolute inset-0 sensor-fusion-radar opacity-18" />
       <div className="absolute inset-0 scanline-overlay opacity-12" />
 
-      <div className="bg-orb bg-orb-a absolute -top-40 -left-36 h-[560px] w-[560px] rounded-full blur-3xl" />
-      <div className="bg-orb bg-orb-b absolute top-1/4 -right-44 h-[620px] w-[620px] rounded-full blur-3xl" />
-      <div className="bg-orb bg-orb-c absolute bottom-[-12rem] left-[36%] h-[540px] w-[540px] rounded-full blur-3xl" />
+      <div className="bg-orb bg-orb-a absolute -top-40 -left-36 h-[560px] w-[560px] rounded-full" />
+      <div className="bg-orb bg-orb-b absolute top-1/4 -right-44 h-[620px] w-[620px] rounded-full" />
+      <div className="bg-orb bg-orb-c absolute bottom-[-12rem] left-[36%] h-[540px] w-[540px] rounded-full" />
 
       <div className="absolute inset-0 overflow-hidden">
         <div className="holographic-lyriq" aria-hidden="true">
@@ -371,12 +361,7 @@ export function AnimatedBackground({ testMode = false }: AnimatedBackgroundProps
         </div>
       </div>
 
-      {testMode && (
-        <>
-          <PathfindingGraph isActive testMode={testMode} />
-        </>
-      )}
-      {!testMode && <PathfindingGraph isActive={backgroundActive} />}
+      {testMode && <PathfindingGraph isActive testMode />}
       {testMode && <AstarShowcaseOverlay />}
 
       {particles.map((p) => (

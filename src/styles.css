@@ -8485,3 +8485,67 @@ html.symbolism-active .global-back-to-top {
   filter: none !important;
   transform: none !important;
 }
+
+/* Scroll performance pass: the visual signature stays, but static scrollbar
+   paint avoids restyling the root document for every scroll position. */
+@layer base {
+  html {
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+    scrollbar-color: #2563eb rgba(3, 8, 24, 0.97);
+  }
+
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  html::-webkit-scrollbar-track,
+  body::-webkit-scrollbar-track {
+    background: rgba(3, 8, 24, 0.97);
+    border-left: 1px solid rgba(96, 165, 250, 0.24);
+    box-shadow: none;
+  }
+
+  html::-webkit-scrollbar-thumb,
+  body::-webkit-scrollbar-thumb {
+    border: 2px solid rgba(3, 8, 24, 0.97);
+    border-radius: 999px;
+    background: linear-gradient(180deg, #60a5fa, #7c3aed 52%, #e23d67);
+    background-clip: padding-box;
+    box-shadow: none;
+    transition: none;
+  }
+
+  html::-webkit-scrollbar-thumb:hover,
+  body::-webkit-scrollbar-thumb:hover {
+    border-width: 2px;
+    background: linear-gradient(180deg, #7dd3fc, #8b5cf6 52%, #fb7185);
+    box-shadow: none;
+    filter: none;
+  }
+}
+
+/* The normal site background is decorative. Keep the live A* animation for
+   /test, but prevent continuous filtered animation from competing with scroll. */
+@layer utilities {
+  .background-layer:not(.background-test-layer) .grid-bg,
+  .background-layer:not(.background-test-layer) .sensor-fusion-radar,
+  .background-layer:not(.background-test-layer) .bg-particle,
+  .background-layer:not(.background-test-layer) .holographic-lyriq,
+  .background-layer:not(.background-test-layer) .holographic-lyriq * {
+    animation: none !important;
+  }
+
+  .home-story-page > .home-spaced-section:not(.home-symbolism-reveal) {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 900px;
+  }
+
+  .home-story-page .home-chapter-card::after,
+  .home-story-page .home-cockpit-card::after,
+  .home-story-page .home-telemetry-grid {
+    animation: none;
+  }
+}
