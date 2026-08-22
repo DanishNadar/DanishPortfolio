@@ -304,6 +304,34 @@ type AnimatedBackgroundProps = {
 };
 
 export function AnimatedBackground({ testMode = false }: AnimatedBackgroundProps) {
+  const [symbolismActive, setSymbolismActive] = useState(false);
+  const [documentVisible, setDocumentVisible] = useState(
+    () => typeof document === "undefined" || document.visibilityState !== "hidden",
+  );
+
+  useEffect(() => {
+    const root = document.documentElement;
+    const syncSymbolismState = () => {
+      setSymbolismActive(root.classList.contains("symbolism-active"));
+    };
+    const syncVisibility = () => {
+      setDocumentVisible(document.visibilityState !== "hidden");
+    };
+
+    const classObserver = new MutationObserver(syncSymbolismState);
+    classObserver.observe(root, { attributes: true, attributeFilter: ["class"] });
+    document.addEventListener("visibilitychange", syncVisibility);
+    syncSymbolismState();
+    syncVisibility();
+
+    return () => {
+      classObserver.disconnect();
+      document.removeEventListener("visibilitychange", syncVisibility);
+    };
+  }, []);
+
+  const showcaseActive = symbolismActive && documentVisible;
+
   return (
     <div
       className={`background-layer fixed inset-0 ${
@@ -361,7 +389,11 @@ export function AnimatedBackground({ testMode = false }: AnimatedBackgroundProps
         </div>
       </div>
 
-      {testMode && <PathfindingGraph isActive testMode />}
+      {testMode ? (
+        <PathfindingGraph isActive testMode />
+      ) : (
+        <PathfindingGraph isActive={showcaseActive} />
+      )}
       {testMode && <AstarShowcaseOverlay />}
 
       {particles.map((p) => (
