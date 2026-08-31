@@ -546,20 +546,20 @@ function Home() {
       <SectionReveal className="home-spaced-section py-8">
         <section className="glass premium-border rounded-[2rem] p-6 md:p-8 overflow-hidden relative">
           <div
-            className="absolute -right-12 -top-20 h-64 w-64 rounded-full bg-blue-500/15 blur-3xl"
+            className="!absolute !z-0 -right-12 -top-20 h-64 w-64 rounded-full bg-blue-500/15 blur-3xl"
             aria-hidden="true"
           />
           <div
-            className="absolute -left-16 -bottom-24 h-64 w-64 rounded-full bg-rose-500/10 blur-3xl"
+            className="!absolute !z-0 -left-16 -bottom-24 h-64 w-64 rounded-full bg-rose-500/10 blur-3xl"
             aria-hidden="true"
           />
           <Link
             to="/intelligence-stack"
-            className="group relative block overflow-hidden rounded-[1.5rem] border border-cyan-300/20 bg-slate-950/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70"
+            className="group relative block overflow-hidden rounded-[1.5rem] border border-violet-300/25 bg-slate-950/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-300/70"
             aria-label="Explore the Intelligence Stack systems map"
           >
             <img
-              src="/portfolio_images/home/intelligence-stack-overview.png"
+              src="/portfolio_images/home/intelligence-stack-overview-v2.png"
               alt="AI engineering systems map showing connected foundations for retrieval, vision, language, planning, autonomy, product engineering, compute, and deployment."
               width={1672}
               height={941}
@@ -568,10 +568,10 @@ function Home() {
               className="block h-auto w-full transition duration-700 ease-out group-hover:scale-[1.015]"
             />
             <div
-              className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/35 via-transparent to-cyan-300/5"
+              className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/35 via-transparent to-violet-300/10"
               aria-hidden="true"
             />
-            <span className="absolute bottom-4 right-4 rounded-full border border-cyan-200/35 bg-slate-950/75 px-3 py-1.5 text-[10px] font-tech uppercase tracking-[0.18em] text-cyan-100 shadow-lg">
+            <span className="absolute bottom-4 right-4 rounded-full border border-violet-200/35 bg-slate-950/80 px-3 py-1.5 text-[10px] font-tech uppercase tracking-[0.18em] text-violet-100 shadow-lg">
               Open the interactive map
             </span>
           </Link>
@@ -581,7 +581,7 @@ function Home() {
                 <Bot className="h-4 w-4" /> Interactive systems map
               </div>
               <h2 className="mt-3 text-3xl md:text-4xl font-display font-bold">
-                Explore the <span className="text-gradient-rb">Intelligence Stack</span>.
+                Explore the <span className="text-gradient-rb">Intelligence Stack</span>
               </h2>
               <p className="mt-3 max-w-2xl text-sm leading-7 text-muted-foreground">
                 A focused 3D systems map of the foundations, perception, planning, and
