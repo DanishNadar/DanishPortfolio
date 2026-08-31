@@ -553,30 +553,8 @@ function Home() {
             className="!absolute !z-0 -left-16 -bottom-24 h-64 w-64 rounded-full bg-rose-500/10 blur-3xl"
             aria-hidden="true"
           />
-          <Link
-            to="/intelligence-stack"
-            className="group relative block overflow-hidden rounded-[1.5rem] border border-violet-300/25 bg-slate-950/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-300/70"
-            aria-label="Explore the Intelligence Stack systems map"
-          >
-            <img
-              src="/portfolio_images/home/intelligence-stack-overview-v2.png"
-              alt="AI engineering systems map showing connected foundations for retrieval, vision, language, planning, autonomy, product engineering, compute, and deployment."
-              width={1672}
-              height={941}
-              loading="lazy"
-              decoding="async"
-              className="block h-auto w-full transition duration-700 ease-out group-hover:scale-[1.015]"
-            />
-            <div
-              className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/35 via-transparent to-violet-300/10"
-              aria-hidden="true"
-            />
-            <span className="absolute bottom-4 right-4 rounded-full border border-violet-200/35 bg-slate-950/80 px-3 py-1.5 text-[10px] font-tech uppercase tracking-[0.18em] text-violet-100 shadow-lg">
-              Open the interactive map
-            </span>
-          </Link>
-          <div className="relative mt-7 grid gap-6 lg:grid-cols-[1.25fr_0.75fr] lg:items-center">
-            <div>
+          <div className="relative grid gap-7 lg:grid-cols-2 lg:items-center">
+            <div className="order-2 lg:order-1">
               <div className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-accent font-tech">
                 <Bot className="h-4 w-4" /> Interactive systems map
               </div>
@@ -588,15 +566,35 @@ function Home() {
                 infrastructure behind intelligent machines. Activate the six major disciplines and
                 complete the stack.
               </p>
-            </div>
-            <div className="flex lg:justify-end">
               <Link
                 to="/intelligence-stack"
-                className="brand-button-lg inline-flex items-center gap-2 bg-gradient-rb text-background glow-blue hover:scale-[1.02] transition"
+                className="brand-button-lg mt-6 inline-flex items-center gap-2 bg-gradient-rb text-background glow-blue transition hover:scale-[1.02]"
               >
                 Explore the Story of my Stack <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
+            <Link
+              to="/intelligence-stack"
+              className="group relative order-1 block overflow-hidden rounded-[1.5rem] border border-violet-300/25 bg-slate-950/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-300/70 lg:order-2 lg:max-w-[48rem] lg:justify-self-end"
+              aria-label="Explore the Intelligence Stack systems map"
+            >
+              <img
+                src="/portfolio_images/home/intelligence-stack-overview-v2.png"
+                alt="AI engineering systems map showing connected foundations for retrieval, vision, language, planning, autonomy, product engineering, compute, and deployment."
+                width={1672}
+                height={941}
+                loading="lazy"
+                decoding="async"
+                className="block aspect-[16/9] w-full object-cover transition duration-700 ease-out group-hover:scale-[1.015]"
+              />
+              <div
+                className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/35 via-transparent to-violet-300/10"
+                aria-hidden="true"
+              />
+              <span className="absolute bottom-4 right-4 rounded-full border border-violet-200/35 bg-slate-950/80 px-3 py-1.5 text-[10px] font-tech uppercase tracking-[0.18em] text-violet-100 shadow-lg">
+                Open map
+              </span>
+            </Link>
           </div>
         </section>
       </SectionReveal>

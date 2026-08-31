@@ -8710,6 +8710,18 @@ html.symbolism-active .global-back-to-top {
   animation-play-state: running !important;
 }
 
+/* This must share the utilities layer with the normal-page motion budget.
+   Otherwise its important pause wins as soon as `symbolism-active` is removed,
+   freezing the car before the exit animation can carry it off screen. */
+@layer utilities {
+  .background-layer.symbolism-car-entering .holographic-lyriq,
+  .background-layer.symbolism-car-entering .holographic-lyriq *,
+  .background-layer.symbolism-car-exiting .holographic-lyriq,
+  .background-layer.symbolism-car-exiting .holographic-lyriq * {
+    animation-play-state: running !important;
+  }
+}
+
 .background-layer.symbolism-car-entering .lyriq-wheel-overlay {
   animation-duration: 4.8s !important;
 }
@@ -8720,6 +8732,33 @@ html.symbolism-active .global-back-to-top {
 
 html.symbolism-active .background-layer.symbolism-car-active .holographic-lyriq .lyriq-wheel-overlay {
   animation-play-state: paused !important;
+}
+
+/* The ambient language has defined systems roles: the grid is spatial context,
+   the neural mesh is perception/data fusion, and this subtle route flow is the
+   planner selecting a safe next action. Keeping the graph mounted and holding a
+   solved route for fifteen seconds prevents repeated fade-in/fade-out flicker. */
+.background-layer:not(.background-test-layer) .pathfinding-simulation.is-active {
+  opacity: 0.2;
+}
+
+html:not(.symbolism-active)
+  .background-layer:not(.background-test-layer)
+  .pathfinding-solution-edge {
+  stroke-dasharray: 10 32;
+  animation: ambientAstarRouteFlow 9s linear var(--solution-delay) infinite;
+}
+
+html:not(.symbolism-active)
+  .background-layer:not(.background-test-layer)
+  .pathfinding-node-pulse {
+  animation-duration: 5.6s;
+}
+
+@keyframes ambientAstarRouteFlow {
+  to {
+    stroke-dashoffset: -84;
+  }
 }
 
 /* Tight tire sidewalls, a restrained rim face, and aligned hub geometry make
@@ -8760,6 +8799,10 @@ html.symbolism-active .background-layer.symbolism-car-active .holographic-lyriq 
 @media (max-width: 760px) {
   .home-symbolism-section {
     min-height: 132svh;
+  }
+
+  .background-layer:not(.background-test-layer) .pathfinding-simulation.is-active {
+    opacity: 0.13;
   }
 
   .ambient-neural-network {

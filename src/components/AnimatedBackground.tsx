@@ -146,6 +146,7 @@ function PathfindingGraph({
   const [revealKey, bumpReveal] = useReducer((n: number) => n + 1, 0);
   const telemetryProblem = activeProblem;
   const solutionDelay = 1.55;
+  const cycleInterval = 15_000;
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -154,10 +155,10 @@ function PathfindingGraph({
     const cycleTimer = window.setTimeout(() => {
       setActiveProblem(createPathfindingProblem());
       bumpReveal();
-    }, (solutionDelay + 1.7) * 1_000);
+    }, cycleInterval);
 
     return () => window.clearTimeout(cycleTimer);
-  }, [activeProblem.id, isActive, solutionDelay]);
+  }, [activeProblem.id, cycleInterval, isActive]);
 
   const exploredStep = new Map(activeProblem.explored.map((nodeId, index) => [nodeId, index]));
   const solutionPoints = activeProblem.path
@@ -425,7 +426,9 @@ export function AnimatedBackground({ testMode = false }: AnimatedBackgroundProps
     };
   }, [symbolismActive]);
 
-  const showcaseActive = symbolismActive && documentVisible;
+  // The persistent planner represents an AI system continuously selecting the next safe route.
+  // It pauses only when the document is hidden, avoiding unnecessary work in background tabs.
+  const plannerActive = documentVisible;
 
   return (
     <div
@@ -488,7 +491,7 @@ export function AnimatedBackground({ testMode = false }: AnimatedBackgroundProps
       {testMode ? (
         <PathfindingGraph isActive testMode />
       ) : (
-        <PathfindingGraph isActive={showcaseActive} />
+        <PathfindingGraph isActive={plannerActive} />
       )}
       {testMode && <AstarShowcaseOverlay />}
 
