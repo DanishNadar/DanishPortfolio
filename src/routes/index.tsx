@@ -553,7 +553,29 @@ function Home() {
             className="absolute -left-16 -bottom-24 h-64 w-64 rounded-full bg-rose-500/10 blur-3xl"
             aria-hidden="true"
           />
-          <div className="relative grid gap-6 lg:grid-cols-[1.25fr_0.75fr] lg:items-center">
+          <Link
+            to="/intelligence-stack"
+            className="group relative block overflow-hidden rounded-[1.5rem] border border-cyan-300/20 bg-slate-950/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70"
+            aria-label="Explore the Intelligence Stack systems map"
+          >
+            <img
+              src="/portfolio_images/home/intelligence-stack-overview.png"
+              alt="AI engineering systems map showing connected foundations for retrieval, vision, language, planning, autonomy, product engineering, compute, and deployment."
+              width={1672}
+              height={941}
+              loading="lazy"
+              decoding="async"
+              className="block h-auto w-full transition duration-700 ease-out group-hover:scale-[1.015]"
+            />
+            <div
+              className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/35 via-transparent to-cyan-300/5"
+              aria-hidden="true"
+            />
+            <span className="absolute bottom-4 right-4 rounded-full border border-cyan-200/35 bg-slate-950/75 px-3 py-1.5 text-[10px] font-tech uppercase tracking-[0.18em] text-cyan-100 shadow-lg">
+              Open the interactive map
+            </span>
+          </Link>
+          <div className="relative mt-7 grid gap-6 lg:grid-cols-[1.25fr_0.75fr] lg:items-center">
             <div>
               <div className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-accent font-tech">
                 <Bot className="h-4 w-4" /> Interactive systems map
@@ -862,7 +884,7 @@ function Home() {
         <section
           ref={symbolismRef}
           id="see-the-symbolism"
-          className="home-symbolism-section relative min-h-[100svh] overflow-visible"
+          className="home-symbolism-section relative min-h-[138svh] overflow-visible"
           aria-label="See the Symbolism background showcase"
         >
           <div className="home-symbolism-frame">

@@ -8585,3 +8585,192 @@ html.symbolism-active .global-back-to-top {
     animation: none;
   }
 }
+
+/* Persistent AI-engineering signature: one lightweight SVG graph gives every
+   route an always-present perception-and-planning layer without a particle
+   system or canvas redraw loop. */
+@keyframes ambientNetworkDrift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-0.9%, 0.7%, 0) scale(1.015);
+  }
+}
+
+@keyframes ambientNetworkSignal {
+  to {
+    stroke-dashoffset: -240;
+  }
+}
+
+.ambient-neural-network {
+  position: absolute;
+  inset: -5%;
+  z-index: 3;
+  width: 110%;
+  height: 110%;
+  overflow: visible;
+  opacity: 0.42;
+  animation: ambientNetworkDrift 46s ease-in-out infinite;
+}
+
+.ambient-network-link,
+.ambient-network-signal {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+}
+
+.ambient-network-link {
+  stroke: rgba(96, 165, 250, 0.3);
+  stroke-width: 1.1;
+}
+
+.ambient-network-signal {
+  stroke: rgba(34, 211, 238, 0.68);
+  stroke-width: 1.45;
+  stroke-dasharray: 5 38;
+  animation: ambientNetworkSignal 22s linear infinite;
+}
+
+.ambient-network-node {
+  fill: rgba(34, 211, 238, 0.84);
+  stroke: rgba(224, 251, 255, 0.78);
+  stroke-width: 1.2;
+}
+
+.ambient-network-node-accent,
+.ambient-network-node-goal {
+  fill: rgba(226, 61, 103, 0.9);
+}
+
+.ambient-network-node-goal {
+  stroke: rgba(255, 226, 235, 0.9);
+}
+
+/* A longer sticky window makes the Symbolism scene read as a destination,
+   rather than a passing interlude in the homepage story. */
+.home-symbolism-section {
+  min-height: 138svh;
+}
+
+/* The car uses named enter/exit phases rather than resuming a looping scene:
+   it decisively arrives from the right, settles in place, then leaves left. */
+@keyframes symbolismCarEnter {
+  0% {
+    transform: translate(-50%, -50%) translate3d(115vw, 0, 0);
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.92;
+  }
+  82% {
+    transform: translate(-50%, -50%) translate3d(-1.25vw, 0, 0);
+    opacity: 0.94;
+  }
+  100% {
+    transform: translate(-50%, -50%) translate3d(0, 0, 0);
+    opacity: 0.94;
+  }
+}
+
+@keyframes symbolismCarExit {
+  0% {
+    transform: translate(-50%, -50%) translate3d(0, 0, 0);
+    opacity: 0.94;
+  }
+  82% {
+    opacity: 0.92;
+  }
+  100% {
+    transform: translate(-50%, -50%) translate3d(-115vw, 0, 0);
+    opacity: 0;
+  }
+}
+
+.background-layer.symbolism-car-entering .holographic-lyriq {
+  animation: symbolismCarEnter 4.8s cubic-bezier(0.16, 1, 0.3, 1) both !important;
+}
+
+.background-layer.symbolism-car-active .holographic-lyriq {
+  animation: none !important;
+  transform: translate(-50%, -50%) translate3d(0, 0, 0) !important;
+  opacity: 0.94 !important;
+}
+
+.background-layer.symbolism-car-exiting .holographic-lyriq {
+  animation: symbolismCarExit 3.6s cubic-bezier(0.7, 0, 0.84, 0) both !important;
+}
+
+.background-layer.symbolism-car-entering .holographic-lyriq,
+.background-layer.symbolism-car-entering .holographic-lyriq *,
+.background-layer.symbolism-car-exiting .holographic-lyriq,
+.background-layer.symbolism-car-exiting .holographic-lyriq * {
+  animation-play-state: running !important;
+}
+
+.background-layer.symbolism-car-entering .lyriq-wheel-overlay {
+  animation-duration: 4.8s !important;
+}
+
+.background-layer.symbolism-car-exiting .lyriq-wheel-overlay {
+  animation-duration: 3.6s !important;
+}
+
+html.symbolism-active .background-layer.symbolism-car-active .holographic-lyriq .lyriq-wheel-overlay {
+  animation-play-state: paused !important;
+}
+
+/* Tight tire sidewalls, a restrained rim face, and aligned hub geometry make
+   the rolling motion legible without the duplicated-glow look. */
+.lyriq-wheel-overlay {
+  box-sizing: border-box;
+  aspect-ratio: 1;
+  border: clamp(1px, 0.12vw, 2px) solid rgba(189, 215, 241, 0.52);
+  background:
+    radial-gradient(circle at center, rgba(195, 219, 244, 0.18) 0 8%, transparent 9%),
+    radial-gradient(circle at center, rgba(6, 11, 24, 0.98) 0 61%, rgba(23, 30, 45, 0.98) 62% 86%, rgba(153, 183, 215, 0.38) 87% 91%, rgba(7, 13, 27, 0.98) 92% 100%);
+  box-shadow: inset 0 0 8px rgba(147, 207, 255, 0.06), 0 0 12px rgba(96, 165, 250, 0.08);
+}
+
+.lyriq-wheel-overlay::after {
+  inset: 11%;
+  border: 1px solid rgba(178, 207, 237, 0.2);
+  background: repeating-conic-gradient(from 0deg, rgba(191, 212, 237, 0.4) 0deg 3deg, transparent 3deg 45deg);
+  mask: radial-gradient(circle at center, transparent 0 74%, #000 76% 100%);
+  -webkit-mask: radial-gradient(circle at center, transparent 0 74%, #000 76% 100%);
+  opacity: 0.48;
+}
+
+.lyriq-wheel-overlay-spokes {
+  inset: 18%;
+  background: repeating-conic-gradient(from 8deg, rgba(187, 205, 230, 0.74) 0deg 3deg, rgba(187, 205, 230, 0.04) 3deg 42deg, rgba(187, 205, 230, 0.58) 42deg 45deg);
+  mask: radial-gradient(circle at center, transparent 0 24%, #000 25% 63%, transparent 64% 100%);
+  -webkit-mask: radial-gradient(circle at center, transparent 0 24%, #000 25% 63%, transparent 64% 100%);
+  filter: none;
+}
+
+.lyriq-wheel-overlay-hub {
+  width: 13%;
+  height: 13%;
+  box-shadow: 0 0 5px rgba(147, 207, 255, 0.16);
+}
+
+@media (max-width: 760px) {
+  .home-symbolism-section {
+    min-height: 132svh;
+  }
+
+  .ambient-neural-network {
+    opacity: 0.27;
+    animation: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient-neural-network,
+  .ambient-network-signal {
+    animation: none !important;
+  }
+}

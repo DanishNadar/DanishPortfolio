@@ -2,7 +2,7 @@
 // works reliably when dn-engine-open is on <html>. Framer Motion uses the Web
 // Animations API and ignores CSS animation-play-state entirely.
 
-import { useEffect, useReducer, useState, type CSSProperties } from "react";
+import { useEffect, useReducer, useRef, useState, type CSSProperties } from "react";
 import { createPathfindingProblem } from "@/lib/pathfinding";
 
 const particles = Array.from({ length: 8 }, (_, index) => ({
@@ -30,6 +30,67 @@ const astarShowcaseSegments = [
   { id: 3, left: "55%", top: "43%", width: "21%", rotate: "12deg", delay: "0.48s" },
   { id: 4, left: "74%", top: "51%", width: "24%", rotate: "-28deg", delay: "0.64s" },
 ];
+
+function AmbientNeuralNetwork() {
+  return (
+    <svg
+      className="ambient-neural-network"
+      viewBox="0 0 1000 600"
+      preserveAspectRatio="none"
+      role="presentation"
+      aria-hidden="true"
+    >
+      <g className="ambient-network-links">
+        <path
+          className="ambient-network-link"
+          d="M 28 478 L 168 348 L 314 426 L 456 258 L 604 344 L 758 186 L 946 292"
+        />
+        <path
+          className="ambient-network-link"
+          d="M 92 102 L 224 212 L 392 132 L 538 224 L 698 98 L 846 168"
+        />
+        <path
+          className="ambient-network-link"
+          d="M 168 348 L 224 212 M 314 426 L 392 132 M 456 258 L 538 224 M 604 344 L 698 98 M 758 186 L 846 168"
+        />
+        <path
+          className="ambient-network-signal"
+          d="M 28 478 L 168 348 L 314 426 L 456 258 L 604 344 L 758 186 L 946 292"
+        />
+      </g>
+      <g className="ambient-network-nodes">
+        <circle className="ambient-network-node" cx="28" cy="478" r="5" />
+        <circle className="ambient-network-node" cx="92" cy="102" r="4" />
+        <circle className="ambient-network-node" cx="168" cy="348" r="6" />
+        <circle className="ambient-network-node" cx="224" cy="212" r="4" />
+        <circle className="ambient-network-node" cx="314" cy="426" r="5" />
+        <circle className="ambient-network-node" cx="392" cy="132" r="4" />
+        <circle
+          className="ambient-network-node ambient-network-node-accent"
+          cx="456"
+          cy="258"
+          r="6"
+        />
+        <circle className="ambient-network-node" cx="538" cy="224" r="4" />
+        <circle className="ambient-network-node" cx="604" cy="344" r="5" />
+        <circle className="ambient-network-node" cx="698" cy="98" r="4" />
+        <circle
+          className="ambient-network-node ambient-network-node-accent"
+          cx="758"
+          cy="186"
+          r="6"
+        />
+        <circle className="ambient-network-node" cx="846" cy="168" r="4" />
+        <circle
+          className="ambient-network-node ambient-network-node-goal"
+          cx="946"
+          cy="292"
+          r="6"
+        />
+      </g>
+    </svg>
+  );
+}
 
 function AstarShowcaseOverlay() {
   return (
@@ -303,8 +364,13 @@ type AnimatedBackgroundProps = {
   testMode?: boolean;
 };
 
+type SymbolismCarPhase = "idle" | "entering" | "active" | "exiting";
+
 export function AnimatedBackground({ testMode = false }: AnimatedBackgroundProps) {
   const [symbolismActive, setSymbolismActive] = useState(false);
+  const [carPhase, setCarPhase] = useState<SymbolismCarPhase>("idle");
+  const carPhaseTimerRef = useRef<number | null>(null);
+  const hasVisitedSymbolismRef = useRef(false);
   const [documentVisible, setDocumentVisible] = useState(
     () => typeof document === "undefined" || document.visibilityState !== "hidden",
   );
@@ -330,11 +396,40 @@ export function AnimatedBackground({ testMode = false }: AnimatedBackgroundProps
     };
   }, []);
 
+  useEffect(() => {
+    if (carPhaseTimerRef.current !== null) {
+      window.clearTimeout(carPhaseTimerRef.current);
+      carPhaseTimerRef.current = null;
+    }
+
+    if (symbolismActive) {
+      hasVisitedSymbolismRef.current = true;
+      setCarPhase("entering");
+      carPhaseTimerRef.current = window.setTimeout(() => {
+        setCarPhase("active");
+        carPhaseTimerRef.current = null;
+      }, 4_800);
+    } else if (hasVisitedSymbolismRef.current) {
+      setCarPhase("exiting");
+      carPhaseTimerRef.current = window.setTimeout(() => {
+        setCarPhase("idle");
+        carPhaseTimerRef.current = null;
+      }, 3_600);
+    }
+
+    return () => {
+      if (carPhaseTimerRef.current !== null) {
+        window.clearTimeout(carPhaseTimerRef.current);
+        carPhaseTimerRef.current = null;
+      }
+    };
+  }, [symbolismActive]);
+
   const showcaseActive = symbolismActive && documentVisible;
 
   return (
     <div
-      className={`background-layer fixed inset-0 ${
+      className={`background-layer symbolism-car-${carPhase} fixed inset-0 ${
         testMode ? "background-test-layer" : "-z-10"
       } overflow-hidden pointer-events-none`}
       aria-hidden="true"
@@ -344,6 +439,7 @@ export function AnimatedBackground({ testMode = false }: AnimatedBackgroundProps
       <div className="absolute inset-0 neural-grid opacity-44" />
       <div className="absolute inset-0 sensor-fusion-radar opacity-18" />
       <div className="absolute inset-0 scanline-overlay opacity-12" />
+      <AmbientNeuralNetwork />
 
       <div className="bg-orb bg-orb-a absolute -top-40 -left-36 h-[560px] w-[560px] rounded-full" />
       <div className="bg-orb bg-orb-b absolute top-1/4 -right-44 h-[620px] w-[620px] rounded-full" />
