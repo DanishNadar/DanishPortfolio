@@ -8527,10 +8527,22 @@ html.symbolism-active .global-back-to-top {
   }
 }
 
-/* The normal site background is decorative. Pause the background at rest, then
-   let the Symbolism showcase own the full motion budget while it is in view. */
+/* The normal site background gets a small, composited motion budget: three
+   slow light drifts plus the existing grid. The richer vehicle, particle,
+   radar, and A* layers remain reserved for the Symbolism showcase. */
 @layer utilities {
-  .background-layer:not(.background-test-layer) .grid-bg,
+  .background-layer:not(.background-test-layer) .bg-orb-a {
+    animation: bgOrbDriftA 68s ease-in-out infinite;
+  }
+
+  .background-layer:not(.background-test-layer) .bg-orb-b {
+    animation: bgOrbDriftB 82s ease-in-out infinite;
+  }
+
+  .background-layer:not(.background-test-layer) .bg-orb-c {
+    animation: bgOrbPulse 56s ease-in-out infinite;
+  }
+
   .background-layer:not(.background-test-layer) .sensor-fusion-radar,
   .background-layer:not(.background-test-layer) .bg-particle,
   .background-layer:not(.background-test-layer) .holographic-lyriq,
@@ -8538,7 +8550,6 @@ html.symbolism-active .global-back-to-top {
     animation-play-state: paused !important;
   }
 
-  html.symbolism-active .background-layer:not(.background-test-layer) .grid-bg,
   html.symbolism-active .background-layer:not(.background-test-layer) .sensor-fusion-radar,
   html.symbolism-active .background-layer:not(.background-test-layer) .bg-particle,
   html.symbolism-active .background-layer:not(.background-test-layer) .holographic-lyriq,
@@ -8551,6 +8562,15 @@ html.symbolism-active .global-back-to-top {
   @media (max-width: 768px) {
     html.symbolism-active .background-layer:not(.background-test-layer) .holographic-lyriq {
       animation: lyriqDrive 20s linear infinite !important;
+    }
+  }
+
+  /* Keep phones on a static background. The glow is still visible, but no
+     large fixed surface needs to be composited during touch scrolling. */
+  @media (max-width: 768px) {
+    .background-layer:not(.background-test-layer) .bg-orb,
+    .background-layer:not(.background-test-layer) .grid-bg {
+      animation: none !important;
     }
   }
 
