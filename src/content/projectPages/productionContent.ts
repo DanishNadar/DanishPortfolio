@@ -106,14 +106,8 @@ function productionReady(project: ProjectPageContent): ProjectPageContent {
         ? impact.outcomes[index % impact.outcomes.length]
         : card,
     ),
-    metrics: project.metrics.map((metric, index) => {
-      const fallback = impact.metrics[index % impact.metrics.length];
-      return {
-        label: metric.label || fallback.label,
-        value: !metric.value || metric.value === " - " ? fallback.value : metric.value,
-        note: metric.note || fallback.note,
-      };
-    }),
+    // Only figures that were written down for the project; no generated fallbacks.
+    metrics: project.metrics.filter((metric) => metric.value && metric.value.trim() !== "-"),
     gallery: project.gallery.map((image) => ({
       ...image,
       caption:

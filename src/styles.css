@@ -722,29 +722,9 @@
       transparent 58%
     ),
     linear-gradient(180deg, #0b1024, #070b1a);
-  --gradient-rb: linear-gradient(
-    135deg,
-    #f43f5e 0%,
-    #d9467d 24%,
-    #a855f7 52%,
-    #6366f1 76%,
-    #3b82f6 100%
-  );
-  --gradient-highlight-heading: linear-gradient(
-    118deg,
-    #ff1a45 0%,
-    #e8195f 22%,
-    #b91cd6 50%,
-    #6d28d9 74%,
-    #1d4ed8 100%
-  );
-  --gradient-highlight-inline: linear-gradient(
-    105deg,
-    #67e8f9 0%,
-    #60a5fa 34%,
-    #a78bfa 62%,
-    #fb7185 100%
-  );
+  --gradient-rb: linear-gradient(135deg, #ff4b57 0%, #ef314b 28%, #2f8fe6 100%);
+  --gradient-highlight-heading: linear-gradient(118deg, #ff4b57 0%, #ef314b 26%, #bfe1ff 62%, #35a7ff 100%);
+  --gradient-highlight-inline: linear-gradient(105deg, #bfe1ff 0%, #35a7ff 45%, #ff7a84 100%);
   --gradient-card: linear-gradient(
     160deg,
     color-mix(in oklab, #172554 90%, transparent),
@@ -826,8 +806,8 @@
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    filter: drop-shadow(0 0 18px rgba(196, 18, 48, 0.5))
-      drop-shadow(0 0 32px rgba(109, 40, 217, 0.3));
+    filter: drop-shadow(0 0 18px rgba(239, 49, 75, 0.38))
+      drop-shadow(0 0 32px rgba(53, 167, 255, 0.22));
   }
   .technical-keyword {
     background: var(--gradient-highlight-inline);

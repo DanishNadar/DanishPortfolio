@@ -97,6 +97,53 @@
   ],
   "projects": [
     {
+      "id": "taloncv",
+      "page": "/projects/taloncv",
+      "title": "TalonCV",
+      "domain": "Applied AI",
+      "domainSlug": "applied-ai",
+      "role": "Sole engineer",
+      "summary": "Private, explainable interview coaching: Whisper, MiniLM, YOLO11-face and MediaPipe run in browser workers, with time-aligned evidence and deterministic scoring. No inference server.",
+      "visualLabel": "Multimodal AI",
+      "skills": [
+        "TypeScript",
+        "Next.js",
+        "Transformers.js",
+        "ONNX Runtime Web",
+        "MediaPipe",
+        "scikit-learn",
+        "Python"
+      ],
+      "outcomes": [
+        "Live demo with CI (typecheck, lint, Vitest, Playwright)",
+        "Five model families running in the browser"
+      ],
+      "github": "https://github.com/DanishNadar/TalonCV"
+    },
+    {
+      "id": "morph",
+      "page": "/projects/morph",
+      "title": "Morph",
+      "domain": "Research",
+      "domainSlug": "research",
+      "role": "Sole author",
+      "summary": "Depth-compresses Hugging Face causal LMs by keeping blocks uniformly across depth, then distills the student against a frozen, optionally quantized teacher. Research prototype; no benchmarks published yet.",
+      "visualLabel": "LLM compression",
+      "skills": [
+        "PyTorch",
+        "Transformers",
+        "Datasets",
+        "Accelerate",
+        "bitsandbytes",
+        "safetensors"
+      ],
+      "outcomes": [
+        "Supports nine causal-LM architectures",
+        "Evaluation protocol defined in the README"
+      ],
+      "github": "https://github.com/DanishNadar/Morph"
+    },
+    {
       "id": "observ-e",
       "page": "project-observ-e.html",
       "title": "OBSERV-E Accessibility Robotics Ecosystem",
@@ -333,6 +380,70 @@
           "note": "Use for the cleanest driving replay or the most informative failure case."
         }
       ]
+    },
+    {
+      "id": "confusion-classifier",
+      "page": "/projects/confusion-classifier",
+      "title": "ConfusionClassifier",
+      "domain": "Applied AI",
+      "domainSlug": "applied-ai",
+      "role": "Model, API and game design",
+      "summary": "A club-fair game where players try to drive a GoEmotions text classifier to a uniform 25/25/25/25 prediction, with TF-IDF x coefficient explanations.",
+      "visualLabel": "Probabilistic ML",
+      "skills": [
+        "scikit-learn",
+        "FastAPI",
+        "React",
+        "TypeScript",
+        "Supabase"
+      ],
+      "outcomes": [
+        "Live demo used at the Illinois Tech club fair"
+      ],
+      "github": "https://github.com/DanishNadar/ConfusionClassifier"
+    },
+    {
+      "id": "campgrids",
+      "page": "/projects/campgrids",
+      "title": "CampGrids",
+      "domain": "Product",
+      "domainSlug": "product",
+      "role": "Interface, workbook sync and account layer",
+      "summary": "Turns an MSI Fab Lab curriculum workbook into a live platform with roles, rosters and progress tracking, secured with Postgres row-level security and admin-only Edge Functions.",
+      "visualLabel": "Full-stack platform",
+      "skills": [
+        "JavaScript",
+        "Supabase",
+        "Postgres RLS",
+        "Edge Functions",
+        "Python",
+        "AWS CloudFormation"
+      ],
+      "outcomes": [
+        "Live site",
+        "Documented AWS target (not deployed)"
+      ],
+      "github": "https://github.com/DanishNadar/CampGrids"
+    },
+    {
+      "id": "compute-collaborative",
+      "page": "/projects/compute-collaborative",
+      "title": "Compute Collaborative",
+      "domain": "Infrastructure",
+      "domainSlug": "infrastructure",
+      "role": "Initiative lead",
+      "summary": "Funding-proposal site for a governed student GPU suite: workload explorer, budget builder and own-versus-rent model with sourced assumptions. No cluster has been deployed.",
+      "visualLabel": "GPU infrastructure",
+      "skills": [
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "Cost modeling"
+      ],
+      "outcomes": [
+        "Interactive proposal ready for review"
+      ],
+      "github": "https://github.com/DanishNadar/ComputeCollaborative"
     },
     {
       "id": "dns-security-scanner",

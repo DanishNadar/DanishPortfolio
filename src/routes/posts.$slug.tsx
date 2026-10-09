@@ -7,7 +7,6 @@ import { ImageZoomButton } from "@/components/ImageLightbox";
 import { getPostPage } from "@/content/postPages";
 import { MotionPage } from "@/components/MotionPage";
 import portfolio from "@/data/portfolio.json";
-import { getSimulatedImpact } from "@/lib/simulatedImpact";
 
 export const Route = createFileRoute("/posts/$slug")({
   loader: async ({ context, params }) => {
@@ -134,9 +133,6 @@ function PostPage() {
   const idx = allPosts.findIndex((p) => p.slug === slug);
   const prev = idx > 0 ? allPosts[idx - 1] : null;
   const next = idx >= 0 && idx < allPosts.length - 1 ? allPosts[idx + 1] : null;
-  const simulatedImpact = getSimulatedImpact(
-    [slug, title, subtitle ?? "", summary ?? "", ...tags, ...relatedStack].join(" "),
-  );
 
   return (
     <MotionPage className="mx-auto max-w-7xl px-6 py-16">
@@ -179,37 +175,6 @@ function PostPage() {
           </div>
         </section>
       )}
-
-      <section className="mt-8">
-        <div className="flex flex-wrap items-end justify-between gap-4">
-          <div>
-            <div className="text-xs uppercase tracking-[0.18em] text-accent font-tech">
-              Impact-driven readout
-            </div>
-            <h2 className="mt-2 text-2xl md:text-3xl font-display font-bold">
-              Results behind the story
-            </h2>
-          </div>
-          <div className="case-badge bg-gradient-rb text-background">Performance summary</div>
-        </div>
-        <div className="mt-5 grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
-          {simulatedImpact.metrics.map((metric) => (
-            <article key={metric.label} className="glass premium-border ambient-card rounded-2xl p-5">
-              <div className="text-3xl font-display font-bold text-gradient-rb">{metric.value}</div>
-              <div className="mt-1 text-sm font-semibold">{metric.label}</div>
-              <p className="mt-2 text-xs leading-5 text-muted-foreground">{metric.note}</p>
-            </article>
-          ))}
-        </div>
-        <div className="mt-4 grid md:grid-cols-3 gap-4">
-          {simulatedImpact.outcomes.map((outcome) => (
-            <article key={outcome.title} className="glass rounded-2xl p-5 border border-border/50">
-              <div className="text-sm font-semibold text-gradient-rb">{outcome.title}</div>
-              <p className="mt-2 text-sm leading-7 text-muted-foreground">{outcome.body}</p>
-            </article>
-          ))}
-        </div>
-      </section>
 
       {post?.cover_image_url && <div className="zoomable-image-wrap mt-8 aspect-[16/9] overflow-hidden rounded-2xl glass"><img src={post.cover_image_url} alt={title} className="h-full w-full object-cover" /><ImageZoomButton src={post.cover_image_url} alt={title} /></div>}
 

@@ -15,9 +15,16 @@ import { project as ai_headshot_platform } from "./ai_headshot_platform";
 import { project as phishing_detector } from "./phishing_detector";
 import { project as spiron_assistant } from "./spiron_assistant";
 import { project as shopping_bot } from "./shopping_bot";
+import { project as taloncv } from "./taloncv";
+import { project as morph } from "./morph";
+import { project as confusion_classifier } from "./confusion_classifier";
+import { project as campgrids } from "./campgrids";
+import { project as compute_collaborative } from "./compute_collaborative";
 import { getProductionProject } from "./productionContent";
 
 export const projectPages = [
+  taloncv,
+  morph,
   observ_e,
   selvam_valuations,
   ecocar_sensor_fusion,
@@ -35,6 +42,9 @@ export const projectPages = [
   phishing_detector,
   spiron_assistant,
   shopping_bot,
+  confusion_classifier,
+  campgrids,
+  compute_collaborative,
 ];
 export const projectPageBySlug: Record<string, (typeof projectPages)[number]> = Object.fromEntries(
   projectPages.map((p) => [p.slug, p]),

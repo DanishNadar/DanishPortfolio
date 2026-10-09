@@ -72,6 +72,12 @@ const journeyGroups = [
         featured: true,
       },
       {
+        to: "/skills",
+        label: "Capabilities",
+        description: "Every skill mapped to the projects that prove it.",
+        featured: false,
+      },
+      {
         to: "/illinois-tech",
         label: "Illinois Tech",
         description: "Computer Science at IIT and the academic foundation behind the work.",
@@ -110,17 +116,23 @@ const featuredPosts = [
 ];
 
 const projectGroups = [
+  "Flagship Systems",
   "Accessibility Robotics",
   "Autonomy Systems",
   "Machine Learning",
   "Cybersecurity",
   "AI Product",
+  "Infrastructure",
   "Hackathon Build",
   "Other",
 ] as const;
 
+const flagshipSlugs = new Set(["taloncv", "morph", "observ-e"]);
+
 function projectGroup(project: (typeof projectPages)[number]) {
   const eyebrow = project.pageTheme?.eyebrow ?? "Other";
+  if (flagshipSlugs.has(project.slug)) return "Flagship Systems";
+  if (/infrastructure|gpu/i.test(eyebrow)) return "Infrastructure";
   if (/accessibility|robot/i.test(eyebrow)) return "Accessibility Robotics";
   if (/autonomy|vehicle|lane|driving/i.test(`${eyebrow} ${project.title}`))
     return "Autonomy Systems";

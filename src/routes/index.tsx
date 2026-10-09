@@ -7,38 +7,34 @@ import {
   ArrowRight,
   Bot,
   BriefcaseBusiness,
-  Car,
   Cpu,
-  FileText,
-  Gauge,
   GraduationCap,
   HeartPulse,
   Info,
   Radar,
   Route as RouteIcon,
   ShieldCheck,
-  Sparkles,
   X,
 } from "lucide-react";
 import { projectsQuery } from "@/lib/queries";
-import heroPhoto from "@/assets/danish-hero.jpg";
-import { SocialLinks } from "@/components/SocialLinks";
 import { MotionPage } from "@/components/MotionPage";
 import { SectionReveal } from "@/components/SectionReveal";
 import { TechnicalHighlight } from "@/components/TechnicalHighlight";
 import { ImageZoomButton } from "@/components/ImageLightbox";
+import { LabHero } from "@/lab/LabHero";
+import { PerceiveReasonAct } from "@/lab/PerceiveReasonAct";
+import { SectionHeading } from "@/lab/LabViz";
+import { FlagshipSystem, MoreBuilds, ProjectGallery } from "@/lab/ProjectSpotlight";
+import { CapabilityNetwork } from "@/lab/CapabilityNetwork";
+import { EngineeringTimeline } from "@/lab/EngineeringTimeline";
+import { labProjects } from "@/lab/data";
 
 export const Route = createFileRoute("/")({
   loader: ({ context }) => context.queryClient.ensureQueryData(projectsQuery),
   component: Home,
 });
 
-const metrics = [
-  { v: "38+", l: "AI experiments benchmarked" },
-  { v: "120+", l: "simulation scenarios tested" },
-  { v: "91%", l: "best perception benchmark" },
-  { v: "3", l: "robotics + autonomy pipelines" },
-];
+const flagships = labProjects.filter((p) => p.flagship);
 
 const openingTimeline = [
   {
@@ -444,104 +440,122 @@ function Home() {
   }, []);
 
   return (
-    <MotionPage className="mx-auto max-w-7xl px-6 home-story-page">
+    <>
+      <div className="lab-home mx-auto max-w-7xl px-4 sm:px-6">
+        <div className="pb-2 pt-8 md:pt-12">
+          <LabHero />
+        </div>
+
+        <div className="lab-section" id="perceive-reason-act">
+          <PerceiveReasonAct />
+        </div>
+
+        <section className="lab-section lab-surface" id="flagship-systems" aria-labelledby="flagship-heading">
+          <SectionHeading
+            id="flagship-heading"
+            kicker="Flagship systems"
+            accent="var(--lab-blue)"
+            title={
+              <>
+                Three systems, built <em>end to end</em>
+              </>
+            }
+            lede="Each covers a different part of the loop: multimodal inference on the user's own device, model compression research, and real-time perception on a robot. Open an architecture to see how it works."
+          />
+          <div className="mt-10 grid gap-8">
+            {flagships.map((p, i) => (
+              <FlagshipSystem key={p.id} project={p} index={i} defaultOpen={i === 0} />
+            ))}
+          </div>
+        </section>
+
+        <section className="lab-section lab-surface" id="systems-lab" aria-labelledby="gallery-heading">
+          <SectionHeading
+            id="gallery-heading"
+            kicker="Work by discipline"
+            title={
+              <>
+                Autonomy, applied AI, research and <em>infrastructure</em>
+              </>
+            }
+            lede="Every card states what the project is (shipped, prototype, simulation or proposal) and leads to its case study, source or live demo."
+          />
+          <div className="mt-8">
+            <ProjectGallery />
+          </div>
+          <div className="mt-12">
+            <MoreBuilds />
+          </div>
+        </section>
+
+        <section className="lab-section lab-surface" id="capabilities" aria-labelledby="capabilities-heading">
+          <SectionHeading
+            id="capabilities-heading"
+            kicker="Capabilities"
+            accent="var(--lab-ice)"
+            title={
+              <>
+                Skills, each with <em>proof of work</em>
+              </>
+            }
+            lede="No self-ratings. Pick a discipline and follow the lines to the projects where each skill was used."
+          />
+          <div className="mt-10">
+            <CapabilityNetwork />
+          </div>
+          <Link to="/skills" className="lab-link mt-5 inline-flex items-center gap-2 text-sm font-semibold">
+            Open the full capability map <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </Link>
+        </section>
+
+        <section className="lab-section lab-surface" id="experience" aria-labelledby="experience-heading">
+          <div className="mx-auto max-w-4xl">
+            <div>
+              <SectionHeading
+                id="experience-heading"
+                kicker="Experience & leadership"
+                title={
+                  <>
+                    Responsibility, <em>over time</em>
+                  </>
+                }
+                lede="Engineering roles, leadership, education and recognition, with what each one involved. Degrees in progress are marked as in progress."
+              />
+              <div className="lab-project-links mt-6">
+                <Link to="/resume" className="lab-plink lab-plink-primary">
+                  Full resume <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                </Link>
+                <Link to="/student-organizations" className="lab-plink">
+                  Student organizations
+                </Link>
+              </div>
+            </div>
+            <div className="mt-10">
+              <EngineeringTimeline />
+            </div>
+          </div>
+        </section>
+
+        <div className="lab-section lab-surface pb-4" id="story">
+          <SectionHeading
+            kicker="The story behind the lab"
+            align="center"
+            title={
+              <>
+                Why autonomy is <em>personal</em>
+              </>
+            }
+            lede="The work above has a reason. This is the route that led to it."
+          />
+        </div>
+      </div>
+
+      <MotionPage className="mx-auto max-w-7xl px-6 home-story-page">
       <div className="home-scroll-telemetry" aria-hidden="true">
         <div className="telemetry-rail" />
         <div className="telemetry-car">▰</div>
         <div className="telemetry-label">route</div>
       </div>
-
-      <section className="home-hero py-5 md:py-6 grid lg:grid-cols-[1.08fr_0.92fr] gap-6 items-center relative overflow-hidden">
-        <div className="absolute inset-x-[-8%] bottom-8 h-24 home-road-scan" aria-hidden="true" />
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.7 }}
-        >
-          <div className="inline-flex items-center gap-2 glass px-3 py-1 rounded-full text-xs text-accent">
-            <Sparkles className="h-3 w-3" /> AI/ML Engineering · Autonomous Systems · Software Development · Innovative Solutions
-          </div>
-          <h1 className="mt-3 text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-[1.02] animated-title-glow">
-            <span className="text-gradient-rb">AI Engineer</span> building intelligent systems
-            that perceive, reason, and act to{" "}
-            <span className="text-gradient-rb">solve real-world problems.</span>
-          </h1>
-          <p className="mt-3 text-base text-muted-foreground max-w-2xl">
-            <TechnicalHighlight text="From agentic AI and intelligent automation to computer vision, robotics, and autonomy, I engineer reliable systems that turn complex signals into useful decisions and measurable impact." />
-          </p>
-          <div className="mt-4 flex flex-wrap gap-3">
-            <Link
-              to="/autonomous-vehicles"
-              className="brand-button-lg inline-flex items-center gap-2 bg-gradient-rb text-background glow-blue hover:scale-[1.02] transition"
-            >
-              See the Autonomy Story <ArrowRight className="h-4 w-4" />
-            </Link>
-            <Link
-              to="/projects"
-              className="brand-button-lg inline-flex items-center gap-2 glass hover:glow-blue transition"
-            >
-              View Build Logs <FileText className="h-4 w-4" />
-            </Link>
-          </div>
-          <SocialLinks variant="buttons" className="mt-3" />
-          <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-3">
-            {metrics.map((m) => (
-              <div
-                key={m.l}
-                className="glass rounded-2xl p-3 hover-lift premium-border ambient-card min-h-[4.5rem]"
-              >
-                <div className="text-2xl font-display font-bold text-gradient-rb">{m.v}</div>
-                <div className="text-xs text-muted-foreground mt-1">{m.l}</div>
-              </div>
-            ))}
-          </div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.15 }}
-          className="relative"
-        >
-          <div className="home-cockpit-card glass premium-border rounded-[2rem] p-3 md:p-4">
-            <div className="relative aspect-[4/3] max-w-[34rem] mx-auto rounded-3xl overflow-hidden ring-orb">
-              <img
-                src={heroPhoto}
-                alt="Danish Nadar"
-                width={4528}
-                height={3016}
-                fetchPriority="high"
-                decoding="async"
-                className="h-full w-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-deep via-transparent to-transparent" />
-              <ImageZoomButton src={heroPhoto} alt="Danish Nadar" className="bottom-20" />
-              <div className="absolute bottom-0 inset-x-0 p-4">
-                <div className="text-xs uppercase tracking-widest text-accent">
-                  Currently building
-                </div>
-                <div className="text-sm font-semibold mt-1">
-                  EcoCAR autonomy · AI automation · accessibility robotics
-                </div>
-              </div>
-            </div>
-            <div className="mt-3 grid grid-cols-3 gap-3 text-center text-xs">
-              <div className="rounded-2xl bg-background/40 border border-border/70 p-2.5">
-                <Gauge className="mx-auto h-5 w-5 text-accent" />
-                <div className="mt-1">Recover</div>
-              </div>
-              <div className="rounded-2xl bg-background/40 border border-border/70 p-2.5">
-                <Cpu className="mx-auto h-5 w-5 text-accent" />
-                <div className="mt-1">Build</div>
-              </div>
-              <div className="rounded-2xl bg-background/40 border border-border/70 p-2.5">
-                <Car className="mx-auto h-5 w-5 text-accent" />
-                <div className="mt-1">Move</div>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-      </section>
 
       <SectionReveal className="home-spaced-section py-8">
         <section className="glass premium-border rounded-[2rem] p-6 md:p-8 overflow-hidden relative">
@@ -960,5 +974,6 @@ function Home() {
         </div>
       </SectionReveal>
     </MotionPage>
+    </>
   );
 }
