@@ -6,6 +6,7 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { BackToTop } from "@/components/BackToTop";
 import { PointerGlow } from "@/components/PointerGlow";
+import { ScrollMotionGate } from "@/components/ScrollMotionGate";
 import { ImageLightboxProvider } from "@/components/ImageLightbox";
 
 const FloatingAvatar = lazy(() =>
@@ -65,6 +66,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <ImageLightboxProvider>
+        {!immersiveMode && <ScrollMotionGate />}
         {!immersiveMode && <AnimatedBackground testMode={backgroundTestMode} />}
         {backgroundTestMode ? (
           <Outlet />

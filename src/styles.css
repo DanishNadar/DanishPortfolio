@@ -9031,3 +9031,75 @@ html:not(.symbolism-active)
     opacity: 0.7;
   }
 }
+
+/* Scroll priority: while `html.is-scrolling` is set (ScrollMotionGate), pause
+   the decorative loops so scroll frames are not competing with SVG repaints.
+   One-shot reveals, scroll-driven timelines, the phase timer and the
+   Symbolism car are deliberately excluded so nothing gets stuck mid-state. */
+html.is-scrolling :is(
+    .lab-flow,
+    .lab-flow-slow,
+    .lab-pulse,
+    .lab-blink,
+    .lab-spin,
+    .lab-lane,
+    .lab-wave,
+    .lab-packet,
+    .lab-bob,
+    .lab-slide,
+    .lab-rebalance,
+    .lab-eq,
+    .lab-draw-loop,
+    .lab-track-smooth,
+    .lab-track-steps,
+    .lab-gimbal,
+    .lab-sweep,
+    .ambient-neural-network,
+    .bg-orb,
+    .pathfinding-status,
+    .pathfinding-node-pulse,
+    .dn-ai-orb-ring,
+    .ai-engine-button,
+    .dn-response-trigger,
+    .stack-constellation-card,
+    .stack-summary-card,
+    .float
+  ),
+html.is-scrolling .ring-orb::before,
+html.is-scrolling .lab-arch-link::before,
+html.is-scrolling .lab-arch-link::after {
+  animation-play-state: paused !important;
+}
+
+/* Each live visualization paints into its own layer, so its per-frame SVG
+   repaint does not invalidate the surrounding page content. */
+.lab-viz > svg {
+  will-change: transform;
+}
+
+/* Background: the masked grid layer was re-composited with its mask every
+   frame for a barely visible drift; keep it static. The neural mesh drifts by
+   translation only (scale changes force the 110%-viewport SVG to re-raster). */
+.grid-bg {
+  animation: none;
+}
+
+@keyframes ambientNetworkDrift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(-0.9%, 0.7%, 0);
+  }
+}
+
+@keyframes sensorFusionPulse {
+  0%,
+  100% {
+    opacity: 0.28;
+  }
+  50% {
+    opacity: 0.58;
+  }
+}
