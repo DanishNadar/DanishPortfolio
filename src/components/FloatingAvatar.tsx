@@ -23,7 +23,7 @@ const FloatingDNLogo = memo(function FloatingDNLogo({ speaking = false }: { spea
       <div className="dn-ai-orb-ring dn-ai-orb-ring-b" />
       <div className="dn-ai-orb-core">
         <img
-          src="/brand/dn-logo.png"
+          src="/brand/dn-logo-192.png"
           alt=""
           className="h-full w-full object-contain dn-response-logo-img"
           draggable={false}

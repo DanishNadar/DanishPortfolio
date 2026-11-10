@@ -4,7 +4,7 @@ import { SocialLinks } from "@/components/SocialLinks";
 
 export function SiteFooter() {
   return (
-    <footer className="mt-32 border-t border-border bg-background/55 backdrop-blur">
+    <footer className="mt-32 border-t border-border bg-background/85">
       <div className="mx-auto max-w-7xl px-6 py-14 grid gap-10 lg:grid-cols-[1.2fr_0.8fr_0.8fr_1fr]">
         <div>
           <div className="font-display text-2xl font-bold text-gradient-rb">Danish Nadar</div>

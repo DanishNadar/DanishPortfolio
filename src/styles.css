@@ -8797,3 +8797,237 @@ html:not(.symbolism-active)
     animation: none !important;
   }
 }
+
+/* ==========================================================================
+   Performance budget
+   The fixed background animates continuously, so anything that samples it
+   (backdrop-filter) or repaints large areas per frame (stroke-dashoffset,
+   background-position, box-shadow/filter keyframes, gradient positions driven
+   by CSS variables) multiplies GPU work on every frame and every scroll.
+   These overrides keep the motion but restrict it to compositor-only
+   properties (transform, opacity). Unlayered rules here beat the layered
+   originals; the hover rule lives in the utilities layer on purpose so that
+   Tailwind hover utilities with higher specificity still apply.
+   ========================================================================== */
+
+/* Glass surfaces: the card backgrounds are already 80-90% opaque, so the
+   blur was nearly invisible but forced a re-blur of the animated background
+   behind every card, every frame. */
+.glass,
+.posts-page > .mt-6,
+.home-signal-card,
+.home-build-node,
+.stack-horizontal-nav,
+.global-back-to-top,
+.astar-background-hud,
+.pathfinding-status,
+.illinois-tech-page .illinois-reflection-note {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.posts-page > .mt-6 {
+  background-color: rgba(5, 9, 24, 0.72);
+}
+
+/* Pointer glow: a 20rem element moved with transform (set from JS) instead of
+   repainting a full-viewport gradient on every pointer move. */
+.pointer-glow {
+  inset: auto;
+  left: 0;
+  top: 0;
+  width: 20rem;
+  height: 20rem;
+  margin: -10rem 0 0 -10rem;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle closest-side,
+    color-mix(in oklab, var(--neon-cyan) 19%, transparent),
+    color-mix(in oklab, var(--neon-blue) 11%, transparent) 34%,
+    color-mix(in oklab, var(--neon-red) 5%, transparent) 52%,
+    transparent 72%
+  );
+  transform: translate3d(-50vw, -50vh, 0);
+  will-change: transform;
+  contain: strict;
+}
+
+/* Hover glow: a drop-shadow filter on a large card re-rasterizes the whole
+   card. Keep it on small controls and nav links only. */
+@layer utilities {
+  a:hover,
+  .post-card-link:hover,
+  .project-card-grid a:hover,
+  .stack-context-link:hover {
+    filter: none;
+  }
+
+  .site-nav-header a:hover,
+  button:hover,
+  [role="button"]:hover,
+  .stack-jump-chip:hover {
+    filter: drop-shadow(0 0 10px color-mix(in oklab, var(--neon-cyan) 18%, transparent));
+  }
+}
+
+/* Background layers: static layers do not need their own GPU surfaces. */
+.neural-grid,
+.scanline-overlay {
+  will-change: auto;
+}
+
+/* Neural mesh: the whole SVG still drifts (composited transform); the dash
+   flow that re-rasterized the 110%-viewport SVG every frame is removed. */
+.ambient-network-signal {
+  animation: none;
+}
+
+/* A* planner: keep the per-problem reveal (runs once every 15s) but drop the
+   infinite SVG-child animations and per-node filters, which repaint the full
+   viewport SVG each frame. */
+.pathfinding-node-core {
+  filter: none;
+}
+
+html:not(.symbolism-active)
+  .background-layer:not(.background-test-layer)
+  .pathfinding-node-pulse {
+  animation: none;
+  opacity: 0.45;
+}
+
+html:not(.symbolism-active)
+  .background-layer:not(.background-test-layer)
+  .pathfinding-solution-edge {
+  animation: none;
+}
+
+/* Telemetry HUD: opacity-only breathing instead of animated box-shadow. */
+@keyframes perfHudBreath {
+  0%,
+  100% {
+    opacity: 0.62;
+  }
+  50% {
+    opacity: 0.76;
+  }
+}
+
+@keyframes perfHudMetricBreath {
+  0%,
+  100% {
+    opacity: 0.78;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+.pathfinding-status,
+.astar-background-hud {
+  animation: perfHudBreath 4.8s ease-in-out infinite;
+}
+
+.pathfinding-status-metrics {
+  background-color: rgba(5, 12, 29, 0.82);
+  animation: perfHudMetricBreath 5.6s ease-in-out infinite;
+}
+
+/* Home build loop: static glow instead of an animated drop-shadow filter. */
+.home-build-node {
+  animation: none;
+  box-shadow: 0 0 24px -8px color-mix(in oklab, var(--neon-cyan) 30%, transparent);
+}
+
+/* background-position animations repaint the element every frame. */
+.home-visual-grid,
+.animated-gradient-surface {
+  animation: none;
+}
+
+/* Illinois Tech and LA heroes: 176-192px blurs on 50-76rem elements are the
+   most expensive filters on the site. closest-side gradients give the same
+   soft falloff with no filter at all. */
+.illinois-tech-page .illinois-hero-glow,
+.la-page .la-hero-glow {
+  filter: none;
+  border-radius: 0;
+}
+
+.illinois-tech-page .illinois-hero-glow-a,
+.la-page .la-hero-glow-a {
+  background: radial-gradient(
+    closest-side,
+    rgba(130, 20, 45, 0.2),
+    rgba(60, 8, 24, 0.08) 54%,
+    transparent
+  );
+}
+
+.illinois-tech-page .illinois-hero-glow-b,
+.la-page .la-hero-glow-b {
+  background: radial-gradient(
+    closest-side,
+    rgba(95, 15, 35, 0.24),
+    rgba(40, 5, 18, 0.1) 54%,
+    transparent
+  );
+}
+
+.illinois-tech-page .illinois-hero-glow-c,
+.la-page .la-hero-glow-c {
+  background: radial-gradient(
+    closest-side,
+    rgba(110, 20, 68, 0.15),
+    rgba(75, 10, 50, 0.06) 56%,
+    transparent
+  );
+}
+
+.illinois-tech-page .illinois-hero::before,
+.illinois-tech-page .illinois-reflection::before,
+.la-page .la-hero::before,
+.illinois-tech-page .illinois-hawk-streaks,
+.la-page .la-haze {
+  filter: none;
+}
+
+/* Particle fields: drift with transform/opacity only (no background-position
+   or drop-shadow filters per frame). */
+@keyframes perfParticleDrift {
+  0% {
+    opacity: 0.5;
+    transform: translate3d(-1.2%, 0.6%, 0) scale(0.985);
+  }
+  100% {
+    opacity: 0.78;
+    transform: translate3d(1.4%, -0.5%, 0) scale(1.01);
+  }
+}
+
+.illinois-tech-page .illinois-hero::after,
+.illinois-tech-page .illinois-reflection::after {
+  filter: none;
+  animation: perfParticleDrift 12s ease-in-out infinite alternate;
+}
+
+.la-page .la-hero::after {
+  filter: none;
+  animation: perfParticleDrift 14s ease-in-out infinite alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pathfinding-status,
+  .astar-background-hud,
+  .pathfinding-status-metrics,
+  .illinois-tech-page .illinois-hero::after,
+  .illinois-tech-page .illinois-reflection::after,
+  .la-page .la-hero::after {
+    animation: none;
+  }
+
+  .pathfinding-status,
+  .astar-background-hud {
+    opacity: 0.7;
+  }
+}

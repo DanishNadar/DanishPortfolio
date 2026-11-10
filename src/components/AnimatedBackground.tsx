@@ -2,7 +2,7 @@
 // works reliably when dn-engine-open is on <html>. Framer Motion uses the Web
 // Animations API and ignores CSS animation-play-state entirely.
 
-import { useEffect, useReducer, useRef, useState, type CSSProperties } from "react";
+import { memo, useEffect, useMemo, useReducer, useRef, useState, type CSSProperties } from "react";
 import { createPathfindingProblem } from "@/lib/pathfinding";
 
 const particles = Array.from({ length: 8 }, (_, index) => ({
@@ -160,19 +160,24 @@ function PathfindingGraph({
     return () => window.clearTimeout(cycleTimer);
   }, [activeProblem.id, cycleInterval, isActive]);
 
-  const exploredStep = new Map(activeProblem.explored.map((nodeId, index) => [nodeId, index]));
-  const solutionPoints = activeProblem.path
-    .map((nodeId) => {
-      const node = activeProblem.nodes[nodeId];
-      return `${node.x},${node.y}`;
-    })
-    .join(" ");
-  const solutionPath = activeProblem.path
-    .map((nodeId, index) => {
-      const node = activeProblem.nodes[nodeId];
-      return `${index === 0 ? "M" : "L"} ${node.x} ${node.y}`;
-    })
-    .join(" ");
+  const { exploredStep, solutionPoints, solutionPath } = useMemo(
+    () => ({
+      exploredStep: new Map(activeProblem.explored.map((nodeId, index) => [nodeId, index])),
+      solutionPoints: activeProblem.path
+        .map((nodeId) => {
+          const node = activeProblem.nodes[nodeId];
+          return `${node.x},${node.y}`;
+        })
+        .join(" "),
+      solutionPath: activeProblem.path
+        .map((nodeId, index) => {
+          const node = activeProblem.nodes[nodeId];
+          return `${index === 0 ? "M" : "L"} ${node.x} ${node.y}`;
+        })
+        .join(" "),
+    }),
+    [activeProblem],
+  );
   const routeHops = Math.max(activeProblem.path.length - 1, 0);
   const exploredCoverage = Math.round(
     (activeProblem.explored.length / activeProblem.nodes.length) * 100,
@@ -361,6 +366,10 @@ function PathfindingGraph({
   );
 }
 
+// Car phase changes re-render the background root; keep the SVG layers out of that.
+const MemoAmbientNeuralNetwork = memo(AmbientNeuralNetwork);
+const MemoPathfindingGraph = memo(PathfindingGraph);
+
 type AnimatedBackgroundProps = {
   testMode?: boolean;
 };
@@ -442,56 +451,61 @@ export function AnimatedBackground({ testMode = false }: AnimatedBackgroundProps
       <div className="absolute inset-0 neural-grid opacity-44" />
       <div className="absolute inset-0 sensor-fusion-radar opacity-18" />
       <div className="absolute inset-0 scanline-overlay opacity-12" />
-      <AmbientNeuralNetwork />
+      <MemoAmbientNeuralNetwork />
 
       <div className="bg-orb bg-orb-a absolute -top-40 -left-36 h-[560px] w-[560px] rounded-full" />
       <div className="bg-orb bg-orb-b absolute top-1/4 -right-44 h-[620px] w-[620px] rounded-full" />
       <div className="bg-orb bg-orb-c absolute bottom-[-12rem] left-[36%] h-[540px] w-[540px] rounded-full" />
 
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="holographic-lyriq" aria-hidden="true">
-          <div className="lyriq-road-layer">
-            <span className="lyriq-road lyriq-road-a" />
-            <span className="lyriq-road lyriq-road-b" />
-          </div>
-          <div className="lyriq-car">
-            <span className="lyriq-underglow" />
-            <span className="lyriq-airflow lyriq-airflow-a" />
-            <span className="lyriq-airflow lyriq-airflow-b" />
-            <span className="lyriq-airflow lyriq-airflow-c" />
-            <span className="lyriq-sensor-halo lyriq-sensor-halo-front" />
-            <span className="lyriq-sensor-halo lyriq-sensor-halo-rear" />
-            <div className="lyriq-visual-frame">
-              <img
-                className="lyriq-outline-img lyriq-reference-img"
-                src="/portfolio_images/shared/approved_reference_suv_car_overlay.png"
-                alt=""
-                loading="eager"
-                decoding="async"
-              />
-              <span className="lyriq-hood-line" aria-hidden="true" />
-              <span className="lyriq-cabin-divider lyriq-cabin-divider-b" aria-hidden="true" />
-              <span className="lyriq-cabin-divider lyriq-cabin-divider-c" aria-hidden="true" />
-              <span className="lyriq-cabin-divider lyriq-cabin-divider-d" aria-hidden="true" />
-              <span className="lyriq-front-light-glow" aria-hidden="true" />
-              <span className="lyriq-rear-light-glow" aria-hidden="true" />
-              <div className="lyriq-wheel-overlay lyriq-wheel-overlay-front" aria-hidden="true">
-                <span className="lyriq-wheel-overlay-spokes" />
-                <span className="lyriq-wheel-overlay-hub" />
-              </div>
-              <div className="lyriq-wheel-overlay lyriq-wheel-overlay-rear" aria-hidden="true">
-                <span className="lyriq-wheel-overlay-spokes" />
-                <span className="lyriq-wheel-overlay-hub" />
+      {/* The vehicle is invisible while idle (its paused drive keyframe sits at
+          ~0 opacity), so it is only mounted for the Symbolism scene. That keeps
+          ~20 animated layers and a large image off every other page. */}
+      {(testMode || carPhase !== "idle") && (
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="holographic-lyriq" aria-hidden="true">
+            <div className="lyriq-road-layer">
+              <span className="lyriq-road lyriq-road-a" />
+              <span className="lyriq-road lyriq-road-b" />
+            </div>
+            <div className="lyriq-car">
+              <span className="lyriq-underglow" />
+              <span className="lyriq-airflow lyriq-airflow-a" />
+              <span className="lyriq-airflow lyriq-airflow-b" />
+              <span className="lyriq-airflow lyriq-airflow-c" />
+              <span className="lyriq-sensor-halo lyriq-sensor-halo-front" />
+              <span className="lyriq-sensor-halo lyriq-sensor-halo-rear" />
+              <div className="lyriq-visual-frame">
+                <img
+                  className="lyriq-outline-img lyriq-reference-img"
+                  src="/portfolio_images/shared/approved_reference_suv_car_overlay.png"
+                  alt=""
+                  loading="eager"
+                  decoding="async"
+                />
+                <span className="lyriq-hood-line" aria-hidden="true" />
+                <span className="lyriq-cabin-divider lyriq-cabin-divider-b" aria-hidden="true" />
+                <span className="lyriq-cabin-divider lyriq-cabin-divider-c" aria-hidden="true" />
+                <span className="lyriq-cabin-divider lyriq-cabin-divider-d" aria-hidden="true" />
+                <span className="lyriq-front-light-glow" aria-hidden="true" />
+                <span className="lyriq-rear-light-glow" aria-hidden="true" />
+                <div className="lyriq-wheel-overlay lyriq-wheel-overlay-front" aria-hidden="true">
+                  <span className="lyriq-wheel-overlay-spokes" />
+                  <span className="lyriq-wheel-overlay-hub" />
+                </div>
+                <div className="lyriq-wheel-overlay lyriq-wheel-overlay-rear" aria-hidden="true">
+                  <span className="lyriq-wheel-overlay-spokes" />
+                  <span className="lyriq-wheel-overlay-hub" />
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
 
       {testMode ? (
-        <PathfindingGraph isActive testMode />
+        <MemoPathfindingGraph isActive testMode />
       ) : (
-        <PathfindingGraph isActive={plannerActive} />
+        <MemoPathfindingGraph isActive={plannerActive} />
       )}
       {testMode && <AstarShowcaseOverlay />}
 

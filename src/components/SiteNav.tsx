@@ -204,7 +204,7 @@ function PathwaysDropdown() {
         onMouseEnter={openDropdown}
         onMouseLeave={scheduleClose}
       >
-        <div className="rounded-2xl border border-border/70 bg-background/98 shadow-2xl shadow-blue-950/40 backdrop-blur-2xl overflow-hidden">
+        <div className="rounded-2xl border border-border/70 bg-background/98 shadow-2xl shadow-blue-950/40 overflow-hidden">
           <div className="flex items-center justify-between gap-4 border-b border-border/60 px-5 py-3 bg-gradient-to-r from-blue-500/10 via-transparent to-rose-800/10">
             <div className="text-xs font-semibold text-foreground">The Journey.</div>
             <div className="flex shrink-0 items-center gap-2">
@@ -280,7 +280,7 @@ function PostsDropdown() {
         onMouseEnter={openDropdown}
         onMouseLeave={scheduleClose}
       >
-        <div className="rounded-2xl border border-border/70 bg-background/98 shadow-2xl shadow-blue-950/40 backdrop-blur-2xl overflow-hidden">
+        <div className="rounded-2xl border border-border/70 bg-background/98 shadow-2xl shadow-blue-950/40 overflow-hidden">
           <div className="flex items-center justify-between gap-4 border-b border-border/60 px-5 py-3 bg-gradient-to-r from-blue-500/10 via-transparent to-rose-800/10">
             <div className="text-xs font-semibold text-foreground">Featured writing</div>
             <Link
@@ -347,7 +347,7 @@ function StackMapDropdown() {
         onMouseEnter={openDropdown}
         onMouseLeave={scheduleClose}
       >
-        <div className="overflow-hidden rounded-2xl border border-border/70 bg-background/98 shadow-2xl shadow-blue-950/40 backdrop-blur-2xl">
+        <div className="overflow-hidden rounded-2xl border border-border/70 bg-background/98 shadow-2xl shadow-blue-950/40">
           <div className="border-b border-border/60 bg-gradient-to-r from-blue-500/10 via-transparent to-rose-800/10 px-5 py-3">
             <div className="text-xs font-semibold text-foreground">Stack Map</div>
             <div className="mt-0.5 text-xs text-muted-foreground">
@@ -425,7 +425,7 @@ function ProjectsDropdown() {
         onMouseEnter={openDropdown}
         onMouseLeave={scheduleClose}
       >
-        <div className="rounded-2xl border border-border/70 bg-background/98 shadow-2xl shadow-blue-950/40 backdrop-blur-2xl overflow-hidden">
+        <div className="rounded-2xl border border-border/70 bg-background/98 shadow-2xl shadow-blue-950/40 overflow-hidden">
           <div className="flex items-center justify-between gap-4 border-b border-border/60 px-5 py-4 bg-gradient-to-r from-blue-500/10 via-transparent to-rose-800/10">
             <div>
               <div className="font-display text-sm font-semibold text-foreground">
@@ -494,7 +494,7 @@ function ProjectsDropdown() {
 
 export function SiteNav() {
   return (
-    <header className="site-nav-header sticky top-0 z-40 backdrop-blur-xl bg-background/90 border-b border-border/70 shadow-[0_12px_60px_-50px_rgba(34,211,238,0.65)]">
+    <header className="site-nav-header sticky top-0 z-40 bg-background/95 border-b border-border/70 shadow-[0_12px_60px_-50px_rgba(34,211,238,0.65)]">
       <nav className="site-nav-shell px-3 lg:px-6 h-16 flex items-center gap-3">
         {/* Logo  -  pinned left */}
         <Link
@@ -504,7 +504,10 @@ export function SiteNav() {
         >
           <span className="dn-logo-aura relative inline-flex h-14 w-14 items-center justify-center rounded-xl overflow-hidden ring-orb bg-background/40 shadow-lg shadow-blue-950/30">
             <img
-              src="/brand/dn-logo.png"
+              src="/brand/dn-logo-192.png"
+              width={56}
+              height={56}
+              decoding="async"
               alt="DN logo"
               className="h-full w-full object-contain p-0.5"
             />
