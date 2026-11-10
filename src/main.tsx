@@ -2,8 +2,11 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import { RouterProvider } from "@tanstack/react-router";
 import { getRouter } from "./router";
+import { initPerfMode } from "./lib/perfMode";
 import "./styles.css";
 import "./lab/lab.css";
+
+initPerfMode();
 
 const router = getRouter();
 

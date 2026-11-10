@@ -10,8 +10,11 @@ import portfolio from "@/data/portfolio.json";
 
 export const Route = createFileRoute("/posts/$slug")({
   loader: async ({ context, params }) => {
-    const post = await context.queryClient.ensureQueryData(postBySlugQuery(params.slug));
-    const rich = getPostPage(params.slug);
+    const [post, { getPostPage: findPostPage }] = await Promise.all([
+      context.queryClient.ensureQueryData(postBySlugQuery(params.slug)),
+      import("@/content/postPages"),
+    ]);
+    const rich = findPostPage(params.slug);
     if (!post && !rich) throw notFound();
     await Promise.all([context.queryClient.ensureQueryData(postsQuery), context.queryClient.ensureQueryData(projectsQuery)]);
     return { post, rich };

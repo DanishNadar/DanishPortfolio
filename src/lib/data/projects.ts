@@ -1,5 +1,5 @@
-import { supabase } from "@/integrations/supabase/client";
 import { seedProjects, type SeedProject } from "@/data/seedPortfolio";
+import { readRemote } from "@/lib/data/remote";
 
 function mergeProject(local: SeedProject | undefined, remote: Partial<SeedProject> | null | undefined): SeedProject {
   if (!local && remote) return remote as SeedProject;
@@ -30,24 +30,23 @@ function mergeProjects(remoteRows: SeedProject[] | null | undefined): SeedProjec
   return Array.from(bySlug.values()).sort((a, b) => (b.priority ?? 0) - (a.priority ?? 0));
 }
 
+/** Bundled projects, available synchronously so pages can render immediately. */
+export function localProjects(): SeedProject[] {
+  return mergeProjects(null);
+}
+
 export async function fetchProjects(): Promise<SeedProject[]> {
-  try {
-    const { data, error } = await supabase.from("projects").select("*").order("priority", { ascending: false });
-    if (error) throw error;
-    return mergeProjects(data as unknown as SeedProject[]);
-  } catch {
-    return seedProjects;
-  }
+  const data = await readRemote<SeedProject[]>((sb) =>
+    sb.from("projects").select("*").order("priority", { ascending: false }),
+  );
+  return mergeProjects(data);
 }
 
 export async function fetchProjectBySlug(slug: string): Promise<SeedProject | null> {
   const local = seedProjects.find((p) => p.slug === slug);
-  try {
-    const { data, error } = await supabase.from("projects").select("*").eq("slug", slug).maybeSingle();
-    if (error) throw error;
-    if (data || local) return mergeProject(local, data as unknown as Partial<SeedProject>);
-  } catch {
-    // local seed fallback below
-  }
-  return local ?? null;
+  const data = await readRemote<Partial<SeedProject>>((sb) =>
+    sb.from("projects").select("*").eq("slug", slug).maybeSingle(),
+  );
+  if (data || local) return mergeProject(local, data);
+  return null;
 }

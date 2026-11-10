@@ -9103,3 +9103,47 @@ html.is-scrolling .lab-arch-link::after {
     opacity: 0.58;
   }
 }
+
+/* Reduced-effects mode (html.perf-lite, set by src/lib/perfMode.ts when the
+   browser cannot hold frame rate). Imagery, gradients, layout and one-shot
+   reveals stay; everything that redraws continuously stops. */
+html.perf-lite .background-layer *,
+html.perf-lite .background-layer *::before,
+html.perf-lite .background-layer *::after,
+html.perf-lite .lab-viz *,
+html.perf-lite .lab-viz *::before,
+html.perf-lite .lab-viz *::after,
+html.perf-lite .ring-orb::before,
+html.perf-lite .dn-ai-orb-ring,
+html.perf-lite .ai-engine-button,
+html.perf-lite .dn-response-trigger,
+html.perf-lite .stack-constellation-card,
+html.perf-lite .stack-summary-card,
+html.perf-lite .home-cockpit-card::after,
+html.perf-lite .float {
+  animation-play-state: paused !important;
+}
+
+/* The Symbolism car still drives in and out: it is the one scripted moment. */
+html.perf-lite .background-layer.symbolism-car-entering .holographic-lyriq,
+html.perf-lite .background-layer.symbolism-car-exiting .holographic-lyriq {
+  animation-play-state: running !important;
+}
+
+html.perf-lite .pointer-glow,
+html.perf-lite .ambient-neural-network,
+html.perf-lite .scanline-overlay,
+html.perf-lite .neural-grid,
+html.perf-lite .background-layer:not(.background-test-layer) .pathfinding-simulation {
+  display: none !important;
+}
+
+html.perf-lite .glass::before,
+html.perf-lite .premium-border::before {
+  display: none;
+}
+
+html.perf-lite .lab-viz > svg,
+html.perf-lite .bg-orb {
+  will-change: auto;
+}

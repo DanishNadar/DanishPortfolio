@@ -1,5 +1,5 @@
-import { supabase } from "@/integrations/supabase/client";
 import { seedPosts, type SeedPost } from "@/data/seedPortfolio";
+import { readRemote } from "@/lib/data/remote";
 import { postPages } from "@/content/postPages";
 
 function mergePost(local: SeedPost | undefined, remote: Partial<SeedPost> | null | undefined): SeedPost {
@@ -54,25 +54,19 @@ function mergePosts(remoteRows: SeedPost[] | null | undefined): SeedPost[] {
 }
 
 export async function fetchPosts(): Promise<SeedPost[]> {
-  try {
-    const { data, error } = await supabase.from("posts").select("*").order("published_at", { ascending: false, nullsFirst: false });
-    if (error) throw error;
-    return mergePosts(data as unknown as SeedPost[]);
-  } catch {
-    return mergePosts(null);
-  }
+  const data = await readRemote<SeedPost[]>((sb) =>
+    sb.from("posts").select("*").order("published_at", { ascending: false, nullsFirst: false }),
+  );
+  return mergePosts(data);
 }
 
 export async function fetchPostBySlug(slug: string): Promise<SeedPost | null> {
   const rich = postPages.find((p) => p.slug === slug);
   const seed = seedPosts.find((p) => p.slug === slug);
   const local = rich ? mergePost(seed, richPostToSeed(rich)) : seed;
-  try {
-    const { data, error } = await supabase.from("posts").select("*").eq("slug", slug).maybeSingle();
-    if (error) throw error;
-    if (data || local) return mergePost(local, data as unknown as Partial<SeedPost>);
-  } catch {
-    // local seed fallback below
-  }
-  return local ?? null;
+  const data = await readRemote<Partial<SeedPost>>((sb) =>
+    sb.from("posts").select("*").eq("slug", slug).maybeSingle(),
+  );
+  if (data || local) return mergePost(local, data);
+  return null;
 }

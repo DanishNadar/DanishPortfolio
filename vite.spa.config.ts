@@ -19,25 +19,17 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks(id) {
+          // three.js is only reached through the lazy /intelligence-stack canvas, so
+          // Rollup already isolates it. Forcing it into a named chunk pulled shared
+          // helpers into that chunk and made every page download it.
           if (id.includes("node_modules")) {
-            if (
-              id.includes("@react-three") ||
-              id.includes("three-stdlib") ||
-              id.includes("\\three\\") ||
-              id.includes("/three/") ||
-              id.includes("\\maath\\") ||
-              id.includes("/maath/")
-            ) {
-              return "intelligence-3d";
-            }
-            if (id.includes("framer-motion")) return "motion";
-            if (id.includes("@radix-ui")) return "radix-ui";
             if (id.includes("@tanstack")) return "tanstack";
-            if (id.includes("@supabase")) return "supabase";
-            return "vendor";
+            if (/[\\/]node_modules[\\/](react|react-dom|scheduler)[\\/]/.test(id)) return "react";
           }
-          if (id.includes("/src/content/postPages/")) return "post-content";
-          if (id.includes("/src/routes/admin/")) return "admin";
+          // Everything else is left to Rollup. Forcing catch-all chunks (vendor,
+          // admin, post-content, supabase) made every page download all of them,
+          // because the route tree references admin routes and shared modules.
+          return undefined;
         },
       },
     },
